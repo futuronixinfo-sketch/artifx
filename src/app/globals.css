@@ -1,13 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
+  --background: #ffffff;
+  --foreground: #111111;
 
-  /* Accent Gradients */
-  --accent-gradient: linear-gradient(90deg, #333333 0%, #666666 100%);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-bg: rgba(255, 255, 255, 0.05);
+  --red: #dc2626;
+  --red-light: #ef4444;
+  --red-dark: #b91c1c;
+
+  --glass-border: rgba(220, 38, 38, 0.12);
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-hover: rgba(220, 38, 38, 0.06);
 }
 
 @theme inline {
@@ -15,40 +18,70 @@
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-  /* Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-glass-border: var(--glass-border);
   --color-glass-bg: var(--glass-bg);
 
-  /* Animation */
-  --animate-fade-in: fade-in 0.5s ease-out forwards;
-  --animate-slide-up: slide-up 0.5s ease-out forwards;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
+  --radius-full: 0px;
+
+  --animate-fade-in: fade-in 0.6s ease-out forwards;
+  --animate-slide-up: slide-up 0.6s ease-out forwards;
+  --animate-slide-down: slide-down 0.6s ease-out forwards;
+  --animate-scale-in: scale-in 0.5s ease-out forwards;
+  --animate-glow: glow 3s ease-in-out infinite alternate;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-soft: pulse-soft 2s ease-in-out infinite;
 
   @keyframes fade-in {
-    0% {
-      opacity: 0;
-    }
-
-    100% {
-      opacity: 1;
-    }
+    0% { opacity: 0; }
+    100% { opacity: 1; }
   }
 
   @keyframes slide-up {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
 
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  @keyframes slide-down {
+    0% { opacity: 0; transform: translateY(-30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scale-in {
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes glow {
+    0% { box-shadow: 0 0 20px rgba(220, 38, 38, 0.08); }
+    100% { box-shadow: 0 0 40px rgba(220, 38, 38, 0.2); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
   }
 }
 
-/* Base Styles */
+*,
+*::before,
+*::after {
+  border-radius: 0 !important;
+}
+
 body {
   background-color: var(--background);
   color: var(--foreground);
@@ -56,41 +89,50 @@ body {
   overflow-x: hidden;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
 }
 
-/* Glassmorphism Utilities */
-.glass-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
+::selection {
+  background: rgba(220, 38, 38, 0.2);
+  color: #111111;
 }
 
-/* Global border-radius reset */
-* {
-  border-radius: 0 !important;
-}
-
-/* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: #f5f5f5;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: rgba(220, 38, 38, 0.3);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: rgba(220, 38, 38, 0.5);
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+}
+
+.gradient-text {
+  color: #b91c1c;
+}
+
+.gradient-red {
+  background: #b91c1c;
+}
+
+.gradient-card {
+  background: rgba(220, 38, 38, 0.04);
+}
+
+.glow-red {
+  box-shadow: 0 0 30px rgba(220, 38, 38, 0.12);
 }

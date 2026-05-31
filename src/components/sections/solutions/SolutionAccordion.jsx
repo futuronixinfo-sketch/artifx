@@ -13,10 +13,10 @@ export default function SolutionAccordion() {
     };
 
     return (
-        <section className="relative py-28 bg-black border-t border-neutral-900 overflow-hidden select-none">
+        <section className="relative py-28 bg-white border-t border-gray-200 overflow-hidden select-none">
             {/* Giant watermark text */}
             <div className="absolute inset-0 flex items-start justify-center pt-16 z-0 pointer-events-none">
-                <div className="absolute top-[8%] left-1/2 -translate-x-1/2 w-[70%] h-[20%] bg-[#f95738]/[0.03] blur-[120px] pointer-events-none" />
+                <div className="absolute top-[8%] left-1/2 -translate-x-1/2 w-[70%] h-[20%] bg-red-50 blur-[120px] pointer-events-none" />
                 <div
                     className="w-full text-center text-[16vw] font-black tracking-tighter leading-none select-none"
                     style={{
@@ -32,16 +32,16 @@ export default function SolutionAccordion() {
                 </div>
             </div>
 
-            <div className="absolute top-1/2 left-0 right-0 h-px bg-neutral-900 z-0 pointer-events-none" />
+            <div className="absolute top-1/2 left-0 right-0 h-px bg-gray-100 z-0 pointer-events-none" />
 
             <Container>
                 <div className="text-center max-w-2xl mx-auto mb-16">
-                    <span className="text-xs font-mono text-[#f95738] uppercase tracking-widest mb-4 block font-bold">
+                    <span className="text-xs font-mono text-red-600 uppercase tracking-widest mb-4 block font-bold">
                         [ 05 / COMPONENTS ]
                     </span>
-                    <h2 className="text-3xl md:text-5xl font-light tracking-tight text-white leading-tight">
+                    <h2 className="text-3xl md:text-5xl font-light tracking-tight text-black leading-tight">
                         Solution <br />
-                        <span className="italic text-[#f95738]" style={{ fontFamily: 'Georgia, serif' }}>Components</span>
+                        <span className="italic gradient-text" style={{ fontFamily: 'Georgia, serif' }}>Components</span>
                     </h2>
                 </div>
 
@@ -53,20 +53,20 @@ export default function SolutionAccordion() {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.1 }}
                             viewport={{ once: true }}
-                            className="group bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 hover:border-neutral-700 transition-all"
+                            className="group bg-gray-100/50 backdrop-blur-sm border border-gray-200 hover:border-gray-300 transition-all"
                         >
                             <button
                                 onClick={() => toggleAccordion(index)}
                                 className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
                             >
-                                <span className="text-lg md:text-xl font-semibold text-white group-hover:text-[#f95738] transition-colors">
+                                <span className="text-lg md:text-xl font-semibold text-black group-hover:text-red-600 transition-colors">
                                     {item.title}
                                 </span>
                                 <motion.div
                                     animate={{ rotate: activeIndex === index ? 180 : 0 }}
                                     transition={{ duration: 0.3 }}
                                 >
-                                    <ChevronDown className="w-5 h-5 text-neutral-500 group-hover:text-white transition-colors" />
+                                    <ChevronDown className="w-5 h-5 text-gray-400 group-hover:text-black transition-colors" />
                                 </motion.div>
                             </button>
 
@@ -78,11 +78,11 @@ export default function SolutionAccordion() {
                                         exit={{ height: 0, opacity: 0 }}
                                         transition={{ duration: 0.3, ease: "easeInOut" }}
                                     >
-                                        <div className="p-6 pt-0 border-t border-neutral-800/50">
-                                            <p className="text-neutral-400 leading-relaxed text-sm md:text-base font-light">
+                                        <div className="p-6 pt-0 border-t border-gray-200/50">
+                                            <p className="text-gray-500 leading-relaxed text-sm md:text-base font-light">
                                                 {item.description}
                                             </p>
-                                            <div className="mt-4 flex items-center gap-2 text-[#f95738] text-xs font-mono uppercase tracking-widest cursor-pointer hover:underline">
+                                            <div className="mt-4 flex items-center gap-2 text-red-600 text-xs font-mono uppercase tracking-widest cursor-pointer hover:underline">
                                                 View Details <ArrowRight className="w-3 h-3" />
                                             </div>
                                         </div>

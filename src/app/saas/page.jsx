@@ -1,5 +1,3 @@
-
-
 import SaasVision from '@/components/sections/saas/SaasVision';
 import WhySaas from '@/components/sections/saas/WhySaas';
 import SaasPhilosophy from '@/components/sections/saas/SaasPhilosophy';
@@ -9,11 +7,11 @@ import SaasArchitecture from '@/components/sections/saas/SaasArchitecture';
 import SaasCTA from '@/components/sections/saas/SaasCTA';
 
 export const metadata = {
-  title: "SaaS Products — Building Key Infrastructure | Artifx",
-  description: "Explore the internal tools and SaaS products we are building to solve complex operational problems.",
+  title: "SaaS Products — Operational Tools | Artifx",
+  description: "Explore the battle-tested SaaS tools and business dashboards Artifx builds to solve real operational bottlenecks.",
 };
 
-export default function SaaSPage() {
+export default function SaasPage() {
   return (
     <>
       <SaasVision />

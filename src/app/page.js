@@ -1,30 +1,25 @@
 import Hero from '@/components/sections/Hero';
-import WhoThisIsFor from '@/components/sections/WhoThisIsFor';
-import WhatWeBuild from '@/components/sections/WhatWeBuild';
+import ServicesShowcase from '@/components/sections/ServicesShowcase';
+import ProjectsShowcase from '@/components/sections/ProjectsShowcase';
 import ProblemsWeSolve from '@/components/sections/ProblemsWeSolve';
-import SystemsWeBuild from '@/components/sections/SystemsWeBuild';
-import OurProcess from '@/components/sections/OurProcess';
 import WhyArtifx from '@/components/sections/WhyArtifx';
-import PartnershipModel from '@/components/sections/PartnershipModel';
+import OurProcess from '@/components/sections/OurProcess';
 import FinalCTA from '@/components/sections/FinalCTA';
 
-
 export const metadata = {
-  title: "Artifx — System Architecture & AI Automation Agency",
-  description: "We build high-performance business systems, AI automations, and scalable digital infrastructure for ambitious companies.",
+  title: "Artifx — AI Automation & Digital Systems Agency",
+  description: "We build intelligent digital systems, AI automations, and scalable web platforms that help businesses scale faster.",
 };
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-black text-white selection:bg-white selection:text-black">
+    <main className="min-h-screen bg-white text-black selection:bg-red-500/30 selection:text-black">
       <Hero />
+      <ServicesShowcase />
+      <ProjectsShowcase />
       <ProblemsWeSolve />
-      <OurProcess />
-      <WhoThisIsFor />
-      <WhatWeBuild />
-      <SystemsWeBuild />
       <WhyArtifx />
-      <PartnershipModel />
+      <OurProcess />
       <FinalCTA />
     </main>
   );

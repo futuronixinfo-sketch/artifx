@@ -4,10 +4,11 @@ import { motion } from 'framer-motion';
 
 const variants = {
     primary: 'bg-white text-black hover:bg-neutral-200 border border-transparent',
-    secondary: 'bg-neutral-900 text-white hover:bg-neutral-800 border border-neutral-800',
-    outline: 'bg-transparent text-white border border-neutral-700 hover:border-neutral-500 hover:text-neutral-300',
-    glass: 'bg-white/10 backdrop-blur-md text-white border border-white/10 hover:bg-white/20',
-    link: 'text-neutral-400 hover:text-white underline-offset-4 hover:underline p-0 h-auto',
+    secondary: 'bg-black text-white hover:bg-gray-800 border border-gray-800',
+    outline: 'bg-transparent text-black border border-gray-300 hover:border-black hover:text-black',
+    glass: 'bg-black/5 backdrop-blur-md text-black border border-black/10 hover:bg-black/10',
+    link: 'text-gray-500 hover:text-black underline-offset-4 hover:underline p-0 h-auto',
+    custom: '',
 };
 
 const sizes = {
@@ -25,7 +26,7 @@ export default function Button({
     children,
     ...props
 }) {
-    const baseStyles = 'inline-flex items-center justify-center rounded-full font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 disabled:opacity-50 disabled:pointer-events-none';
+    const baseStyles = 'inline-flex items-center justify-center rounded-full font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black disabled:opacity-50 disabled:pointer-events-none';
     const combinedClassName = `${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`;
 
     if (href) {
