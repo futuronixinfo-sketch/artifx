@@ -9,12 +9,12 @@ export default function AIHero() {
         <section className="relative min-h-[85vh] flex items-center pt-32 pb-20 bg-black overflow-hidden border-b border-neutral-900 select-none">
             
             {/* 1. GIANT WATERMARK TEXT (Masked Dot-Matrix / Plus-sign Pattern) */}
-            <div className="absolute inset-0 flex items-start justify-center pt-16 z-0 pointer-events-none">
+            <div className="absolute inset-0 flex items-start justify-center pt-28 md:pt-16 z-0 pointer-events-none">
                 {/* Soft ambient background glow */}
                 <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[70%] h-[25%] bg-[#f95738]/[0.03] blur-[130px] rounded-full pointer-events-none" />
                 
                 <div 
-                    className="w-full text-center text-[12vw] font-black tracking-tighter leading-none select-none"
+                    className="w-full text-center text-[18vw] md:text-[12vw] font-black tracking-tighter leading-none select-none"
                     style={{
                         backgroundImage: "radial-gradient(rgba(255, 255, 255, 0.16) 1.5px, transparent 1.5px)",
                         backgroundSize: "6px 6px",
