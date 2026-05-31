@@ -8,10 +8,10 @@ export default function SolutionsIntro() {
         <section className="relative min-h-[90vh] flex flex-col justify-between bg-black overflow-hidden border-b border-neutral-900 pt-24 pb-8 select-none">
 
             {/* Giant watermark text */}
-            <div className="absolute inset-0 flex items-start justify-center pt-20 md:pt-16 z-0 pointer-events-none">
+            <div className="absolute inset-0 flex items-start justify-center pt-28 md:pt-16 z-0 pointer-events-none">
                 <div className="absolute top-[8%] left-1/2 -translate-x-1/2 w-[70%] h-[20%] bg-[#f95738]/[0.04] blur-[120px] pointer-events-none" />
                 <div
-                    className="w-full text-center text-[18vw] font-black tracking-tighter leading-none select-none"
+                    className="w-full text-center text-[22vw] md:text-[18vw] font-black tracking-tighter leading-none select-none"
                     style={{
                         backgroundImage: "radial-gradient(rgba(255, 255, 255, 0.16) 1.5px, transparent 1.5px)",
                         backgroundSize: "6px 6px",
