@@ -1,5 +1,3 @@
-
-
 import SolutionsIntro from '@/components/sections/solutions/SolutionsIntro';
 import BusinessBreakpoint from '@/components/sections/solutions/BusinessBreakpoint';
 import SystemMapping from '@/components/sections/solutions/SystemMapping';
@@ -8,8 +6,8 @@ import SolutionAccordion from '@/components/sections/solutions/SolutionAccordion
 import SolutionsCTA from '@/components/sections/solutions/SolutionsCTA';
 
 export const metadata = {
-  title: "Solutions — Enterprise System Architecture | Artifx",
-  description: "Discover our system-first approach to business growth. We map, architect, and build scalable digital ecosystems.",
+  title: "Solutions — Custom Business Systems | Artifx",
+  description: "Explore the custom digital systems, CRM lead engines, operations workflows, and management dashboards we engineer for business scale.",
 };
 
 export default function SolutionsPage() {

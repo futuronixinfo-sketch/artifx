@@ -22,9 +22,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: "Artifx — Business Systems & AI Automation",
-  description: "Artifx builds intelligent digital systems that help businesses scale faster using AI and modern technology.",
-  keywords: ["AI Automation", "Business Systems", "Web Development", "Next.js Agency", "SaaS Development"],
+  title: "Artifx — AI Automation & Digital Systems Agency",
+  description: "We build intelligent digital systems, AI automations, and scalable web platforms that help businesses scale faster.",
+  keywords: ["AI Automation", "Business Systems", "Web Development", "Next.js Agency", "SaaS Development", "Digital Transformation"],
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',
@@ -35,7 +35,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-black text-white selection:bg-white selection:text-black flex flex-col min-h-screen`} suppressHydrationWarning>
+      <body className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-white text-black flex flex-col min-h-screen`} suppressHydrationWarning>
         <Navbar />
         {children}
         <Footer />
@@ -43,4 +43,3 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
-

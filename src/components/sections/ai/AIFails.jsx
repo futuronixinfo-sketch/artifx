@@ -28,14 +28,14 @@ const fails = [
 
 export default function AIFails() {
     return (
-        <section className="py-24 bg-neutral-950 border-b border-neutral-900">
+        <section className="py-24 bg-white border-b border-gray-200">
             <Container>
                 <div className="text-left max-w-2xl mb-16">
-                    <span className="text-xs font-mono text-red-500 uppercase tracking-widest block font-bold mb-4">[ 02 / REALITY_CHECK ]</span>
-                    <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-white mb-4">
-                        Why Most AI Implementations <span className="italic text-red-500" style={{ fontFamily: "Georgia, serif" }}>Fail</span>.
+                    <span className="text-xs font-mono text-red-600 uppercase tracking-widest block font-bold mb-4">[ 02 / REALITY_CHECK ]</span>
+                    <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-black mb-4">
+                        Why Most AI Implementations <span className="gradient-text italic">Fail</span>.
                     </h2>
-                    <p className="text-xs font-light text-neutral-400 leading-relaxed max-w-md">
+                    <p className="text-xs font-light text-gray-500 leading-relaxed max-w-md">
                         Without structural workflow design, AI becomes shelfware. We resolve friction before writing a single line of logic.
                     </p>
                 </div>
@@ -49,14 +49,13 @@ export default function AIFails() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ delay: idx * 0.1 }}
                                 viewport={{ once: true }}
-                                className="p-6 bg-neutral-950/40 border border-neutral-900 hover:border-red-500/30 transition-colors group"
-                                style={{ borderRadius: 0 }}
+                                className="p-6 bg-gray-50 border border-gray-200 hover:border-red-500 transition-colors group rounded-2xl"
                             >
-                                <div className="w-8 h-8 bg-red-950/40 border border-red-900/40 flex items-center justify-center mb-4 transition-transform text-red-500" style={{ borderRadius: 0 }}>
+                                <div className="w-8 h-8 bg-red-50 border border-red-200 flex items-center justify-center mb-4 transition-transform text-red-600 rounded-xl">
                                     <XCircle className="w-4 h-4" />
                                 </div>
-                                <h3 className="text-sm font-bold uppercase tracking-tight text-white mb-2">{fail.title}</h3>
-                                <p className="text-xs font-light text-neutral-400 leading-relaxed">
+                                <h3 className="text-sm font-bold uppercase tracking-tight text-black mb-2">{fail.title}</h3>
+                                <p className="text-xs font-light text-gray-500 leading-relaxed">
                                     {fail.description}
                                 </p>
                             </motion.div>

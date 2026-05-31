@@ -5,10 +5,10 @@ import Container from '@/components/ui/Container';
 
 export default function SolutionLayers() {
     return (
-        <section className="relative py-28 bg-black border-t border-neutral-900 overflow-hidden select-none">
+        <section className="relative py-28 bg-white border-t border-gray-200 overflow-hidden select-none">
             {/* Giant watermark text */}
             <div className="absolute inset-0 flex items-start justify-center pt-16 z-0 pointer-events-none">
-                <div className="absolute top-[8%] left-1/2 -translate-x-1/2 w-[70%] h-[20%] bg-[#f95738]/[0.03] blur-[120px] pointer-events-none" />
+                <div className="absolute top-[8%] left-1/2 -translate-x-1/2 w-[70%] h-[20%] bg-red-50 blur-[120px] pointer-events-none" />
                 <div
                     className="w-full text-center text-[16vw] font-black tracking-tighter leading-none select-none"
                     style={{
@@ -24,19 +24,19 @@ export default function SolutionLayers() {
                 </div>
             </div>
 
-            <div className="absolute top-1/2 left-0 right-0 h-px bg-neutral-900 z-0 pointer-events-none" />
+            <div className="absolute top-1/2 left-0 right-0 h-px bg-gray-100 z-0 pointer-events-none" />
 
             <Container className="relative z-10 text-center">
-                <span className="text-xs font-mono text-[#f95738] uppercase tracking-widest mb-4 block font-bold">
+                <span className="text-xs font-mono text-red-600 uppercase tracking-widest mb-4 block font-bold">
                     [ 04 / SOLUTION_STACK ]
                 </span>
-                <h2 className="text-3xl md:text-5xl font-light tracking-tight text-white leading-tight mb-16">
+                <h2 className="text-3xl md:text-5xl font-light tracking-tight text-black leading-tight mb-16">
                     Our Solution <br />
-                    <span className="italic text-[#f95738]" style={{ fontFamily: 'Georgia, serif' }}>Stack</span>
+                    <span className="italic gradient-text" style={{ fontFamily: 'Georgia, serif' }}>Stack</span>
                 </h2>
 
                 <div className="relative max-w-4xl mx-auto space-y-6">
-                    <div className="absolute top-0 bottom-0 left-1/2 w-px bg-neutral-800" />
+                    <div className="absolute top-0 bottom-0 left-1/2 w-px bg-gray-200" />
 
                     {solutionLayers.map((layer, index) => (
                         <motion.div
@@ -48,18 +48,18 @@ export default function SolutionLayers() {
                             className={`flex items-center gap-8 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} relative`}
                         >
                             {/* Content Block */}
-                            <div className="w-1/2 p-6 bg-neutral-900/80 backdrop-blur border border-neutral-800 text-left relative z-10 hover:border-[#f95738]/30 transition-colors">
+                            <div className="w-1/2 p-6 bg-gray-100/80 backdrop-blur border border-gray-200 text-left relative z-10 hover:border-gray-300 transition-colors">
                                 <div className="flex items-center gap-3 mb-4">
-                                    <div className="w-8 h-8 bg-[#f95738]/10 flex items-center justify-center text-[#f95738]">
+                                    <div className="w-8 h-8 bg-red-50 flex items-center justify-center text-red-600">
                                         <span className="font-mono text-sm">{index + 1}</span>
                                     </div>
-                                    <h3 className="text-lg font-bold text-white uppercase tracking-tight">{layer.layer}</h3>
+                                    <h3 className="text-lg font-bold text-black uppercase tracking-tight">{layer.layer}</h3>
                                 </div>
 
                                 <ul className="space-y-2">
                                     {layer.features.map((feature, i) => (
-                                        <li key={i} className="text-sm text-neutral-400 flex items-center gap-2 font-light">
-                                            <span className="w-1.5 h-px bg-neutral-600" />
+                                        <li key={i} className="text-sm text-gray-500 flex items-center gap-2 font-light">
+                                            <span className="w-1.5 h-px bg-gray-400" />
                                             {feature}
                                         </li>
                                     ))}
@@ -67,7 +67,7 @@ export default function SolutionLayers() {
                             </div>
 
                             {/* Timeline Dot */}
-                            <div className="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-neutral-900 border-2 border-[#f95738] shadow-[0_0_10px_rgba(249,87,56,0.5)] z-20" />
+                            <div className="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-2 border-red-500 shadow-[0_0_10px_rgba(220,38,38,0.3)] z-20" />
 
                             <div className="w-1/2" />
                         </motion.div>

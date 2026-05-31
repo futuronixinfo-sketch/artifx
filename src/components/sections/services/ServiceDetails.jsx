@@ -1,91 +1,121 @@
 'use client';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { useRef, useState } from 'react';
 import Container from '@/components/ui/Container';
 import { serviceDetails } from '@/data/services-page';
-import { CheckCircle2, ArrowRight } from 'lucide-react';
-import Button from '@/components/ui/Button';
+import { ArrowUpRight, Cpu } from 'lucide-react';
 
 export default function ServiceDetails() {
     return (
-        <section className="py-24 bg-black border-b border-neutral-900 relative select-none">
-            <Container className="max-w-4xl mx-auto space-y-32">
-                {serviceDetails.map((service, index) => (
-                    <motion.div
-                        key={service.id}
-                        id={service.id}
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        viewport={{ once: true, margin: "-100px" }}
-                        className="flex flex-col gap-8 relative"
-                    >
-                        {/* Sticky Number */}
-                        <div className="absolute -left-20 top-0 text-2xl font-bold text-neutral-800 hidden lg:block font-mono">
-                            // 0{index + 1}
-                        </div>
+        <section className="py-28 bg-white border-b border-gray-100 select-none relative">
+            {/* Tech line indicator */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-16 bg-gradient-to-b from-gray-200 to-transparent" />
 
-                        <div className="border-b border-neutral-900 pb-8 grid grid-cols-1 md:grid-cols-[1fr_200px] gap-8">
-                            <div>
-                                <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-4 text-white">{service.title}</h2>
-                                <p className="text-xs text-neutral-400 font-light leading-relaxed max-w-lg">{service.subtitle}</p>
-                            </div>
-                            <div className="flex flex-col justify-end">
-                                <Button variant="outline" size="sm" href="/contact">
-                                    Inquire Now
-                                </Button>
-                            </div>
-                        </div>
+            <Container className="max-w-6xl mx-auto">
+                <div className="text-center max-w-2xl mx-auto mb-20 space-y-4">
+                    <span className="text-xs font-mono text-red-600 uppercase tracking-widest block font-bold">
+                        [ SYSTEM DISCOVERY ]
+                    </span>
+                    <h2 className="text-3xl md:text-5xl font-black tracking-tight text-black uppercase">
+                        Select your operational stack
+                    </h2>
+                    <p className="text-xs text-gray-500 max-w-sm mx-auto font-light leading-relaxed">
+                        Click on any system block below to inspect its detailed specifications, engineering modules, and target outcomes.
+                    </p>
+                </div>
 
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
-                            {/* Left Column: Tiers & Info */}
-                            <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div>
-                                    <h3 className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#f95738] mb-6">[ Includes ]</h3>
-                                    <ul className="space-y-4">
-                                        {service.includes.map((item, i) => (
-                                            <li key={i} className="flex items-start gap-3 text-neutral-300 font-light text-xs leading-relaxed">
-                                                <CheckCircle2 className="w-4 h-4 text-[#f95738] flex-shrink-0" />
-                                                {item}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-
-                                <div className="space-y-8">
-                                    <div>
-                                        <h3 className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#f95738] mb-4">[ Best For ]</h3>
-                                        <span className="inline-block px-4 py-2 bg-neutral-950/40 border border-neutral-900 text-xs font-mono uppercase tracking-wider text-neutral-400 font-bold">
-                                            {service.bestFor}
-                                        </span>
-                                    </div>
-
-                                    <div>
-                                        <h3 className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#f95738] mb-4">[ Outcome ]</h3>
-                                        <div className="p-4 bg-neutral-950/40 border border-[#10b981]/20 flex items-start gap-4">
-                                            <div className="w-8 h-8 border border-neutral-800 bg-neutral-900 flex items-center justify-center flex-shrink-0 text-[#10b981]">
-                                                <ArrowRight className="w-4 h-4 animate-pulse" />
-                                            </div>
-                                            <p className="text-emerald-400 text-xs font-mono font-bold uppercase tracking-wide mt-1">{service.outcome}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Right Column: Service Feature Image */}
-                            <div className="lg:col-span-5">
-                                <div className="relative h-full border border-neutral-900 p-1.5 bg-neutral-950/40 group min-h-[220px]">
-                                    <img 
-                                        src={service.image} 
-                                        alt={service.title} 
-                                        className="w-full h-full min-h-[200px] object-cover opacity-50 group-hover:scale-102 group-hover:opacity-75 transition-all duration-700 filter grayscale"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
-                                </div>
-                            </div>
-                        </div>
-                    </motion.div>
-                ))}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {serviceDetails.map((service, idx) => (
+                        <ServiceCard key={service.id} service={service} idx={idx} />
+                    ))}
+                </div>
             </Container>
         </section>
+    );
+}
+
+function ServiceCard({ service, idx }) {
+    const cardRef = useRef(null);
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleMouseMove = (e) => {
+        if (!cardRef.current) return;
+        const rect = cardRef.current.getBoundingClientRect();
+        setMousePos({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top,
+        });
+    };
+
+    return (
+        <Link href={`/services/${service.id}`} className="group block h-full">
+            <motion.div
+                ref={cardRef}
+                onMouseMove={handleMouseMove}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: idx * 0.05 }}
+                viewport={{ once: true }}
+                className="border border-gray-200 bg-white p-7 group-hover:border-black transition-all duration-500 flex flex-col h-full relative overflow-hidden rounded-2xl shadow-sm hover:shadow-2xl hover:shadow-black/5"
+            >
+                {/* Glowing radial backdrop spotlight on hover */}
+                <div
+                    className="absolute -inset-px transition duration-500 opacity-0 group-hover:opacity-100 pointer-events-none"
+                    style={{
+                        background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, rgba(220, 38, 38, 0.04), transparent 45%)`,
+                    }}
+                />
+
+                {/* Decorative border highlight indicator */}
+                <div className="absolute top-0 left-0 right-0 h-[2px] bg-red-600 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500" />
+
+                {/* Card Header */}
+                <div className="flex justify-between items-start mb-4 relative z-10">
+                    <span className="text-[10px] font-mono text-red-600 font-bold bg-red-50 px-2 py-0.5 rounded-md">
+                        {"//"} 0{idx + 1}
+                    </span>
+                    <div className="w-8 h-8 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-black group-hover:border-black group-hover:text-white transition-all duration-500">
+                        <ArrowUpRight className="w-4 h-4" />
+                    </div>
+                </div>
+
+                {/* Card Title & Description */}
+                <div className="space-y-2 mb-6 relative z-10">
+                    <h3 className="text-lg font-bold text-black group-hover:text-red-600 transition-colors duration-300 uppercase tracking-tight">
+                        {service.title}
+                    </h3>
+                    <p className="text-xs text-gray-400 leading-relaxed font-light">{service.subtitle}</p>
+                </div>
+
+                {/* Interactive list tags */}
+                <div className="flex flex-wrap gap-1.5 mb-8 relative z-10">
+                    {service.includes.map((item) => (
+                        <span
+                            key={item}
+                            className="px-2.5 py-1 bg-gray-50 border border-gray-100 text-[9px] text-gray-500 font-mono uppercase tracking-wider rounded-md group-hover:bg-red-50/30 group-hover:border-red-100 group-hover:text-red-600 transition-all duration-500"
+                        >
+                            {item}
+                        </span>
+                    ))}
+                </div>
+
+                {/* Card Footer */}
+                <div className="mt-auto pt-5 border-t border-gray-100 flex justify-between items-center relative z-10">
+                    <div className="flex items-center gap-1.5">
+                        <Cpu className="w-3.5 h-3.5 text-gray-300 group-hover:text-red-500 transition-colors" />
+                        <span className="text-[9px] font-mono text-gray-400 uppercase tracking-wider">
+                            {service.bestFor.split(',')[0]}
+                        </span>
+                    </div>
+                    <span className="text-[9px] font-mono text-red-600 font-bold opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+                        INSPECT SPEC &rarr;
+                    </span>
+                </div>
+            </motion.div>
+        </Link>
     );
 }
