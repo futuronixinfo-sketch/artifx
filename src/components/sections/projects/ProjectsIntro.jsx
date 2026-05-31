@@ -8,7 +8,7 @@ export default function ProjectsIntro() {
         <section className="relative pt-32 pb-20 bg-black text-white border-b border-neutral-900 select-none overflow-hidden">
             
             {/* 1. GIANT WATERMARK TEXT (Masked Dot-Matrix / Plus-sign Pattern) */}
-            <div className="absolute inset-0 flex items-start justify-center pt-16 z-0 pointer-events-none">
+            <div className="absolute inset-0 flex items-start justify-center pt-20 md:pt-16 z-0 pointer-events-none">
                 {/* Soft ambient background glow */}
                 <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[70%] h-[20%] bg-[#f95738]/[0.03] blur-[120px] rounded-full pointer-events-none" />
                 
