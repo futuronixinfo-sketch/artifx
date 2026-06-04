@@ -1,27 +1,18 @@
 'use client';
 import { motion } from 'framer-motion';
-import { Users, Cpu, Terminal, ExternalLink, Github, Linkedin, Shield, Workflow, CheckCircle, ArrowRight } from 'lucide-react';
+import { Users, ExternalLink, Github, Linkedin, ArrowRight } from 'lucide-react';
 import Container from '@/components/ui/Container';
 import Button from '@/components/ui/Button';
 import { teamIntro, teamMembers, teamValues } from '@/data/team';
 
 export default function TeamPage() {
   return (
-    <main className="min-h-screen bg-white text-black select-none relative overflow-hidden pb-24">
-      
+    <main className="min-h-screen bg-[#FAFAF8] text-black select-none relative overflow-hidden pb-24">
+
       {/* 1. HERO SECTION */}
-      <section className="relative pt-40 pb-16 border-b border-gray-100 flex items-center bg-white overflow-hidden select-none">
-        
-        {/* Soft Background Grid Guides */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#f3f4f6_1px,transparent_1px),linear-gradient(to_bottom,#f3f4f6_1px,transparent_1px)] bg-[size:32px_32px] opacity-40 pointer-events-none" />
+      <section className="relative pt-40 pb-16 border-t-2 border-b-2 border-black flex items-center bg-[#FAFAF8] overflow-hidden select-none">
 
-        {/* Decorative vertical center grid guide */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-full bg-gradient-to-b from-gray-200 via-gray-100 to-transparent pointer-events-none" />
-
-        {/* Ambient Crimson Aura Backdrop */}
-        <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[60%] h-[30%] bg-red-50/50 rounded-full blur-[100px] pointer-events-none z-0" />
-
-        {/* Huge Watermarked Background Text (matches homepage fix) */}
+        {/* Huge Watermarked Background Text */}
         <div className="absolute inset-x-0 top-[14%] sm:top-[16%] md:top-[12%] flex justify-center z-0 pointer-events-none select-none">
           <div
             className="w-full text-center text-[24vw] sm:text-[18vw] font-black tracking-tighter leading-none opacity-[0.03]"
@@ -36,10 +27,10 @@ export default function TeamPage() {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-red-50/80 border border-red-200 rounded-xl shadow-sm"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#FFE500] text-black border-2 border-black shadow-[3px_3px_0_#0A0A0A]"
           >
-            <Users className="w-3.5 h-3.5 text-red-600 animate-pulse" />
-            <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-red-600">
+            <Users className="w-3.5 h-3.5 text-black animate-pulse" />
+            <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-black">
               [ {teamIntro.badge} ]
             </span>
           </motion.div>
@@ -53,7 +44,7 @@ export default function TeamPage() {
               className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-black uppercase leading-[0.95]"
             >
               {teamIntro.title.split(' ')[0]}{' '}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-red-500">
+              <span className="text-red-600 underline decoration-4 underline-offset-4">
                 {teamIntro.title.split(' ').slice(1).join(' ')}
               </span>
             </motion.h1>
@@ -64,7 +55,7 @@ export default function TeamPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xs md:text-sm text-gray-500 max-w-2xl mx-auto leading-relaxed font-mono"
+            className="text-xs md:text-sm text-gray-600 max-w-2xl mx-auto leading-relaxed font-mono"
           >
             /* {teamIntro.subtitle} */
           </motion.p>
@@ -82,19 +73,16 @@ export default function TeamPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: idx * 0.15 }}
-                className="group border border-gray-200 bg-white/70 backdrop-blur-sm p-6 sm:p-8 rounded-3xl relative overflow-hidden shadow-xl hover:shadow-2xl hover:border-gray-300 transition-all duration-300 flex flex-col justify-between"
+                className="group bg-white border-2 border-black shadow-[4px_4px_0_#0A0A0A] hover:shadow-[6px_6px_0_#0A0A0A] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-100 p-6 sm:p-8 relative overflow-hidden flex flex-col justify-between"
               >
-                
-                {/* Visual guideline metrics inside cards */}
-                <div className="absolute top-0 right-0 w-24 h-24 bg-red-500/[0.01] rounded-full blur-2xl pointer-events-none group-hover:bg-red-500/[0.02] transition-colors" />
-                <div className="absolute top-4 right-4 text-[9px] font-mono text-gray-300 font-bold">
+                <div className="absolute top-4 right-4 text-[9px] font-mono text-gray-400 font-bold">
                   CORE_NODE // 0{idx + 1}
                 </div>
 
                 <div className="space-y-6">
                   {/* Member Name and Identity Info */}
                   <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-2xl bg-black flex items-center justify-center text-white font-mono font-black text-lg shadow-lg shadow-black/10 border border-neutral-800">
+                    <div className="w-14 h-14 bg-black border-2 border-black flex items-center justify-center text-white font-mono font-black text-lg">
                       {member.avatarText}
                     </div>
                     <div>
@@ -112,12 +100,12 @@ export default function TeamPage() {
 
                   {/* Dynamic Tech Stack Badges */}
                   <div className="space-y-2">
-                    <span className="text-[9px] font-mono text-gray-400 font-bold uppercase tracking-wider block">
+                    <span className="text-[9px] font-mono text-gray-500 font-bold uppercase tracking-wider block">
                       Active Tech Infrastructure & Core Focus
                     </span>
                     <div className="flex flex-wrap gap-1.5">
                       {member.techStack.map((tech) => (
-                        <span key={tech} className="px-2.5 py-1 bg-gray-50 border border-gray-100 text-gray-500 font-mono text-[9px] uppercase tracking-wide rounded-md">
+                        <span key={tech} className="px-2.5 py-1 bg-[#FAFAF8] border-2 border-black text-gray-700 font-mono text-[9px] uppercase tracking-wide">
                           {tech}
                         </span>
                       ))}
@@ -125,11 +113,10 @@ export default function TeamPage() {
                   </div>
 
                   {/* Monospaced Diagnostic Status Telemetry */}
-                  <div className="bg-black/95 p-4 rounded-2xl border border-neutral-900 font-mono text-[9px] text-neutral-400 space-y-2 select-text relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-red-950/20 rounded-full blur-xl pointer-events-none" />
-                    <div className="flex justify-between items-center text-red-500 font-bold border-b border-neutral-900 pb-1 mb-1 select-none">
+                  <div className="bg-black p-4 border-2 border-black font-mono text-[9px] text-neutral-400 space-y-2 select-text relative overflow-hidden">
+                    <div className="flex justify-between items-center text-red-500 font-bold border-b border-neutral-800 pb-1 mb-1 select-none">
                       <span>STATUS ENGINE TELEMETRY</span>
-                      <span className="flex items-center gap-1 text-[8px] px-1.5 py-0.5 bg-red-950/50 border border-red-900/50 rounded-sm">
+                      <span className="flex items-center gap-1 text-[8px] px-1.5 py-0.5 bg-red-950/50 border border-red-900/50">
                         {member.stats.find(s => s.label === "Status Engine")?.value || "ONLINE"}
                       </span>
                     </div>
@@ -145,14 +132,14 @@ export default function TeamPage() {
                 </div>
 
                 {/* External Social Profiles & Portals */}
-                <div className="flex items-center justify-between pt-6 mt-6 border-t border-gray-100">
+                <div className="flex items-center justify-between pt-6 mt-6 border-t-2 border-black">
                   <div className="flex items-center gap-3">
                     {member.links.website && (
                       <a
                         href={member.links.website}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2 border border-gray-200 hover:border-black rounded-xl text-gray-500 hover:text-black transition-all hover:scale-105"
+                        className="p-2 border-2 border-black text-gray-600 hover:text-black hover:bg-[#FFE500] transition-all duration-100"
                         title="Personal Website"
                       >
                         <ExternalLink className="w-4 h-4" />
@@ -163,7 +150,7 @@ export default function TeamPage() {
                         href={member.links.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2 border border-gray-200 hover:border-black rounded-xl text-gray-500 hover:text-black transition-all hover:scale-105"
+                        className="p-2 border-2 border-black text-gray-600 hover:text-black hover:bg-[#FFE500] transition-all duration-100"
                         title="GitHub Profile"
                       >
                         <Github className="w-4 h-4" />
@@ -174,14 +161,14 @@ export default function TeamPage() {
                         href={member.links.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2 border border-gray-200 hover:border-black rounded-xl text-gray-500 hover:text-black transition-all hover:scale-105"
+                        className="p-2 border-2 border-black text-gray-600 hover:text-black hover:bg-[#FFE500] transition-all duration-100"
                         title="LinkedIn Profile"
                       >
                         <Linkedin className="w-4 h-4" />
                       </a>
                     )}
                   </div>
-                  
+
                   <span className="text-[8px] font-mono text-gray-400 uppercase tracking-widest">
                     SYSTEM_LINK_ACTIVE // 200_OK
                   </span>
@@ -194,16 +181,16 @@ export default function TeamPage() {
       </section>
 
       {/* 3. CORE ENGINEERING VALUES */}
-      <section className="py-20 relative z-10 border-t border-b border-gray-100 bg-gray-50/30">
+      <section className="py-20 relative z-10 border-t-2 border-b-2 border-black bg-[#FAFAF8]">
         <Container className="max-w-5xl">
           <div className="text-center space-y-4 mb-16">
-            <span className="text-[9px] font-mono text-red-600 font-bold uppercase tracking-widest">
+            <span className="inline-block text-[9px] font-mono text-[#FFE500] font-bold uppercase tracking-widest px-3.5 py-1.5 bg-black border-2 border-black shadow-[3px_3px_0_#DC2626]">
               HOW WE COMPILE SYSTEMS
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black uppercase tracking-tight">
               Our Core Operational Values
             </h2>
-            <p className="text-xs font-mono text-gray-400 uppercase tracking-wider max-w-xl mx-auto">
+            <p className="text-xs font-mono text-gray-500 uppercase tracking-wider max-w-xl mx-auto">
               Behind every line of code lies a strict architecture benchmark focused on scale.
             </p>
           </div>
@@ -216,22 +203,22 @@ export default function TeamPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="border border-gray-200 bg-white p-5 rounded-2xl shadow-sm relative overflow-hidden flex flex-col justify-between"
+                className="bg-white border-2 border-black shadow-[4px_4px_0_#0A0A0A] hover:shadow-[6px_6px_0_#0A0A0A] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-100 p-5 relative overflow-hidden flex flex-col justify-between"
               >
                 <div className="space-y-4">
-                  <div className="w-8 h-8 rounded-lg bg-red-50 border border-red-100 flex items-center justify-center text-red-600 font-mono text-xs font-bold">
+                  <div className="w-8 h-8 bg-[#FFE500] border-2 border-black flex items-center justify-center text-black font-mono text-xs font-black">
                     0{idx + 1}
                   </div>
                   <div>
                     <h3 className="text-base font-black text-black uppercase tracking-tight">{val.title}</h3>
-                    <p className="text-xs text-gray-500 leading-relaxed mt-2 font-mono">
+                    <p className="text-xs text-gray-600 leading-relaxed mt-2 font-mono">
                       {val.desc}
                     </p>
                   </div>
                 </div>
 
-                <div className="bg-gray-50 p-2.5 rounded-xl border border-gray-100 mt-6 select-text">
-                  <code className="text-[9px] font-mono text-red-600 font-semibold block break-all">
+                <div className="bg-black p-2.5 border-2 border-black mt-6 select-text">
+                  <code className="text-[9px] font-mono text-[#FFE500] font-semibold block break-all">
                     &gt; {val.code}
                   </code>
                 </div>
@@ -244,14 +231,10 @@ export default function TeamPage() {
       {/* 4. MEET THE ENGINEERS CTA */}
       <section className="py-20 relative z-10">
         <Container className="max-w-4xl text-center">
-          <div className="border border-neutral-900 bg-black text-white p-8 sm:p-12 rounded-3xl relative overflow-hidden shadow-2xl">
-            {/* Glowing red accent behind CTA text */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-red-900/10 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-red-900/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="border-2 border-black bg-black text-white p-8 sm:p-12 relative overflow-hidden shadow-[8px_8px_0_#0A0A0A]">
 
             <div className="relative z-10 space-y-6">
-              <span className="text-[9px] font-mono text-red-500 font-bold uppercase tracking-widest flex items-center justify-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0 animate-pulse" />
+              <span className="inline-block text-[9px] font-mono text-black font-bold uppercase tracking-widest px-3.5 py-1.5 bg-[#FFE500] border-2 border-black shadow-[3px_3px_0_#0A0A0A]">
                 COGNITIVE SCHEDULING INTERFACE
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight uppercase leading-none">
@@ -266,7 +249,7 @@ export default function TeamPage() {
                   variant="custom"
                   size="lg"
                   href="/contact"
-                  className="bg-red-600 text-white hover:bg-red-500 border-0 shadow-lg shadow-red-500/20 text-xs font-mono uppercase tracking-widest px-8 py-4.5 rounded-xl flex items-center justify-center gap-2 group transition-all"
+                  className="bg-[#FFE500] text-black border-2 border-black shadow-[4px_4px_0_#0A0A0A] hover:shadow-[2px_2px_0_#0A0A0A] hover:translate-x-0.5 hover:translate-y-0.5 text-xs font-mono uppercase tracking-widest px-8 py-4 flex items-center justify-center gap-2 font-black transition-all duration-100"
                 >
                   Initiate System Audit <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>

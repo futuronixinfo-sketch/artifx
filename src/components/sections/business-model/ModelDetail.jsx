@@ -2,569 +2,200 @@
 import { motion } from 'framer-motion';
 import Container from '@/components/ui/Container';
 import Link from 'next/link';
-import { 
-  ArrowLeft, ArrowRight, Terminal, ShieldCheck, 
-  Layers, Cpu, Award, Server, Activity, Workflow
-} from 'lucide-react';
+import { ArrowLeft, ArrowRight, Lightbulb, TrendingUp, Code2, Target, Workflow } from 'lucide-react';
 
-function RenderCategoryDiagram({ categoryId, modelName }) {
-  // Common node styling helper
-  const nodeBox = "fill-white stroke-gray-300 stroke-[1] rx-[8] ry-[8]";
-  const activeNodeBox = "fill-white stroke-red-500 stroke-[1.5] rx-[8] ry-[8]";
-  
-  switch (categoryId) {
-    case 'real-estate':
-      return (
-        <svg className="w-full h-full text-gray-800" viewBox="0 0 500 220" fill="none">
-          <defs>
-            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 2 L 10 5 L 0 8 z" fill="#ef4444" />
-            </marker>
-          </defs>
-          <rect x="20" y="70" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="70" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">CLIENT / BUYER</text>
-          
-          <rect x="180" y="70" width="140" height="40" rx="8" className="fill-white stroke-red-500 stroke-[1.5]" />
-          <text x="250" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">REAL ESTATE PLATFORM</text>
-          <text x="250" y="104" textAnchor="middle" className="fill-gray-400 font-mono text-[6.5px] uppercase">Broker Routing Core</text>
+function RenderCategoryDiagram({ categoryId }) {
+  const configs = {
+    'real-estate':     { nodes: ['CLIENT / BUYER', 'REAL ESTATE PLATFORM', 'VETTED BROKERS', 'BUILDER INVENTORY'], sub: 'Broker Routing Core' },
+    'healthcare':      { nodes: ['PATIENT', 'HIPAA GATEWAY', 'CLINICAL DB', 'TELEMED PHYSICIAN'], sub: 'HL7 Secure Tunnel' },
+    'ecommerce':       { nodes: ['BUYER APP', 'ORDER ROUTER', 'DARK STORE', 'LOGISTICS FLEET'], sub: null },
+    'home-services':   { nodes: ['CLIENT BOOKING', 'GEO DISPATCH', 'FIELD CONTRACTOR'], sub: 'Active Matching Engine' },
+    'food':            { nodes: ['CUSTOMER APP', 'MENU AGGREGATOR', 'CLOUD KITCHEN', 'COURIER RIDER'], sub: null },
+    'logistics':       { nodes: ['CARGO DISPATCH', 'ROUTE OPTIMIZER', 'FINAL DESTINATION'], sub: 'Smart Hub Distributor' },
+    'education':       { nodes: ['STUDENT APP', 'LMS CONTROLLER', 'ACADEMIC MENTOR'], sub: 'Live Streaming CDN' },
+    'fintech':         { nodes: ['INVESTOR / USER', 'LEDGER ESCROW', 'CLEARING CORE'], sub: 'ISO 20022 Audit Trail' },
+    'travel':          { nodes: ['TRAVELLER', 'GDS ENGINE', 'GLOBAL INVENTORY'], sub: 'Multi-Hospitality Router' },
+    'automobile':      { nodes: ['TELEMATICS', 'FLEET ROUTER HUB', 'EV CHARGING GRID'], sub: 'GPS Active Tracking' },
+    'ai-saas':         { nodes: ['USER API QUERY', 'COGNITIVE ORCHESTRATOR', 'VECTOR DB / ACTION'], sub: 'LLM Agent Reasoning' },
+    'creator-economy': { nodes: ['SUBSCRIBER', 'MEDIA PAYWALL', 'CREATOR WALLET'], sub: 'Direct Subscription CDN' },
+  };
 
-          <rect x="380" y="25" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="430" y="49" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">VETTED BROKERS</text>
+  const cfg = configs[categoryId] || { nodes: ['DEMAND INGEST', 'ORCHESTRATOR', 'SERVICE NODES'], sub: 'Real-Time Routing' };
+  const nodes = cfg.nodes;
+  const n = nodes.length;
+  const totalW = 520;
+  const nodeW = 110;
+  const nodeH = 44;
+  const gap = (totalW - n * nodeW) / (n + 1);
+  const cy = 100;
 
-          <rect x="380" y="115" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="430" y="139" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">BUILDER INVENTORY</text>
-
-          {/* Linking paths */}
-          <path id="path1" d="M 120 90 L 180 90" stroke="#d1d5db" strokeWidth="1" strokeDasharray="3 3" markerEnd="url(#arrow)" />
-          <path id="path2" d="M 320 85 L 380 45" stroke="#ef4444" strokeWidth="1" markerEnd="url(#arrow)" />
-          <path id="path3" d="M 320 95 L 380 135" stroke="#ef4444" strokeWidth="1" markerEnd="url(#arrow)" />
-
-          {/* Flow packets */}
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="3s" repeatCount="indefinite" path="M 120 90 L 180 90" />
-          </circle>
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2.5s" repeatCount="indefinite" path="M 320 85 L 380 45" />
-          </circle>
-        </svg>
-      );
-    case 'healthcare':
-      return (
-        <svg className="w-full h-full text-gray-800" viewBox="0 0 500 220" fill="none">
-          <defs>
-            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 2 L 10 5 L 0 8 z" fill="#ef4444" />
-            </marker>
-          </defs>
-          <rect x="25" y="70" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="75" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">PATIENT CLIENT</text>
-          
-          <rect x="175" y="70" width="150" height="40" rx="8" className="fill-white stroke-red-500 stroke-[1.5]" />
-          <text x="250" y="90" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">HIPAA SECURE GATEWAY</text>
-          <text x="250" y="102" textAnchor="middle" className="fill-emerald-600 font-mono text-[6.5px] uppercase font-bold">HL7_COMPLIANT_TUNNEL</text>
-
-          <rect x="375" y="25" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="425" y="49" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">CLINICAL DOCS DB</text>
-
-          <rect x="375" y="115" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="425" y="139" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">TELEMED PHYSICIAN</text>
-
-          <path d="M 125 90 L 175 90" stroke="#d1d5db" strokeWidth="1" strokeDasharray="3 3" markerEnd="url(#arrow)" />
-          <path d="M 325 85 L 375 45" stroke="#ef4444" strokeWidth="1" markerEnd="url(#arrow)" />
-          <path d="M 325 95 L 375 135" stroke="#ef4444" strokeWidth="1" markerEnd="url(#arrow)" />
-
-          <circle r="3" fill="#10b981">
-            <animateMotion dur="2.8s" repeatCount="indefinite" path="M 125 90 L 175 90" />
-          </circle>
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2.2s" repeatCount="indefinite" path="M 325 95 L 375 135" />
-          </circle>
-        </svg>
-      );
-    case 'ecommerce':
-      return (
-        <svg className="w-full h-full text-gray-800" viewBox="0 0 500 220" fill="none">
-          <defs>
-            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 2 L 10 5 L 0 8 z" fill="#ef4444" />
-            </marker>
-          </defs>
-          <rect x="20" y="70" width="90" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="65" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">BUYER APP</text>
-          
-          <rect x="150" y="70" width="110" height="40" rx="8" className="fill-white stroke-red-500 stroke-[1.5]" />
-          <text x="205" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">OMS CART ROUTER</text>
-
-          <rect x="290" y="70" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="340" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">DARK STORE DEPOT</text>
-
-          <rect x="410" y="70" width="80" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="450" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">LOGISTICS FLEET</text>
-
-          <path d="M 110 90 L 150 90" stroke="#d1d5db" strokeWidth="1" strokeDasharray="3 3" markerEnd="url(#arrow)" />
-          <path d="M 260 90 L 290 90" stroke="#ef4444" strokeWidth="1" markerEnd="url(#arrow)" />
-          <path d="M 390 90 L 410 90" stroke="#ef4444" strokeWidth="1" markerEnd="url(#arrow)" />
-
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2.5s" repeatCount="indefinite" path="M 110 90 L 150 90" />
-          </circle>
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2s" repeatCount="indefinite" path="M 260 90 L 290 90" />
-          </circle>
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="1.5s" repeatCount="indefinite" path="M 390 90 L 410 90" />
-          </circle>
-        </svg>
-      );
-    case 'home-services':
-      return (
-        <svg className="w-full h-full text-gray-800" viewBox="0 0 500 220" fill="none">
-          <defs>
-            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 2 L 10 5 L 0 8 z" fill="#ef4444" />
-            </marker>
-          </defs>
-          <rect x="25" y="70" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="75" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">CLIENT BOOKING</text>
-          
-          <rect x="175" y="70" width="150" height="40" rx="8" className="fill-white stroke-red-500 stroke-[1.5]" />
-          <text x="250" y="90" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">GEO DISPATCH ROUTER</text>
-          <text x="250" y="102" textAnchor="middle" className="fill-gray-400 font-mono text-[6.5px] uppercase">Active Matching Engine</text>
-
-          <rect x="375" y="70" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="425" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">FIELD CONTRACTOR</text>
-
-          <path d="M 125 90 L 175 90" stroke="#d1d5db" strokeWidth="1" strokeDasharray="3 3" markerEnd="url(#arrow)" />
-          <path d="M 325 90 L 375 90" stroke="#ef4444" strokeWidth="1" markerEnd="url(#arrow)" />
-
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2.5s" repeatCount="indefinite" path="M 125 90 L 175 90" />
-          </circle>
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2s" repeatCount="indefinite" path="M 325 90 L 375 90" />
-          </circle>
-        </svg>
-      );
-    case 'food':
-      return (
-        <svg className="w-full h-full text-gray-800" viewBox="0 0 500 220" fill="none">
-          <defs>
-            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 2 L 10 5 L 0 8 z" fill="#ef4444" />
-            </marker>
-          </defs>
-          <rect x="20" y="70" width="90" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="65" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">CUSTOMER APP</text>
-          
-          <rect x="150" y="70" width="120" height="40" rx="8" className="fill-white stroke-red-500 stroke-[1.5]" />
-          <text x="210" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">MENU AGGREGATOR</text>
-
-          <rect x="300" y="70" width="90" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="345" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">CLOUD KITCHEN</text>
-
-          <rect x="410" y="70" width="80" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="450" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">COURIER RIDER</text>
-
-          <path d="M 110 90 L 150 90" stroke="#d1d5db" strokeWidth="1" strokeDasharray="3 3" markerEnd="url(#arrow)" />
-          <path d="M 270 90 L 300 90" stroke="#ef4444" strokeWidth="1" markerEnd="url(#arrow)" />
-          <path d="M 390 90 L 410 90" stroke="#ef4444" strokeWidth="1" markerEnd="url(#arrow)" />
-
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2.5s" repeatCount="indefinite" path="M 110 90 L 150 90" />
-          </circle>
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2s" repeatCount="indefinite" path="M 270 90 L 300 90" />
-          </circle>
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="1.5s" repeatCount="indefinite" path="M 390 90 L 410 90" />
-          </circle>
-        </svg>
-      );
-    case 'logistics':
-      return (
-        <svg className="w-full h-full text-gray-800" viewBox="0 0 500 220" fill="none">
-          <defs>
-            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 2 L 10 5 L 0 8 z" fill="#ef4444" />
-            </marker>
-          </defs>
-          <rect x="25" y="70" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="75" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">CARGO DISPATCH</text>
-          
-          <rect x="175" y="70" width="150" height="40" rx="8" className="fill-white stroke-red-500 stroke-[1.5]" />
-          <text x="250" y="90" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">ROUTE OPTI NETWORK</text>
-          <text x="250" y="102" textAnchor="middle" className="fill-gray-400 font-mono text-[6.5px] uppercase">Smart Hub Distributor</text>
-
-          <rect x="375" y="70" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="425" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">FINAL DESTINATION</text>
-
-          <path d="M 125 90 L 175 90" stroke="#d1d5db" strokeWidth="1" strokeDasharray="3 3" markerEnd="url(#arrow)" />
-          <path d="M 325 90 L 375 90" stroke="#ef4444" strokeWidth="1" markerEnd="url(#arrow)" />
-
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2.5s" repeatCount="indefinite" path="M 125 90 L 175 90" />
-          </circle>
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2s" repeatCount="indefinite" path="M 325 90 L 375 90" />
-          </circle>
-        </svg>
-      );
-    case 'education':
-      return (
-        <svg className="w-full h-full text-gray-800" viewBox="0 0 500 220" fill="none">
-          <defs>
-            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 2 L 10 5 L 0 8 z" fill="#ef4444" />
-            </marker>
-          </defs>
-          <rect x="25" y="70" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="75" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">STUDENT APP</text>
-          
-          <rect x="175" y="70" width="150" height="40" rx="8" className="fill-white stroke-red-500 stroke-[1.5]" />
-          <text x="250" y="90" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">LMS VIDEO CONTROLLER</text>
-          <text x="250" y="102" textAnchor="middle" className="fill-gray-400 font-mono text-[6.5px] uppercase">Live Streaming CDN</text>
-
-          <rect x="375" y="70" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="425" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">ACADEMIC MENTOR</text>
-
-          <path d="M 125 90 L 175 90" stroke="#d1d5db" strokeWidth="1" strokeDasharray="3 3" markerEnd="url(#arrow)" />
-          <path d="M 325 90 L 375 90" stroke="#ef4444" strokeWidth="1" markerEnd="url(#arrow)" />
-
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2.5s" repeatCount="indefinite" path="M 125 90 L 175 90" />
-          </circle>
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2s" repeatCount="indefinite" path="M 325 90 L 375 90" />
-          </circle>
-        </svg>
-      );
-    case 'fintech':
-      return (
-        <svg className="w-full h-full text-gray-800" viewBox="0 0 500 220" fill="none">
-          <defs>
-            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 2 L 10 5 L 0 8 z" fill="#ef4444" />
-            </marker>
-          </defs>
-          <rect x="25" y="70" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="75" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">INVESTOR / USER</text>
-          
-          <rect x="175" y="70" width="150" height="40" rx="8" className="fill-white stroke-red-500 stroke-[1.5]" />
-          <text x="250" y="90" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">LEDGER ESCROW NETWORK</text>
-          <text x="250" y="102" textAnchor="middle" className="fill-gray-400 font-mono text-[6.5px] uppercase">ISO_20022 Audit Trail</text>
-
-          <rect x="375" y="70" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="425" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">CLEARING CORE</text>
-
-          <path d="M 125 90 L 175 90" stroke="#d1d5db" strokeWidth="1" strokeDasharray="3 3" markerEnd="url(#arrow)" />
-          <path d="M 325 90 L 375 90" stroke="#ef4444" strokeWidth="1" markerEnd="url(#arrow)" />
-
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2.5s" repeatCount="indefinite" path="M 125 90 L 175 90" />
-          </circle>
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2s" repeatCount="indefinite" path="M 325 90 L 375 90" />
-          </circle>
-        </svg>
-      );
-    case 'travel':
-      return (
-        <svg className="w-full h-full text-gray-800" viewBox="0 0 500 220" fill="none">
-          <defs>
-            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 2 L 10 5 L 0 8 z" fill="#ef4444" />
-            </marker>
-          </defs>
-          <rect x="25" y="70" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="75" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">TRAVELLER PRO</text>
-          
-          <rect x="175" y="70" width="150" height="40" rx="8" className="fill-white stroke-red-500 stroke-[1.5]" />
-          <text x="250" y="90" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">GDS ENGINE API</text>
-          <text x="250" y="102" textAnchor="middle" className="fill-gray-400 font-mono text-[6.5px] uppercase">Multi-Hospitality Router</text>
-
-          <rect x="375" y="70" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="425" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">GLOBAL INVENTORY</text>
-
-          <path d="M 125 90 L 175 90" stroke="#d1d5db" strokeWidth="1" strokeDasharray="3 3" markerEnd="url(#arrow)" />
-          <path d="M 325 90 L 375 90" stroke="#ef4444" strokeWidth="1" markerEnd="url(#arrow)" />
-
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2.5s" repeatCount="indefinite" path="M 125 90 L 175 90" />
-          </circle>
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2s" repeatCount="indefinite" path="M 325 90 L 375 90" />
-          </circle>
-        </svg>
-      );
-    case 'automobile':
-      return (
-        <svg className="w-full h-full text-gray-800" viewBox="0 0 500 220" fill="none">
-          <defs>
-            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 2 L 10 5 L 0 8 z" fill="#ef4444" />
-            </marker>
-          </defs>
-          <rect x="25" y="70" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="75" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">VEHICLE TELEMATICS</text>
-          
-          <rect x="175" y="70" width="150" height="40" rx="8" className="fill-white stroke-red-500 stroke-[1.5]" />
-          <text x="250" y="90" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">FLEET ROUTER HUB</text>
-          <text x="250" y="102" textAnchor="middle" className="fill-gray-400 font-mono text-[6.5px] uppercase">Active GPS Telematics</text>
-
-          <rect x="375" y="70" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="425" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">EV CHARGING GRID</text>
-
-          <path d="M 125 90 L 175 90" stroke="#d1d5db" strokeWidth="1" strokeDasharray="3 3" markerEnd="url(#arrow)" />
-          <path d="M 325 90 L 375 90" stroke="#ef4444" strokeWidth="1" markerEnd="url(#arrow)" />
-
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2.5s" repeatCount="indefinite" path="M 125 90 L 175 90" />
-          </circle>
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2s" repeatCount="indefinite" path="M 325 90 L 375 90" />
-          </circle>
-        </svg>
-      );
-    case 'ai-saas':
-      return (
-        <svg className="w-full h-full text-gray-800" viewBox="0 0 500 220" fill="none">
-          <defs>
-            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 2 L 10 5 L 0 8 z" fill="#ef4444" />
-            </marker>
-          </defs>
-          <rect x="25" y="70" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="75" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">USER API QUERY</text>
-          
-          <rect x="175" y="70" width="150" height="40" rx="8" className="fill-white stroke-red-500 stroke-[1.5]" />
-          <text x="250" y="90" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">COGNITIVE ORCHESTRATOR</text>
-          <text x="250" y="102" textAnchor="middle" className="fill-emerald-600 font-mono text-[6.5px] uppercase font-bold">LLM_AGENT_REASONING</text>
-
-          <rect x="375" y="70" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="425" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">VECTOR DB / ACTION</text>
-
-          <path d="M 125 90 L 175 90" stroke="#d1d5db" strokeWidth="1" strokeDasharray="3 3" markerEnd="url(#arrow)" />
-          <path d="M 325 90 L 375 90" stroke="#ef4444" strokeWidth="1" markerEnd="url(#arrow)" />
-
-          <circle r="3" fill="#10b981">
-            <animateMotion dur="2.2s" repeatCount="indefinite" path="M 125 90 L 175 90" />
-          </circle>
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="1.8s" repeatCount="indefinite" path="M 325 90 L 375 90" />
-          </circle>
-        </svg>
-      );
-    case 'creator-economy':
-      return (
-        <svg className="w-full h-full text-gray-800" viewBox="0 0 500 220" fill="none">
-          <defs>
-            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 2 L 10 5 L 0 8 z" fill="#ef4444" />
-            </marker>
-          </defs>
-          <rect x="25" y="70" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="75" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">SUBSCRIBER PORTAL</text>
-          
-          <rect x="175" y="70" width="150" height="40" rx="8" className="fill-white stroke-red-500 stroke-[1.5]" />
-          <text x="250" y="90" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">MEDIA PAYWALL ENGINE</text>
-          <text x="250" y="102" textAnchor="middle" className="fill-gray-400 font-mono text-[6.5px] uppercase">Direct Subscription CDN</text>
-
-          <rect x="375" y="70" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="425" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">CREATOR WALLET</text>
-
-          <path d="M 125 90 L 175 90" stroke="#d1d5db" strokeWidth="1" strokeDasharray="3 3" markerEnd="url(#arrow)" />
-          <path d="M 325 90 L 375 90" stroke="#ef4444" strokeWidth="1" markerEnd="url(#arrow)" />
-
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2.5s" repeatCount="indefinite" path="M 125 90 L 175 90" />
-          </circle>
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2s" repeatCount="indefinite" path="M 325 90 L 375 90" />
-          </circle>
-        </svg>
-      );
-    default: // popular / general aggregator
-      return (
-        <svg className="w-full h-full text-gray-800" viewBox="0 0 500 220" fill="none">
-          <defs>
-            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 2 L 10 5 L 0 8 z" fill="#ef4444" />
-            </marker>
-          </defs>
-          <rect x="25" y="70" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="75" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">DEMAND INGEST</text>
-          
-          <rect x="175" y="70" width="150" height="40" rx="8" className="fill-white stroke-red-500 stroke-[1.5]" />
-          <text x="250" y="90" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">ORCHESTRATOR MATRIX</text>
-          <text x="250" y="102" textAnchor="middle" className="fill-gray-400 font-mono text-[6.5px] uppercase">Real-Time Routing Core</text>
-
-          <rect x="375" y="70" width="100" height="40" rx="8" className="fill-white stroke-gray-300 stroke-[1]" />
-          <text x="425" y="94" textAnchor="middle" className="fill-black font-mono text-[9px] font-bold">SERVICE NODES</text>
-
-          <path d="M 125 90 L 175 90" stroke="#d1d5db" strokeWidth="1" strokeDasharray="3 3" markerEnd="url(#arrow)" />
-          <path d="M 325 90 L 375 90" stroke="#ef4444" strokeWidth="1" markerEnd="url(#arrow)" />
-
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2.5s" repeatCount="indefinite" path="M 125 90 L 175 90" />
-          </circle>
-          <circle r="3" fill="#ef4444">
-            <animateMotion dur="2s" repeatCount="indefinite" path="M 325 90 L 375 90" />
-          </circle>
-        </svg>
-      );
-  }
-}
-
-function ModelFlowDiagram({ categoryId, modelName }) {
   return (
-    <div className="border border-gray-200 bg-gradient-to-br from-white via-white to-gray-50/50 p-6 rounded-3xl relative overflow-hidden shadow-sm">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#f3f4f6_1px,transparent_1px),linear-gradient(to_bottom,#f3f4f6_1px,transparent_1px)] bg-[size:16px_16px] opacity-25 pointer-events-none z-0" />
-      
-      <div className="relative z-10 space-y-4">
-        {/* Header telemetry details */}
-        <div className="flex justify-between items-center border-b border-gray-150 pb-3 text-[8px] font-mono text-gray-400 font-bold uppercase tracking-widest">
-          <span className="flex items-center gap-1.5 text-red-600">
-            <Workflow className="w-3.5 h-3.5" />
-            [ ARCHITECTURE_BLUEPRINT // FLOW_SCHEMATIC ]
-          </span>
-          <span>SYS_FAMILY: {categoryId.toUpperCase()}</span>
-        </div>
+    <svg viewBox={`0 0 ${totalW} 200`} fill="none" className="w-full h-full">
+      <defs>
+        <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 0 2 L 9 5 L 0 8 z" fill="#DC2626" />
+        </marker>
+      </defs>
 
-        {/* Diagram Canvas */}
-        <div className="w-full h-52 border border-gray-150 bg-white/80 rounded-2xl relative overflow-hidden flex items-center justify-center p-2 shadow-inner">
-          <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-[size:16px_16px] opacity-35 pointer-events-none" />
-          <RenderCategoryDiagram categoryId={categoryId} modelName={modelName} />
-        </div>
+      {nodes.map((label, i) => {
+        const x = gap + i * (nodeW + gap);
+        const isCore = i === Math.floor(n / 2) && n > 2 || (n === 2 && i === 1) || (n <= 2 && i === 0);
+        const actuallyCore = n >= 3 ? i === 1 : i === 0;
+        return (
+          <g key={i}>
+            <rect
+              x={x} y={cy - nodeH / 2}
+              width={nodeW} height={nodeH}
+              className={actuallyCore ? 'fill-black stroke-black stroke-2' : 'fill-white stroke-black stroke-[1.5]'}
+            />
+            <text
+              x={x + nodeW / 2}
+              y={cy + (cfg.sub && actuallyCore ? -4 : 3)}
+              textAnchor="middle"
+              className={`font-mono font-black text-[8px] ${actuallyCore ? 'fill-white' : 'fill-black'}`}
+              fontSize="8"
+              fontWeight="900"
+              fontFamily="monospace"
+              fill={actuallyCore ? '#ffffff' : '#000000'}
+            >
+              {label}
+            </text>
+            {cfg.sub && actuallyCore && (
+              <text x={x + nodeW / 2} y={cy + 9} textAnchor="middle" fontSize="6.5" fontFamily="monospace" fill="#DC2626" fontWeight="700">
+                {cfg.sub}
+              </text>
+            )}
+          </g>
+        );
+      })}
 
-        {/* Diagnostic info logs */}
-        <div className="flex items-center justify-between font-mono text-[7px] text-gray-400">
-          <span>PIPELINE_ROUTE: CONNECTED ➔ AUTOMATED</span>
-          <span className="flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            LIVE_DIAGNOSTICS // STREAMING
-          </span>
-        </div>
-      </div>
-    </div>
+      {nodes.slice(0, -1).map((_, i) => {
+        const x1 = gap + i * (nodeW + gap) + nodeW;
+        const x2 = gap + (i + 1) * (nodeW + gap);
+        return (
+          <g key={i}>
+            <line x1={x1} y1={cy} x2={x2} y2={cy} stroke="#DC2626" strokeWidth="1.5" markerEnd="url(#arr2)" />
+            <circle r="3" fill="#DC2626">
+              <animateMotion dur={`${2 - i * 0.3}s`} repeatCount="indefinite" path={`M ${x1} ${cy} L ${x2} ${cy}`} />
+            </circle>
+          </g>
+        );
+      })}
+    </svg>
   );
 }
 
+const SPEC_CONFIG = [
+  { key: 'howItWorks',   label: 'How It Works',   Icon: Lightbulb,   accent: '#FFE500' },
+  { key: 'revenueModel', label: 'Revenue Model',   Icon: TrendingUp,  accent: '#DC2626' },
+  { key: 'techStack',    label: 'Tech Stack',      Icon: Code2,       accent: '#0A0A0A' },
+  { key: 'suitableFor',  label: 'Best Suited For', Icon: Target,      accent: '#0A0A0A' },
+];
+
 export default function ModelDetail({ model, category }) {
-  const specs = [
-    {
-      title: "How It Works",
-      content: model.howItWorks,
-      icon: Cpu,
-      badge: "FUNCTIONAL_LOGIC"
-    },
-    {
-      title: "Revenue Model",
-      content: model.revenueModel,
-      icon: Layers,
-      badge: "FINANCIAL_TELEMETRY"
-    },
-    {
-      title: "Tech Stack",
-      content: model.techStack,
-      icon: Terminal,
-      badge: "ENGINE_STACK"
-    },
-    {
-      title: "Suitable For",
-      content: model.suitableFor,
-      icon: Award,
-      badge: "SECTOR_TARGETS"
-    }
-  ];
-
   return (
-    <section className="relative py-20 bg-white border-b border-gray-100 overflow-hidden select-none">
-      
-      {/* Soft Background Grid Guides */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#f3f4f6_1px,transparent_1px),linear-gradient(to_bottom,#f3f4f6_1px,transparent_1px)] bg-[size:32px_32px] opacity-40 pointer-events-none" />
-
-      {/* Ambient Crimson Aura Backdrop */}
-      <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[70%] h-[20%] bg-red-50/50 rounded-full blur-[100px] pointer-events-none z-0" />
-
-      <Container className="relative z-10 max-w-4xl mx-auto">
+    <section className="relative py-16 bg-[#FAFAF8]">
+      <Container className="max-w-4xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35 }}
           className="space-y-10"
         >
-          {/* Header Specifications Block */}
-          <div className="pb-6 border-b border-gray-200/60 space-y-4">
-            <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded bg-red-50 text-red-600 font-mono text-[8px] font-bold border border-red-100 uppercase tracking-widest">
-                [ SYSTEM ARCHITECTURE DETAIL // {category.name.toUpperCase()} ]
+
+          {/* ── HEADER ── */}
+          <div className="border-b-2 border-black pb-8 space-y-4">
+            <div className="flex items-center gap-3 flex-wrap">
+              <span className="px-3 py-1 bg-[#FFE500] text-black font-mono text-[10px] font-black border-2 border-black uppercase tracking-widest shadow-[2px_2px_0_#0A0A0A]">
+                {category.name}
               </span>
+              {model.example && (
+                <span className="px-3 py-1 bg-white text-gray-500 font-mono text-[10px] border-2 border-black uppercase tracking-widest">
+                  e.g. {model.example}
+                </span>
+              )}
             </div>
 
-            <h1 className="text-3xl md:text-5xl font-black text-black uppercase tracking-tight leading-none mt-2">
+            <h1 className="text-4xl md:text-6xl font-black text-black leading-[0.95] tracking-tight">
               {model.name}
             </h1>
 
-            {model.example && (
-              <div className="inline-block px-3 py-1 rounded-xl bg-gray-50 border border-gray-200/60 font-mono text-[9px] text-gray-500">
-                <span className="text-gray-400">PROD_MODEL_EXAMPLE:</span> {model.example.toUpperCase()}
-              </div>
-            )}
-
-            <p className="text-xs md:text-sm text-gray-500 leading-relaxed font-sans font-light mt-4">
+            <p className="text-base text-gray-700 leading-relaxed max-w-2xl">
               {model.desc}
             </p>
           </div>
 
-          {/* DYNAMIC SYSTEM FLOW ARCHITECTURE DIAGRAM CARD */}
-          <ModelFlowDiagram categoryId={category.id} modelName={model.name} />
-
-          {/* SPECIFICATION CARD GRID */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {specs.map((spec, i) => {
-              const Icon = spec.icon;
-              return (
-                <div 
-                  key={i}
-                  className="border border-gray-200 bg-gray-50/30 backdrop-blur-sm rounded-3xl p-6 relative overflow-hidden group shadow-sm hover:border-black transition-colors duration-300 min-h-[160px] flex flex-col justify-between"
-                >
-                  <div className="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] bg-[size:16px_16px] opacity-25 pointer-events-none z-0" />
-                  
-                  <div className="relative z-10 space-y-3">
-                    
-                    {/* Header bezel */}
-                    <div className="flex justify-between items-center border-b border-gray-200/60 pb-2 mb-2">
-                      <span className="text-[8px] font-mono text-red-600 font-bold uppercase tracking-widest flex items-center gap-1.5">
-                        <Icon className="w-3.5 h-3.5 text-red-500 shrink-0" />
-                        {spec.title}
-                      </span>
-                      <span className="text-[6.5px] font-mono text-gray-400 uppercase tracking-widest">{spec.badge}</span>
-                    </div>
-
-                    <p className="text-xs text-gray-600 font-sans font-light leading-relaxed">
-                      {spec.content}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
+          {/* ── FLOW DIAGRAM ── */}
+          <div className="border-2 border-black shadow-[4px_4px_0_#0A0A0A] bg-white overflow-hidden">
+            <div className="flex items-center gap-2 px-5 py-3 border-b-2 border-black bg-[#FAFAF8]">
+              <Workflow className="w-3.5 h-3.5 text-[#DC2626]" />
+              <span className="font-mono text-[10px] font-black uppercase tracking-widest text-black">System Flow</span>
+              <span className="ml-auto flex items-center gap-1.5 font-mono text-[9px] text-gray-500">
+                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse inline-block" />
+                Live
+              </span>
+            </div>
+            <div className="relative h-52 bg-[#FAFAF8]">
+              <div className="absolute inset-0 bg-[radial-gradient(#d1d5db_1px,transparent_1px)] bg-size-[18px_18px] opacity-30 pointer-events-none" />
+              <div className="relative w-full h-full p-3 flex items-center">
+                <RenderCategoryDiagram categoryId={category.id} />
+              </div>
+            </div>
           </div>
 
-          {/* Action buttons row */}
-          <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-100">
-            <Link 
-              href={`/business-model/${category.id}`} 
-              className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-gray-250 bg-white text-gray-600 font-mono text-[9px] font-bold uppercase tracking-widest hover:text-black hover:border-black transition-all shadow-sm"
+          {/* ── SPEC CARDS ── */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {SPEC_CONFIG.map(({ key, label, Icon, accent }) => (
+              <motion.div
+                key={key}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="bg-white border-2 border-black shadow-[4px_4px_0_#0A0A0A] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#0A0A0A] transition-all duration-100 flex flex-col"
+              >
+                {/* Card header */}
+                <div
+                  className="flex items-center gap-2.5 px-5 py-3 border-b-2 border-black"
+                  style={{ background: accent === '#FFE500' ? '#FFE500' : accent === '#DC2626' ? '#DC2626' : '#0A0A0A' }}
+                >
+                  <Icon
+                    className="w-4 h-4 shrink-0"
+                    style={{ color: accent === '#FFE500' ? '#0A0A0A' : '#ffffff' }}
+                  />
+                  <span
+                    className="font-black text-[11px] uppercase tracking-widest"
+                    style={{ color: accent === '#FFE500' ? '#0A0A0A' : '#ffffff' }}
+                  >
+                    {label}
+                  </span>
+                </div>
+
+                {/* Card body */}
+                <div className="px-5 py-5 flex-1">
+                  <p className="text-sm text-gray-800 leading-relaxed">
+                    {model[key]}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* ── ACTIONS ── */}
+          <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t-2 border-black">
+            <Link
+              href={`/business-model/${category.id}`}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-black bg-white text-black font-mono text-[10px] font-black uppercase tracking-widest shadow-[4px_4px_0_#0A0A0A] hover:shadow-[2px_2px_0_#0A0A0A] hover:translate-x-0.5 hover:translate-y-0.5 transition-all duration-100"
             >
-              <ArrowLeft className="w-3.5 h-3.5 shrink-0" />
+              <ArrowLeft className="w-3.5 h-3.5" />
               Back to {category.name}
             </Link>
-            
-            <Link 
-              href="/contact" 
-              className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-black text-white font-mono text-[9px] font-bold uppercase tracking-widest hover:bg-red-600 hover:scale-[1.01] active:scale-[0.99] transition-all shadow-md"
+
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-black bg-black text-white font-mono text-[10px] font-black uppercase tracking-widest shadow-[4px_4px_0_#444] hover:shadow-[2px_2px_0_#444] hover:translate-x-0.5 hover:translate-y-0.5 transition-all duration-100"
             >
               Build This Model
-              <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 
@@ -573,4 +204,3 @@ export default function ModelDetail({ model, category }) {
     </section>
   );
 }
-

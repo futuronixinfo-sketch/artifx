@@ -2,13 +2,13 @@
 import { motion } from 'framer-motion';
 import Container from '@/components/ui/Container';
 import { saasPhilosophy } from '@/data/saas-page';
-import { Check } from 'lucide-react';
 
 export default function SaasPhilosophy() {
     return (
-        <section className="py-24 bg-white border-b border-gray-200 select-none text-left">
+        <section className="py-24 bg-white border-b-2 border-black select-none text-left">
             <Container className="max-w-3xl mx-auto">
-                <span className="text-xs font-mono text-red-600 uppercase tracking-widest block font-bold mb-12">[ 03 / CORE_PHILOSOPHY ]</span>
+                <span className="inline-block text-xs font-mono bg-black text-[#FFE500] border-2 border-black shadow-[3px_3px_0_#DC2626] px-3 py-1 uppercase tracking-widest font-black mb-12">[ 03 / CORE_PHILOSOPHY ]</span>
+
 
                 <div className="space-y-8">
                     {saasPhilosophy.map((point, idx) => (
@@ -18,10 +18,10 @@ export default function SaasPhilosophy() {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.1 }}
                             viewport={{ once: true }}
-                            className="border-l-2 border-gray-200 pl-6"
+                            className="bg-white border-2 border-black shadow-[4px_4px_0_#0A0A0A] hover:shadow-[6px_6px_0_#0A0A0A] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-100 p-6"
                         >
                             <h3 className="text-lg md:text-xl text-black font-bold leading-relaxed">{point.title}</h3>
-                            <p className="text-sm text-gray-500 mt-2 leading-relaxed">{point.description}</p>
+                            <p className="text-sm text-gray-600 mt-2 leading-relaxed">{point.description}</p>
                         </motion.div>
                     ))}
                 </div>

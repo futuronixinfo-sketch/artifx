@@ -5,6 +5,7 @@ export const navigation = [
     { name: 'Business Model', href: '/business-model' },
     { name: 'Product', href: '/product' },
     { name: 'Team', href: '/team' },
+    { name: 'UI Lab', href: '/ui-styles' },
 ];
 
 export const legal = [

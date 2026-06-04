@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Container from '@/components/ui/Container';
 import { categories } from '@/data/business-models';
-import { 
-  ArrowRight, Flame, Home, Activity, ShoppingBag, 
-  Wrench, Utensils, Truck, GraduationCap, CreditCard, 
-  Compass, Car, Cpu, Palette, Plus, Sparkles 
+import {
+  ArrowRight, Flame, Home, Activity, ShoppingBag,
+  Wrench, Utensils, Truck, GraduationCap, CreditCard,
+  Compass, Car, Cpu, Palette, Plus, Sparkles
 } from 'lucide-react';
 
 const iconMap = {
@@ -100,10 +100,10 @@ function BlueprintSVG({ categoryId }) {
       return (
         <svg className="w-full h-full text-red-500/10 group-hover:text-red-500/25 transition-colors duration-500" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1">
           <path d="M10,0 V100 M30,0 V100 M50,0 V100 M70,0 V100 M90,0 V100 M0,20 H100 M0,40 H100 M0,60 H100 M0,80 H100" strokeDasharray="1 8" />
-          <path d="M0,50 L35,50 L40,30 L45,70 L50,45 L53,52 L56,50 L100,50" 
-                strokeDasharray="200" 
+          <path d="M0,50 L35,50 L40,30 L45,70 L50,45 L53,52 L56,50 L100,50"
+                strokeDasharray="200"
                 strokeDashoffset="200"
-                className="group-hover:[stroke-dashoffset:0] transition-all duration-[1.5s] ease-in-out" 
+                className="group-hover:[stroke-dashoffset:0] transition-all duration-[1.5s] ease-in-out"
                 strokeWidth="1.5" />
           <circle cx="45" cy="70" r="3" fill="currentColor" className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-ping" />
         </svg>
@@ -272,9 +272,9 @@ function BlueprintSVG({ categoryId }) {
 
 export default function CategoriesGrid() {
   return (
-    <section className="py-24 bg-white border-b border-gray-100 select-none">
+    <section className="py-24 bg-[#FAFAF8] border-b-2 border-black select-none">
       <Container className="max-w-6xl mx-auto">
-        
+
         {/* CATEGORIES BLUEPRINT BENTO MATRIX */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((cat, idx) => {
@@ -293,60 +293,54 @@ export default function CategoriesGrid() {
               >
                 <Link
                   href={`/business-model/${cat.id}`}
-                  className="block border border-gray-200 bg-gradient-to-br from-white via-white to-gray-50/70 p-6 rounded-3xl hover:border-black hover:shadow-2xl hover:shadow-black/5 hover:scale-[1.01] transition-all duration-500 h-full flex flex-col justify-between min-h-[250px] relative group overflow-hidden shadow-sm"
+                  className="flex flex-col justify-between bg-white border-2 border-black shadow-[4px_4px_0_#0A0A0A] hover:shadow-[6px_6px_0_#0A0A0A] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-100 p-6 h-full min-h-62.5 relative group overflow-hidden"
                 >
-                  {/* Subtle Grid inside each card */}
-                  <div className="absolute inset-0 bg-[linear-gradient(to_right,#f3f4f6_1px,transparent_1px),linear-gradient(to_bottom,#f3f4f6_1px,transparent_1px)] bg-[size:16px_16px] opacity-30 pointer-events-none z-0" />
-                  
                   {/* Absolute Animated Schematic Overlay in background */}
                   <div className="absolute right-4 bottom-14 w-28 h-28 pointer-events-none z-0">
                     <BlueprintSVG categoryId={cat.id} />
                   </div>
 
                   <div className="relative z-10 space-y-4 w-full">
-                    {/* Header: Bezel Icon & Sector index */}
+                    {/* Header: Icon & Sector index */}
                     <div className="flex justify-between items-center w-full">
                       <div className="flex items-center gap-2">
-                        {/* High-tech Bezel Icon frame */}
-                        <div className="w-10 h-10 rounded-xl bg-gray-50 border border-gray-200 text-lg flex items-center justify-center group-hover:bg-red-50 group-hover:border-red-100 transition-colors duration-500 shrink-0">
-                          <IconComponent className="w-5 h-5 text-gray-500 group-hover:text-red-600 transition-colors duration-500" />
+                        <div className="w-10 h-10 bg-[#FAFAF8] border-2 border-black flex items-center justify-center group-hover:bg-[#FFE500] transition-colors duration-100 shrink-0">
+                          <IconComponent className="w-5 h-5 text-black" />
                         </div>
-                        {/* Live active tagger */}
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                        <span className="text-[7.5px] font-mono text-gray-400 font-bold uppercase tracking-widest leading-none">
+                        <span className="w-1.5 h-1.5 bg-emerald-500 animate-pulse" />
+                        <span className="text-[7.5px] font-mono text-gray-500 font-bold uppercase tracking-widest leading-none">
                           SYS_ACTIVE
                         </span>
                       </div>
 
-                      {/* Sector mono index tag */}
-                      <span className="text-[8px] font-mono text-gray-400 font-bold uppercase tracking-widest">
+                      <span className="text-[8px] font-mono text-gray-500 font-bold uppercase tracking-widest">
                         [ SEC_0{idx + 1 < 10 ? '0' + (idx + 1) : idx + 1} ]
                       </span>
                     </div>
 
                     {/* Headline and tagline */}
                     <div className="space-y-1 pb-2">
-                      <h3 className="text-base font-bold text-black uppercase tracking-tight group-hover:text-red-600 transition-colors duration-300">
+                      <h3 className="text-base font-black text-black uppercase tracking-tight group-hover:text-red-600 transition-colors duration-100">
                         {cat.name}
                       </h3>
-                      <p className="text-[9px] text-gray-400 font-mono uppercase tracking-wider leading-none">
+                      <p className="text-[9px] text-gray-500 font-mono uppercase tracking-wider leading-none">
                         {cat.tagline}
                       </p>
                     </div>
 
                     {/* Technical Telemetry Dashboard Panel */}
-                    <div className="border-t border-gray-100 pt-3 space-y-1.5 font-mono text-[7px] text-gray-400/80 group-hover:text-gray-500 transition-colors">
+                    <div className="border-t-2 border-black pt-3 space-y-1.5 font-mono text-[7px] text-gray-500 group-hover:text-gray-700 transition-colors">
                       <div className="flex justify-between">
                         <span>CORE_SYSTEM:</span>
-                        <span className="text-black font-semibold uppercase">{telemetry.system}</span>
+                        <span className="text-black font-bold uppercase">{telemetry.system}</span>
                       </div>
                       <div className="flex justify-between">
                         <span>ROUTING_ENG:</span>
-                        <span className="text-black font-semibold uppercase">{telemetry.engine}</span>
+                        <span className="text-black font-bold uppercase">{telemetry.engine}</span>
                       </div>
                       <div className="flex justify-between">
                         <span>SECURITY_PROTOCOL:</span>
-                        <span className="text-black font-semibold uppercase">{telemetry.protocol}</span>
+                        <span className="text-black font-bold uppercase">{telemetry.protocol}</span>
                       </div>
                     </div>
                   </div>
@@ -354,23 +348,21 @@ export default function CategoriesGrid() {
                   {/* Telemetry footer & action details */}
                   <div className="relative z-10 flex flex-col justify-end mt-6">
                     {/* Schematic count progress bar */}
-                    <div className="w-full bg-gray-100 rounded-full h-[3px] overflow-hidden mb-4 relative">
-                      <div 
-                        className="bg-red-500 h-full rounded-full transition-all duration-700 ease-out group-hover:bg-red-600"
+                    <div className="w-full bg-gray-200 h-0.75 overflow-hidden mb-4 relative border border-black">
+                      <div
+                        className="bg-red-600 h-full transition-all duration-700 ease-out"
                         style={{ width: `${Math.min(100, (cat.count / 25) * 100)}%` }}
                       />
                     </div>
 
                     <div className="flex items-center justify-between">
-                      {/* Schematic count pill */}
-                      <span className="px-2 py-0.5 rounded bg-red-50 text-red-600 border border-red-100 font-mono text-[8px] font-bold uppercase tracking-widest">
+                      <span className="px-2 py-0.5 bg-[#FFE500] text-black border-2 border-black font-mono text-[8px] font-black uppercase tracking-widest">
                         [ {cat.count} SCHEMATICS ]
                       </span>
-                      
-                      {/* Action trigger chevron */}
-                      <span className="inline-flex items-center gap-1.5 font-mono text-[9px] font-bold uppercase tracking-widest text-gray-400 group-hover:text-black transition-colors duration-300">
+
+                      <span className="inline-flex items-center gap-1.5 font-mono text-[9px] font-black uppercase tracking-widest text-gray-500 group-hover:text-black transition-colors duration-100">
                         ACCESS DECK
-                        <ArrowRight className="w-3.5 h-3.5 text-gray-300 group-hover:text-red-600 transition-colors shrink-0" />
+                        <ArrowRight className="w-3.5 h-3.5 text-gray-400 group-hover:text-red-600 transition-colors shrink-0" />
                       </span>
                     </div>
                   </div>
@@ -380,7 +372,7 @@ export default function CategoriesGrid() {
             );
           })}
 
-          {/* Row 6 Bento Slot: Custom Systems Architect CTA Card */}
+          {/* Row Bento Slot: Custom Systems Architect CTA Card */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -390,12 +382,9 @@ export default function CategoriesGrid() {
           >
             <Link
               href="/contact"
-              className="block border border-dashed border-gray-300 bg-gradient-to-br from-gray-50/50 via-white to-gray-50 p-6 rounded-3xl hover:border-black hover:shadow-2xl hover:shadow-black/5 hover:scale-[1.01] transition-all duration-500 h-full flex flex-col justify-between min-h-[250px] relative group overflow-hidden shadow-sm"
+              className="flex flex-col justify-between bg-white border-2 border-black border-dashed shadow-[4px_4px_0_#0A0A0A] hover:shadow-[6px_6px_0_#0A0A0A] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-100 p-6 h-full min-h-62.5 relative group overflow-hidden"
             >
-              {/* Subtle Grid inside each card */}
-              <div className="absolute inset-0 bg-[linear-gradient(to_right,#f3f4f6_1px,transparent_1px),linear-gradient(to_bottom,#f3f4f6_1px,transparent_1px)] bg-[size:16px_16px] opacity-30 pointer-events-none z-0" />
-              
-              {/* Animated Blueprint background representation */}
+              {/* Animated Blueprint background */}
               <div className="absolute right-6 bottom-12 w-32 h-32 pointer-events-none z-0 opacity-20 group-hover:opacity-40 transition-opacity">
                 <svg className="w-full h-full text-black" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="0.75">
                   <circle cx="50" cy="50" r="38" strokeDasharray="2 4" />
@@ -410,50 +399,48 @@ export default function CategoriesGrid() {
               </div>
 
               <div className="relative z-10 space-y-4 w-full">
-                {/* Header: Bezel Icon & Info tag */}
+                {/* Header */}
                 <div className="flex justify-between items-center w-full">
                   <div className="flex items-center gap-2">
-                    <div className="w-10 h-10 rounded-xl bg-black border border-black text-lg flex items-center justify-center group-hover:bg-red-600 group-hover:border-red-600 transition-colors duration-500 shrink-0">
+                    <div className="w-10 h-10 bg-black border-2 border-black flex items-center justify-center group-hover:bg-red-600 transition-colors duration-100 shrink-0">
                       <Plus className="w-5 h-5 text-white" />
                     </div>
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-ping" />
+                    <span className="w-1.5 h-1.5 bg-red-600 animate-ping" />
                     <span className="text-[7.5px] font-mono text-red-600 font-bold uppercase tracking-widest leading-none">
                       CUSTOM_ENGINEERING
                     </span>
                   </div>
 
-                  <span className="text-[8px] font-mono text-gray-400 font-bold uppercase tracking-widest">
+                  <span className="text-[8px] font-mono text-gray-500 font-bold uppercase tracking-widest">
                     [ SEC_CUSTOM ]
                   </span>
                 </div>
 
                 {/* Headline and tagline */}
                 <div className="space-y-1">
-                  <h3 className="text-base font-bold text-black uppercase tracking-tight group-hover:text-red-600 transition-colors duration-300">
+                  <h3 className="text-base font-black text-black uppercase tracking-tight group-hover:text-red-600 transition-colors duration-100">
                     Proprietary Architecture
                   </h3>
-                  <p className="text-[9px] text-gray-400 font-mono uppercase tracking-wider leading-none">
+                  <p className="text-[9px] text-gray-500 font-mono uppercase tracking-wider leading-none">
                     Can't find a matching system for your project?
                   </p>
                 </div>
 
-                <p className="text-xs text-gray-500 leading-relaxed font-sans font-light max-w-md">
+                <p className="text-xs text-gray-600 leading-relaxed font-sans font-light max-w-md">
                   Collaborate directly with our engineering team to design, draft, and deploy a custom proprietary business model and workflow engine customized specifically to your enterprise operations.
                 </p>
               </div>
 
-              {/* Telemetry footer & action details */}
+              {/* Footer */}
               <div className="relative z-10 flex flex-col justify-end mt-6">
-                <div className="flex items-center justify-between border-t border-gray-100 pt-4">
-                  {/* Schematic count pill */}
-                  <span className="px-2 py-0.5 rounded bg-black text-white font-mono text-[8px] font-bold uppercase tracking-widest group-hover:bg-red-600 transition-colors">
+                <div className="flex items-center justify-between border-t-2 border-black pt-4">
+                  <span className="px-2 py-0.5 bg-black text-white font-mono text-[8px] font-black uppercase tracking-widest group-hover:bg-red-600 transition-colors duration-100">
                     [ INITIATE INGEST ]
                   </span>
-                  
-                  {/* Action trigger chevron */}
-                  <span className="inline-flex items-center gap-1.5 font-mono text-[9px] font-bold uppercase tracking-widest text-gray-400 group-hover:text-black transition-colors duration-300">
+
+                  <span className="inline-flex items-center gap-1.5 font-mono text-[9px] font-black uppercase tracking-widest text-gray-500 group-hover:text-black transition-colors duration-100">
                     CONSULT ARCHITECT
-                    <ArrowRight className="w-3.5 h-3.5 text-gray-300 group-hover:text-red-600 transition-colors shrink-0" />
+                    <ArrowRight className="w-3.5 h-3.5 text-gray-400 group-hover:text-red-600 transition-colors shrink-0" />
                   </span>
                 </div>
               </div>
@@ -466,4 +453,3 @@ export default function CategoriesGrid() {
     </section>
   );
 }
-

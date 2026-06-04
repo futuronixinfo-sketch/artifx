@@ -1,6 +1,7 @@
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import EstimateWidget from '@/components/EstimateWidget';
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -39,6 +40,7 @@ export default function RootLayout({ children }) {
         <Navbar />
         {children}
         <Footer />
+        <EstimateWidget />
       </body>
     </html>
   );

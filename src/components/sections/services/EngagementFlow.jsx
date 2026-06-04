@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Container from '@/components/ui/Container';
-import { Terminal, ShieldAlert, Cpu, Check, Activity, BarChart2 } from 'lucide-react';
+import { Terminal, Cpu, Check, Activity, BarChart2 } from 'lucide-react';
 
 const workflowSteps = [
     {
@@ -53,14 +53,11 @@ export default function EngagementFlow() {
     const [activeIndex, setActiveIndex] = useState(0);
 
     return (
-        <section className="py-28 bg-white border-b border-gray-100 select-none relative overflow-hidden">
-            {/* Background Mesh */}
-            <div className="absolute inset-0 z-0 opacity-[0.02] bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:20px_20px]" />
-            <div className="absolute bottom-1/4 right-1/3 w-[450px] h-[450px] bg-red-50/20 rounded-full blur-[130px] pointer-events-none" />
+        <section className="py-28 bg-[#FAFAF8] border-b-2 border-black select-none relative overflow-hidden">
 
             <Container className="max-w-5xl mx-auto relative z-10">
                 <div className="text-center max-w-2xl mx-auto mb-20 space-y-3">
-                    <span className="text-xs font-mono text-red-600 uppercase tracking-widest block font-bold">
+                    <span className="inline-block px-2 py-0.5 bg-[#FFE500] text-black border-2 border-black shadow-[3px_3px_0_#0A0A0A] font-mono text-xs font-bold uppercase tracking-widest">
                         [ PIPELINE ENGINEERING ]
                     </span>
                     <h2 className="text-3xl md:text-5xl font-black tracking-tight text-black uppercase">
@@ -74,7 +71,7 @@ export default function EngagementFlow() {
                 {/* Steps Selector Timeline */}
                 <div className="relative mb-12">
                     {/* Horizontal Line Connection (Desktop) */}
-                    <div className="hidden lg:block absolute top-[21px] left-8 right-8 h-[2px] bg-gray-100 -z-10" />
+                    <div className="hidden lg:block absolute top-5.25 left-8 right-8 h-0.5 bg-black -z-10" />
 
                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 relative z-10">
                         {workflowSteps.map((step, idx) => {
@@ -85,18 +82,18 @@ export default function EngagementFlow() {
                                     onClick={() => setActiveIndex(idx)}
                                     className="flex flex-col items-center gap-3 text-center cursor-pointer group focus:outline-none"
                                 >
-                                    {/* Number Circle Badge */}
-                                    <div className={`w-11 h-11 border rounded-xl flex items-center justify-center font-mono text-xs font-bold transition-all duration-500 relative ${
+                                    {/* Number Badge */}
+                                    <div className={`w-11 h-11 border-2 border-black flex items-center justify-center font-mono text-xs font-bold transition-all duration-150 relative ${
                                         isActive
-                                            ? 'bg-black text-white border-black shadow-lg shadow-black/10 scale-105'
-                                            : 'bg-white text-gray-400 border-gray-200 group-hover:border-black group-hover:text-black'
+                                            ? 'bg-black text-white shadow-[2px_2px_0_#0A0A0A]'
+                                            : 'bg-white text-black group-hover:bg-[#FFE500]'
                                     }`}>
                                         {step.number}
                                         {isActive && (
-                                            <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-red-600 rounded-full animate-ping" />
+                                            <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-red-600 animate-ping" />
                                         )}
                                     </div>
-                                    
+
                                     <span className={`text-[10px] font-mono uppercase tracking-wider font-bold transition-colors ${
                                         isActive ? 'text-red-600' : 'text-gray-400 group-hover:text-black'
                                     }`}>
@@ -109,8 +106,7 @@ export default function EngagementFlow() {
                 </div>
 
                 {/* Active Diagnostic Panel */}
-                <div className="border border-gray-200 rounded-2xl bg-white p-7 md:p-10 shadow-xl shadow-black/5 min-h-[300px] flex flex-col justify-between relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-36 h-36 bg-gray-50 rounded-full blur-2xl pointer-events-none" />
+                <div className="bg-white border-2 border-black shadow-[4px_4px_0_#0A0A0A] p-7 md:p-10 min-h-75 flex flex-col justify-between relative overflow-hidden">
 
                     <AnimatePresence mode="wait">
                         <motion.div
@@ -138,15 +134,15 @@ export default function EngagementFlow() {
                             </div>
 
                             {/* Panel Metrics Checklist */}
-                            <div className="lg:col-span-5 border border-gray-100 bg-gray-50 p-6 rounded-xl space-y-4">
-                                <h4 className="text-[10px] font-mono text-black font-bold uppercase tracking-widest border-b border-gray-200 pb-1.5 flex items-center gap-1.5">
+                            <div className="lg:col-span-5 border-2 border-black bg-[#FAFAF8] p-6 space-y-4">
+                                <h4 className="text-[10px] font-mono text-black font-bold uppercase tracking-widest border-b-2 border-black pb-1.5 flex items-center gap-1.5">
                                     <Terminal className="w-3.5 h-3.5 text-red-600" />
                                     Active Telemetry Scope
                                 </h4>
                                 <ul className="space-y-3">
                                     {workflowSteps[activeIndex].metrics.map((metric) => (
                                         <li key={metric} className="flex gap-2.5 items-start text-xs text-gray-500 leading-normal">
-                                            <div className="w-4 h-4 rounded-md bg-red-50 border border-red-200 flex items-center justify-center text-red-600 shrink-0 mt-0.5">
+                                            <div className="w-4 h-4 bg-[#FFE500] border-2 border-black flex items-center justify-center text-black shrink-0 mt-0.5">
                                                 <Check className="w-2.5 h-2.5" />
                                             </div>
                                             <span className="font-light">{metric}</span>
@@ -158,7 +154,7 @@ export default function EngagementFlow() {
                     </AnimatePresence>
 
                     {/* Bottom Status bar */}
-                    <div className="mt-8 pt-6 border-t border-gray-100 flex flex-wrap justify-between items-center text-[9px] font-mono text-gray-400 gap-4">
+                    <div className="mt-8 pt-6 border-t-2 border-black flex flex-wrap justify-between items-center text-[9px] font-mono text-gray-400 gap-4">
                         <span className="flex items-center gap-1.5">
                             <Cpu className="w-3.5 h-3.5 text-gray-400" />
                             CLIENT_COORDINATION: SYNCHRONIZED

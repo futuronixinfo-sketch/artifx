@@ -8,13 +8,11 @@ import { ArrowUpRight, Cpu } from 'lucide-react';
 
 export default function ServiceDetails() {
     return (
-        <section className="py-28 bg-white border-b border-gray-100 select-none relative">
-            {/* Tech line indicator */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-16 bg-gradient-to-b from-gray-200 to-transparent" />
+        <section className="py-28 bg-[#FAFAF8] border-b-2 border-black select-none relative">
 
             <Container className="max-w-6xl mx-auto">
                 <div className="text-center max-w-2xl mx-auto mb-20 space-y-4">
-                    <span className="text-xs font-mono text-red-600 uppercase tracking-widest block font-bold">
+                    <span className="inline-block px-2 py-0.5 bg-[#FFE500] text-black border-2 border-black shadow-[3px_3px_0_#0A0A0A] font-mono text-xs font-bold uppercase tracking-widest">
                         [ SYSTEM DISCOVERY ]
                     </span>
                     <h2 className="text-3xl md:text-5xl font-black tracking-tight text-black uppercase">
@@ -36,67 +34,39 @@ export default function ServiceDetails() {
 }
 
 function ServiceCard({ service, idx }) {
-    const cardRef = useRef(null);
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-    const [isHovered, setIsHovered] = useState(false);
-
-    const handleMouseMove = (e) => {
-        if (!cardRef.current) return;
-        const rect = cardRef.current.getBoundingClientRect();
-        setMousePos({
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top,
-        });
-    };
-
     return (
         <Link href={`/services/${service.id}`} className="group block h-full">
             <motion.div
-                ref={cardRef}
-                onMouseMove={handleMouseMove}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: idx * 0.05 }}
                 viewport={{ once: true }}
-                className="border border-gray-200 bg-white p-7 group-hover:border-black transition-all duration-500 flex flex-col h-full relative overflow-hidden rounded-2xl shadow-sm hover:shadow-2xl hover:shadow-black/5"
+                className="bg-white border-2 border-black shadow-[4px_4px_0_#0A0A0A] hover:shadow-[6px_6px_0_#0A0A0A] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-150 p-7 flex flex-col h-full relative overflow-hidden"
             >
-                {/* Glowing radial backdrop spotlight on hover */}
-                <div
-                    className="absolute -inset-px transition duration-500 opacity-0 group-hover:opacity-100 pointer-events-none"
-                    style={{
-                        background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, rgba(220, 38, 38, 0.04), transparent 45%)`,
-                    }}
-                />
-
-                {/* Decorative border highlight indicator */}
-                <div className="absolute top-0 left-0 right-0 h-[2px] bg-red-600 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500" />
-
                 {/* Card Header */}
                 <div className="flex justify-between items-start mb-4 relative z-10">
-                    <span className="text-[10px] font-mono text-red-600 font-bold bg-red-50 px-2 py-0.5 rounded-md">
+                    <span className="text-[10px] font-mono text-black font-bold bg-[#FFE500] px-2 py-0.5 border-2 border-black">
                         {"//"} 0{idx + 1}
                     </span>
-                    <div className="w-8 h-8 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-black group-hover:border-black group-hover:text-white transition-all duration-500">
+                    <div className="w-8 h-8 bg-white border-2 border-black flex items-center justify-center text-black group-hover:bg-black group-hover:text-white transition-all duration-150">
                         <ArrowUpRight className="w-4 h-4" />
                     </div>
                 </div>
 
                 {/* Card Title & Description */}
                 <div className="space-y-2 mb-6 relative z-10">
-                    <h3 className="text-lg font-bold text-black group-hover:text-red-600 transition-colors duration-300 uppercase tracking-tight">
+                    <h3 className="text-lg font-bold text-black group-hover:text-red-600 transition-colors duration-150 uppercase tracking-tight">
                         {service.title}
                     </h3>
                     <p className="text-xs text-gray-400 leading-relaxed font-light">{service.subtitle}</p>
                 </div>
 
-                {/* Interactive list tags */}
+                {/* Tag list */}
                 <div className="flex flex-wrap gap-1.5 mb-8 relative z-10">
                     {service.includes.map((item) => (
                         <span
                             key={item}
-                            className="px-2.5 py-1 bg-gray-50 border border-gray-100 text-[9px] text-gray-500 font-mono uppercase tracking-wider rounded-md group-hover:bg-red-50/30 group-hover:border-red-100 group-hover:text-red-600 transition-all duration-500"
+                            className="px-2.5 py-1 bg-[#FAFAF8] border-2 border-black text-[9px] text-black font-mono uppercase tracking-wider group-hover:bg-[#FFE500] transition-all duration-150"
                         >
                             {item}
                         </span>
@@ -104,14 +74,14 @@ function ServiceCard({ service, idx }) {
                 </div>
 
                 {/* Card Footer */}
-                <div className="mt-auto pt-5 border-t border-gray-100 flex justify-between items-center relative z-10">
+                <div className="mt-auto pt-5 border-t-2 border-black flex justify-between items-center relative z-10">
                     <div className="flex items-center gap-1.5">
-                        <Cpu className="w-3.5 h-3.5 text-gray-300 group-hover:text-red-500 transition-colors" />
+                        <Cpu className="w-3.5 h-3.5 text-black" />
                         <span className="text-[9px] font-mono text-gray-400 uppercase tracking-wider">
                             {service.bestFor.split(',')[0]}
                         </span>
                     </div>
-                    <span className="text-[9px] font-mono text-red-600 font-bold opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+                    <span className="text-[9px] font-mono text-red-600 font-bold opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-150">
                         INSPECT SPEC &rarr;
                     </span>
                 </div>
