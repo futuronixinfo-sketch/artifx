@@ -1,8 +1,8 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Search, Terminal, Database, Star, MapPin, 
+import {
+  Search, Terminal, Database, Star, MapPin,
   Check, Play, Loader2, Sparkles, Send, Mail, CheckCircle2,
   ChevronRight
 } from 'lucide-react';
@@ -78,7 +78,7 @@ export default function LeadScraperSandbox() {
       const lead = targetLeads[i];
       await addLog(`🧩 Found entity: "${lead.name}" (${lead.location})`, 600);
       await addLog(`   └─ Review Score: ${lead.rating} ⭐ | Web Status: ${lead.website}`, 200);
-      
+
       setScrapedLeads(prev => [...prev, lead]);
     }
 
@@ -107,22 +107,17 @@ export default function LeadScraperSandbox() {
   };
 
   return (
-    <section className="relative py-24 bg-white border-b border-gray-200 overflow-hidden select-none">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-20 bg-gradient-to-b from-gray-200 to-transparent" />
-      
-      {/* Visual Accent */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[550px] bg-red-50/10 rounded-full blur-[160px] pointer-events-none" />
-
+    <section className="relative py-24 bg-[#FAFAF8] border-b-2 border-black overflow-hidden select-none">
       <Container className="relative z-10">
-        
+
         {/* Title Block */}
         <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-red-50 border border-red-200 rounded-full">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#FFE500] border-2 border-black shadow-[3px_3px_0_#0A0A0A]">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full bg-black opacity-75"></span>
+              <span className="relative inline-flex h-2 w-2 bg-black"></span>
             </span>
-            <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-red-600">
+            <span className="text-[10px] font-mono font-black uppercase tracking-widest text-black">
               [ DIRECT HANDS-ON SANDBOX // MAPS EXTRACTOR ]
             </span>
           </div>
@@ -131,37 +126,36 @@ export default function LeadScraperSandbox() {
             Lead Scraper Sandbox
           </h2>
 
-          <p className="text-sm text-gray-500 max-w-xl mx-auto leading-relaxed font-light">
+          <p className="text-sm text-gray-600 max-w-xl mx-auto leading-relaxed font-light">
             Don&apos;t just read about it. Input a target parameters below to run the live simulated high-frequency scraper index engine.
           </p>
         </div>
 
         {/* Scraper Interface Matrix */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch max-w-6xl mx-auto">
-          
+
           {/* Left Column: Command & Settings Panel (5 Cols) */}
-          <div className="lg:col-span-5 flex flex-col justify-between p-6 md:p-8 bg-gray-50 border-2 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] relative overflow-hidden" style={{ borderRadius: 0 }}>
+          <div className="lg:col-span-5 flex flex-col justify-between p-6 md:p-8 bg-white border-2 border-black shadow-[8px_8px_0_#0A0A0A] relative overflow-hidden">
             <div className="absolute top-0 right-0 p-2 text-[6px] font-mono text-gray-300">SCRAPER_CTRL_v1.0</div>
-            
+
             <div className="space-y-6">
               {/* Presets List */}
               <div className="space-y-2">
-                <span className="text-[9px] font-mono text-gray-400 uppercase tracking-widest block">// SELECT PRESET COORDINATES</span>
+                <span className="text-[9px] font-mono text-gray-500 uppercase tracking-widest block">// SELECT PRESET COORDINATES</span>
                 <div className="flex flex-col gap-2">
                   {PRESET_QUERIES.map((q) => (
                     <button
                       key={q}
                       onClick={() => !isScraping && setQuery(q)}
                       disabled={isScraping}
-                      className={`text-left p-3 border text-xs font-bold transition-all flex items-center justify-between ${
-                        query === q 
-                          ? 'bg-black text-white border-black shadow-sm' 
-                          : 'bg-white hover:bg-gray-100 border-gray-200 text-gray-700'
+                      className={`text-left p-3 border-2 text-xs font-black transition-all duration-100 flex items-center justify-between ${
+                        query === q
+                          ? 'bg-black text-white border-black shadow-[2px_2px_0_#444]'
+                          : 'bg-[#FAFAF8] border-black text-black shadow-[4px_4px_0_#0A0A0A] hover:shadow-[2px_2px_0_#0A0A0A] hover:translate-x-0.5 hover:translate-y-0.5'
                       }`}
-                      style={{ borderRadius: 0 }}
                     >
                       <span>{q}</span>
-                      <ChevronRight className="w-3.5 h-3.5" />
+                      <ChevronRight className="w-3.5 h-3.5 shrink-0" />
                     </button>
                   ))}
                 </div>
@@ -169,32 +163,31 @@ export default function LeadScraperSandbox() {
 
               {/* Custom Parameter Input */}
               <div className="space-y-2">
-                <span className="text-[9px] font-mono text-gray-400 uppercase tracking-widest block">// CUSTOM SCRAPING TARGET</span>
-                <div className="flex bg-white border border-gray-200 p-3 items-center gap-3">
-                  <Search className="w-4 h-4 text-gray-400 shrink-0" />
+                <span className="text-[9px] font-mono text-gray-500 uppercase tracking-widest block">// CUSTOM SCRAPING TARGET</span>
+                <div className="flex bg-[#FAFAF8] border-2 border-black p-3 items-center gap-3">
+                  <Search className="w-4 h-4 text-gray-500 shrink-0" />
                   <input
                     type="text"
                     disabled={isScraping}
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Enter keywords e.g. Clinics in Abu Dhabi..."
-                    className="bg-transparent border-none text-xs font-bold outline-none flex-1 text-black placeholder-gray-400"
+                    className="bg-transparent border-none text-xs font-bold outline-none grow text-black placeholder-gray-400"
                   />
                 </div>
               </div>
             </div>
 
             {/* Run Extractor Button */}
-            <div className="mt-8 pt-4 border-t border-gray-200">
+            <div className="mt-8 pt-4 border-t-2 border-black">
               <button
                 onClick={handleStartScrape}
                 disabled={isScraping || !query}
-                className={`w-full py-4.5 font-black uppercase text-xs tracking-widest flex items-center justify-center gap-3 transition-all ${
-                  isScraping 
-                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                    : 'bg-red-600 text-white hover:bg-black hover:scale-[1.02] active:scale-95 shadow-lg shadow-red-600/10'
+                className={`w-full py-4 font-black uppercase text-xs tracking-widest flex items-center justify-center gap-3 transition-all duration-100 border-2 border-black ${
+                  isScraping
+                    ? 'bg-gray-200 text-gray-500 cursor-not-allowed border-gray-300'
+                    : 'bg-[#FFE500] text-black shadow-[4px_4px_0_#0A0A0A] hover:shadow-[2px_2px_0_#0A0A0A] hover:translate-x-0.5 hover:translate-y-0.5'
                 }`}
-                style={{ borderRadius: 0 }}
               >
                 {isScraping ? (
                   <>
@@ -213,22 +206,22 @@ export default function LeadScraperSandbox() {
 
           {/* Right Column: Console Logs & Scraped Output (7 Cols) */}
           <div className="lg:col-span-7 flex flex-col gap-6">
-            
-            {/* Scraper Log terminal Console */}
-            <div className="border-2 border-black bg-[#121212] p-5 shadow-md flex flex-col justify-between" style={{ borderRadius: 0, minHeight: '160px' }}>
+
+            {/* Scraper Log Terminal Console */}
+            <div className="border-2 border-black bg-[#121212] p-5 flex flex-col justify-between" style={{ minHeight: '160px' }}>
               <div className="flex items-center justify-between border-b border-zinc-800 pb-3 mb-3">
                 <div className="flex items-center gap-2">
                   <Terminal className="w-4 h-4 text-red-500" />
                   <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">SCRAPER_SYNC_CONSOLE</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className={`w-1.5 h-1.5 rounded-full ${isScraping ? 'bg-red-500 animate-pulse' : 'bg-zinc-600'}`} />
+                  <span className={`w-1.5 h-1.5 ${isScraping ? 'bg-red-500 animate-pulse' : 'bg-zinc-600'}`} />
                   <span className="text-[8px] font-mono text-zinc-500 uppercase">{isScraping ? 'EXTRACTING' : 'READY'}</span>
                 </div>
               </div>
 
               {/* Logs Stream */}
-              <div className="font-mono text-[10px] text-green-400 space-y-1.5 max-h-[140px] overflow-y-auto custom-scrollbar text-left flex-grow">
+              <div className="font-mono text-[10px] text-green-400 space-y-1.5 max-h-35 overflow-y-auto text-left grow">
                 {logs.length === 0 ? (
                   <span className="text-zinc-500 italic">/* Engine standby. Select coordinates or click Run above to trigger scraping console logs */</span>
                 ) : (
@@ -242,29 +235,29 @@ export default function LeadScraperSandbox() {
               </div>
             </div>
 
-            {/* Live Scraped Leads Pipeline Folder */}
-            <div className="border-2 border-black bg-white p-6 shadow-sm flex flex-col justify-between relative" style={{ borderRadius: 0, minHeight: '260px' }}>
+            {/* Live Scraped Leads Pipeline */}
+            <div className="border-2 border-black bg-white p-6 flex flex-col justify-between relative" style={{ minHeight: '260px' }}>
               <div className="absolute top-0 right-0 p-2 text-[6px] font-mono text-gray-300">LIVE_DATABASE_FOLDER</div>
-              
+
               <div className="space-y-4">
-                <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+                <div className="flex items-center justify-between border-b-2 border-black pb-3">
                   <div className="flex items-center gap-2 text-left">
                     <Database className="w-4 h-4 text-red-600" />
                     <div>
                       <h4 className="text-xs font-black uppercase text-black tracking-tight">SCRAPED TARGET LEADS</h4>
-                      <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wider">Indexed leads under matching segment</p>
+                      <p className="text-[9px] text-gray-500 font-bold uppercase tracking-wider">Indexed leads under matching segment</p>
                     </div>
                   </div>
-                  <span className="px-2.5 py-1 bg-red-50 text-red-600 font-mono text-[9px] font-bold uppercase border border-red-200">
+                  <span className="bg-red-600 text-white border-2 border-black font-mono font-black uppercase text-[9px] px-2 py-1">
                     COUNT: {scrapedLeads.length}
                   </span>
                 </div>
 
-                {/* Scraped Cards Render */}
-                <div className="space-y-3 overflow-y-auto max-h-[220px] pr-1">
+                {/* Scraped Cards */}
+                <div className="space-y-3 overflow-y-auto max-h-55 pr-1">
                   {scrapedLeads.length === 0 ? (
-                    <div className="h-28 flex items-center justify-center border border-dashed border-gray-200">
-                      <span className="text-xs text-gray-400 font-light font-mono">No active lead entities loaded yet. Run scraper logs.</span>
+                    <div className="h-28 flex items-center justify-center border-2 border-dashed border-black">
+                      <span className="text-xs text-gray-500 font-light font-mono">No active lead entities loaded yet. Run scraper logs.</span>
                     </div>
                   ) : (
                     <AnimatePresence>
@@ -274,24 +267,23 @@ export default function LeadScraperSandbox() {
                           initial={{ opacity: 0, x: 20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ duration: 0.3, delay: i * 0.1 }}
-                          className="p-4 bg-gray-50 border border-gray-200 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-black transition-all text-left"
-                          style={{ borderRadius: 0 }}
+                          className="p-4 bg-[#FAFAF8] border-2 border-black shadow-[4px_4px_0_#0A0A0A] hover:shadow-[6px_6px_0_#0A0A0A] hover:-translate-x-0.5 hover:-translate-y-0.5 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all duration-100 text-left"
                         >
                           <div className="space-y-1.5 min-w-0 flex-1">
                             <div className="flex items-center gap-2 flex-wrap">
                               <h5 className="text-sm font-black uppercase text-black truncate">{lead.name}</h5>
-                              <span className={`px-2 py-0.5 text-[8px] font-mono font-bold uppercase ${
-                                lead.website === "No Website Found" 
-                                  ? 'bg-red-50 text-red-600 border border-red-200' 
+                              <span className={`border-2 border-black font-mono font-black uppercase text-[8px] px-2 py-0.5 ${
+                                lead.website === "No Website Found"
+                                  ? 'bg-red-600 text-white'
                                   : lead.website === "Unclaimed Listing"
-                                  ? 'bg-yellow-50 text-yellow-600 border border-yellow-200'
-                                  : 'bg-green-50 text-green-600 border border-green-200'
+                                  ? 'bg-[#FFE500] text-black'
+                                  : 'bg-black text-white'
                               }`}>
                                 {lead.website}
                               </span>
                             </div>
-                            
-                            <div className="flex gap-4 items-center text-[10px] text-gray-500 font-mono">
+
+                            <div className="flex gap-4 items-center text-[10px] text-gray-600 font-mono">
                               <span className="flex items-center gap-0.5 text-black font-semibold">
                                 <Star className="w-3 h-3 fill-red-600 text-red-600 inline" /> {lead.rating}
                               </span>
@@ -303,18 +295,17 @@ export default function LeadScraperSandbox() {
                           </div>
 
                           <div className="flex items-center gap-2 shrink-0 justify-end">
-                            {/* CRM sync Button */}
+                            {/* CRM Sync Button */}
                             <button
                               onClick={() => handleSyncToCRM(lead.name)}
                               disabled={syncStatus[lead.name] === 'synced'}
-                              className={`px-3 py-1.5 text-[9px] font-mono font-bold uppercase transition-all flex items-center gap-1 ${
+                              className={`px-3 py-1.5 text-[9px] font-mono font-black uppercase transition-all duration-100 flex items-center gap-1 border-2 ${
                                 syncStatus[lead.name] === 'synced'
-                                  ? 'bg-green-50 text-green-600 border border-green-200'
+                                  ? 'bg-black text-white border-black'
                                   : syncStatus[lead.name] === 'syncing'
-                                  ? 'bg-yellow-50 text-yellow-600 border border-yellow-200'
-                                  : 'bg-white hover:bg-black hover:text-white border-gray-200 text-gray-700'
+                                  ? 'bg-[#FFE500] text-black border-black'
+                                  : 'bg-[#FAFAF8] text-black border-black shadow-[3px_3px_0_#0A0A0A] hover:shadow-[1px_1px_0_#0A0A0A] hover:translate-x-0.5 hover:translate-y-0.5'
                               }`}
-                              style={{ borderRadius: 0 }}
                             >
                               {syncStatus[lead.name] === 'synced' ? (
                                 <>
@@ -334,8 +325,7 @@ export default function LeadScraperSandbox() {
                             {/* Pitch Button */}
                             <button
                               onClick={() => handleDraftPitch(lead)}
-                              className="px-3 py-1.5 bg-red-600 hover:bg-black text-white text-[9px] font-mono font-bold uppercase transition-all flex items-center gap-1"
-                              style={{ borderRadius: 0 }}
+                              className="px-3 py-1.5 bg-red-600 text-white border-2 border-black shadow-[3px_3px_0_#0A0A0A] hover:shadow-[1px_1px_0_#0A0A0A] hover:translate-x-0.5 hover:translate-y-0.5 text-[9px] font-mono font-black uppercase transition-all duration-100 flex items-center gap-1"
                             >
                               <Mail className="w-3 h-3" />
                               PITCH
@@ -354,30 +344,29 @@ export default function LeadScraperSandbox() {
 
         </div>
 
-        {/* Pitch Custom Modal / Section */}
+        {/* Pitch Modal */}
         <AnimatePresence>
           {selectedLeadForPitch && (
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 30 }}
-              className="mt-12 border-2 border-black bg-gray-50 p-6 md:p-8 max-w-5xl mx-auto relative overflow-hidden"
-              style={{ borderRadius: 0 }}
+              className="mt-12 border-2 border-black bg-white shadow-[8px_8px_0_#0A0A0A] p-6 md:p-8 max-w-5xl mx-auto relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 p-2 text-[6px] font-mono text-gray-300">AUTO_OUTREACH_ENG_V1</div>
-              <div className="flex items-center justify-between border-b border-gray-200 pb-4 mb-6">
+              <div className="flex items-center justify-between border-b-2 border-black pb-4 mb-6">
                 <div className="flex items-center gap-2 text-left">
-                  <div className="w-8 h-8 rounded-none bg-red-100 flex items-center justify-center text-red-600">
-                    <Sparkles className="w-4 h-4" />
+                  <div className="w-8 h-8 bg-[#FFE500] border-2 border-black flex items-center justify-center">
+                    <Sparkles className="w-4 h-4 text-black" />
                   </div>
                   <div>
                     <h4 className="text-xs font-black uppercase text-black tracking-tight">AI OUTREACH PITCH GENERATED</h4>
-                    <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wider">Tailored system integration proposal template for {selectedLeadForPitch.name}</p>
+                    <p className="text-[9px] text-gray-500 font-bold uppercase tracking-wider">Tailored system integration proposal template for {selectedLeadForPitch.name}</p>
                   </div>
                 </div>
                 <button
                   onClick={() => setSelectedLeadForPitch(null)}
-                  className="text-xs font-bold text-gray-400 hover:text-black uppercase"
+                  className="text-xs font-black text-black border-2 border-black px-3 py-1 bg-[#FAFAF8] shadow-[3px_3px_0_#0A0A0A] hover:shadow-[1px_1px_0_#0A0A0A] hover:translate-x-0.5 hover:translate-y-0.5 uppercase tracking-widest font-mono transition-all duration-100"
                 >
                   Close Pitch
                 </button>
@@ -386,24 +375,23 @@ export default function LeadScraperSandbox() {
               {isGeneratingPitch ? (
                 <div className="h-48 flex flex-col gap-3 items-center justify-center">
                   <Loader2 className="w-8 h-8 animate-spin text-red-600" />
-                  <span className="text-xs font-mono text-gray-400 uppercase tracking-widest">Generating responsive email framework...</span>
+                  <span className="text-xs font-mono text-gray-500 uppercase tracking-widest">Generating responsive email framework...</span>
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <div className="bg-white border border-gray-200 p-5 rounded-none font-mono text-[11px] text-gray-800 leading-relaxed text-left whitespace-pre-wrap select-text max-h-[300px] overflow-y-auto">
+                  <div className="bg-[#FAFAF8] border-2 border-black p-5 font-mono text-[11px] text-gray-800 leading-relaxed text-left whitespace-pre-wrap select-text max-h-75 overflow-y-auto">
                     {generatedPitch}
                   </div>
-                  
+
                   <div className="flex justify-between items-center gap-4 flex-wrap text-left">
-                    <div className="text-[10px] text-gray-500 font-light flex items-center gap-1">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-green-600" /> 
+                    <div className="text-[10px] text-gray-600 font-light flex items-center gap-1">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-red-600" />
                       Generated using lead review score ({selectedLeadForPitch.rating} ⭐) and target location.
                     </div>
-                    
+
                     <a
                       href={`mailto:${selectedLeadForPitch.email}?subject=Quick question regarding ${selectedLeadForPitch.name}'s web presence&body=${encodeURIComponent(generatedPitch)}`}
-                      className="px-6 py-3 bg-black hover:bg-red-600 text-white text-xs font-black uppercase tracking-widest flex items-center gap-2 transition-all shadow-sm"
-                      style={{ borderRadius: 0 }}
+                      className="bg-black text-white border-2 border-black shadow-[4px_4px_0_#444] hover:shadow-[2px_2px_0_#444] hover:translate-x-0.5 hover:translate-y-0.5 px-6 py-3 text-xs font-black uppercase tracking-widest flex items-center gap-2 transition-all duration-100"
                     >
                       <Send className="w-3.5 h-3.5" />
                       SEND EMAIL DIRECTLY

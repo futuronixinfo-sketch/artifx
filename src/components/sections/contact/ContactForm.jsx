@@ -2,8 +2,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Container from '@/components/ui/Container';
-import Button from '@/components/ui/Button';
-import { Check, Cpu, Terminal, ShieldCheck, Sparkles } from 'lucide-react';
+import { Check, Terminal, ShieldCheck } from 'lucide-react';
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -38,19 +37,18 @@ export default function ContactForm() {
 
   if (isSubmitted) {
     return (
-      <section id="contact-form" className="py-32 bg-white text-black text-center border-b border-gray-100 select-none relative overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#f3f4f6_1px,transparent_1px),linear-gradient(to_bottom,#f3f4f6_1px,transparent_1px)] bg-[size:32px_32px] opacity-40 pointer-events-none z-0" />
+      <section id="contact-form" className="py-32 bg-[#FAFAF8] text-black text-center border-b-2 border-black select-none relative overflow-hidden">
         <Container className="max-w-xl relative z-10 space-y-6">
           <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="w-16 h-16 border border-emerald-200 bg-emerald-50/50 flex items-center justify-center mx-auto rounded-3xl text-emerald-600 shadow-sm"
+            className="w-16 h-16 bg-[#FFE500] border-2 border-black shadow-[4px_4px_0_#0A0A0A] flex items-center justify-center mx-auto text-black"
           >
             <ShieldCheck className="w-8 h-8" />
           </motion.div>
-          
+
           <div className="space-y-2">
-            <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-mono text-[8px] font-bold border border-emerald-100 uppercase tracking-widest">
+            <span className="inline-block px-2 py-0.5 bg-black text-[#FFE500] font-mono text-[8px] font-bold border-2 border-black uppercase tracking-widest">
               [ TRANSMISSION // SUCCESS ]
             </span>
             <h2 className="text-2xl font-black uppercase tracking-tight text-black">
@@ -67,19 +65,15 @@ export default function ContactForm() {
   }
 
   return (
-    <section id="contact-form" className="py-24 bg-white text-black border-b border-gray-100 relative overflow-hidden select-none">
-      
-      {/* Background soft ambient flow grids */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#f3f4f6_1px,transparent_1px),linear-gradient(to_bottom,#f3f4f6_1px,transparent_1px)] bg-[size:32px_32px] opacity-20 pointer-events-none" />
-      <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-red-50/30 rounded-full blur-[140px] pointer-events-none" />
+    <section id="contact-form" className="py-24 bg-[#FAFAF8] text-black border-b-2 border-black relative overflow-hidden select-none">
 
       <Container className="max-w-6xl mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          
+
           {/* Left Column: Intake Form (7 cols) */}
           <div className="lg:col-span-7 space-y-8">
             <div className="text-left space-y-2">
-              <span className="px-2 py-0.5 rounded bg-red-50 text-red-600 border border-red-100 font-mono text-[8px] font-bold uppercase tracking-widest">
+              <span className="inline-block px-2 py-0.5 bg-[#FFE500] text-black border-2 border-black shadow-[3px_3px_0_#0A0A0A] font-mono text-[8px] font-bold uppercase tracking-widest">
                 [ STAGE_02 // SYSTEM_INTAKE ]
               </span>
               <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-black">
@@ -88,38 +82,38 @@ export default function ContactForm() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
+
                 {/* Full name input */}
                 <div className="space-y-1.5">
-                  <label className="text-[9px] font-mono font-bold uppercase tracking-widest text-gray-400 block">
+                  <label className="text-xs font-mono font-black uppercase tracking-wider text-black block">
                     Full Name // USER
                   </label>
-                  <input 
-                    required 
-                    type="text" 
+                  <input
+                    required
+                    type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full bg-gray-50/50 border border-gray-200 rounded-xl px-4 py-3 text-black text-xs focus:outline-none focus:border-black focus:bg-white transition-all shadow-sm font-sans" 
-                    placeholder="Enter full name" 
+                    className="w-full border-2 border-black bg-white focus:outline-none focus:shadow-[2px_2px_0_#DC2626] font-mono shadow-[2px_2px_0_#0A0A0A] px-4 py-3 text-black text-xs transition-all"
+                    placeholder="Enter full name"
                   />
                 </div>
 
                 {/* Company input */}
                 <div className="space-y-1.5">
-                  <label className="text-[9px] font-mono font-bold uppercase tracking-widest text-gray-400 block">
+                  <label className="text-xs font-mono font-black uppercase tracking-wider text-black block">
                     Company / Brand // NODE
                   </label>
-                  <input 
-                    required 
-                    type="text" 
+                  <input
+                    required
+                    type="text"
                     name="company"
                     value={formData.company}
                     onChange={handleChange}
-                    className="w-full bg-gray-50/50 border border-gray-200 rounded-xl px-4 py-3 text-black text-xs focus:outline-none focus:border-black focus:bg-white transition-all shadow-sm font-sans" 
-                    placeholder="Acme Inc." 
+                    className="w-full border-2 border-black bg-white focus:outline-none focus:shadow-[2px_2px_0_#DC2626] font-mono shadow-[2px_2px_0_#0A0A0A] px-4 py-3 text-black text-xs transition-all"
+                    placeholder="Acme Inc."
                   />
                 </div>
 
@@ -127,33 +121,33 @@ export default function ContactForm() {
 
               {/* Email input */}
               <div className="space-y-1.5">
-                <label className="text-[9px] font-mono font-bold uppercase tracking-widest text-gray-400 block">
+                <label className="text-xs font-mono font-black uppercase tracking-wider text-black block">
                   Email Address // COMM_ROUTE
                 </label>
-                <input 
-                  required 
-                  type="email" 
+                <input
+                  required
+                  type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full bg-gray-50/50 border border-gray-200 rounded-xl px-4 py-3 text-black text-xs focus:outline-none focus:border-black focus:bg-white transition-all shadow-sm font-sans" 
-                  placeholder="john@company.com" 
+                  className="w-full border-2 border-black bg-white focus:outline-none focus:shadow-[2px_2px_0_#DC2626] font-mono shadow-[2px_2px_0_#0A0A0A] px-4 py-3 text-black text-xs transition-all"
+                  placeholder="john@company.com"
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
+
                 {/* Role dropdown selection */}
                 <div className="space-y-1.5">
-                  <label className="text-[9px] font-mono font-bold uppercase tracking-widest text-gray-400 block">
+                  <label className="text-xs font-mono font-black uppercase tracking-wider text-black block">
                     Engage Profile // ROLE
                   </label>
                   <div className="relative">
-                    <select 
+                    <select
                       name="role"
                       value={formData.role}
                       onChange={handleChange}
-                      className="w-full bg-gray-50/50 border border-gray-200 rounded-xl px-4 py-3 text-black text-xs focus:outline-none focus:border-black focus:bg-white transition-all shadow-sm font-sans appearance-none"
+                      className="w-full border-2 border-black bg-white focus:outline-none focus:shadow-[2px_2px_0_#DC2626] font-mono shadow-[2px_2px_0_#0A0A0A] px-4 py-3 text-black text-xs transition-all appearance-none"
                     >
                       <option>Startup Founder</option>
                       <option>Service Business Owner</option>
@@ -169,18 +163,18 @@ export default function ContactForm() {
 
                 {/* System status dropdown */}
                 <div className="space-y-1.5">
-                  <label className="text-[9px] font-mono font-bold uppercase tracking-widest text-gray-400 block">
+                  <label className="text-xs font-mono font-black uppercase tracking-wider text-black block">
                     Infrastructure Status // SYS
                   </label>
                   <div className="relative">
-                    <select 
+                    <select
                       name="system"
                       value={formData.system}
                       onChange={handleChange}
-                      className="w-full bg-gray-50/50 border border-gray-200 rounded-xl px-4 py-3 text-black text-xs focus:outline-none focus:border-black focus:bg-white transition-all shadow-sm font-sans appearance-none"
+                      className="w-full border-2 border-black bg-white focus:outline-none focus:shadow-[2px_2px_0_#DC2626] font-mono shadow-[2px_2px_0_#0A0A0A] px-4 py-3 text-black text-xs transition-all appearance-none"
                     >
                       <option>No, typical chaos</option>
-                      <option>Yes, but it's broken</option>
+                      <option>Yes, but it&apos;s broken</option>
                       <option>Yes, need AI automation</option>
                       <option>Just starting out</option>
                     </select>
@@ -194,32 +188,31 @@ export default function ContactForm() {
 
               {/* Problem textarea */}
               <div className="space-y-1.5">
-                <label className="text-[9px] font-mono font-bold uppercase tracking-widest text-gray-400 block">
+                <label className="text-xs font-mono font-black uppercase tracking-wider text-black block">
                   Core Operational Problem // PAYLOAD
                 </label>
-                <textarea 
-                  required 
+                <textarea
+                  required
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  rows={4} 
-                  className="w-full bg-gray-50/50 border border-gray-200 rounded-xl px-4 py-3 text-black text-xs focus:outline-none focus:border-black focus:bg-white transition-all shadow-sm font-sans resize-none" 
-                  placeholder="Describe your operational bottlenecks or automated systems requirements..." 
+                  rows={4}
+                  className="w-full border-2 border-black bg-white focus:outline-none focus:shadow-[2px_2px_0_#DC2626] font-mono shadow-[2px_2px_0_#0A0A0A] px-4 py-3 text-black text-xs transition-all resize-none"
+                  placeholder="Describe your operational bottlenecks or automated systems requirements..."
                 />
               </div>
 
               <div className="pt-2 space-y-4">
-                <Button
-                  variant="custom"
+                <button
                   type="submit"
-                  className="w-full justify-center text-xs h-12 bg-black text-white hover:bg-red-600 border border-transparent font-mono uppercase tracking-widest rounded-2xl transition-all font-bold"
                   disabled={isSubmitting}
+                  className="w-full flex justify-center items-center text-xs h-12 bg-[#FFE500] text-black border-2 border-black shadow-[4px_4px_0_#0A0A0A] hover:shadow-[2px_2px_0_#0A0A0A] hover:translate-x-0.5 hover:translate-y-0.5 font-black uppercase tracking-widest font-mono transition-all duration-100 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? "TRANSMITTING DATA..." : "COMPILE_INQUIRY // INIT_INGEST"}
-                </Button>
-                
+                </button>
+
                 <div className="flex items-center justify-center gap-2 text-[9px] text-gray-400 font-mono">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-black shrink-0" />
                   <span>[ SECURE TRANSMISSION ENABLED // SSL_256BIT_AES ]</span>
                 </div>
               </div>
@@ -229,11 +222,8 @@ export default function ContactForm() {
 
           {/* Right Column: Dynamic Live Diagnostics Console Ingest Simulator (5 cols) */}
           <div className="lg:col-span-5 w-full sticky top-24">
-            <div className="border border-black bg-black text-emerald-400 font-mono p-6 rounded-3xl min-h-[420px] flex flex-col justify-between relative shadow-2xl shadow-black/30 overflow-hidden">
-              
-              {/* High-tech matrix dotted overlay */}
-              <div className="absolute inset-0 bg-[radial-gradient(#10b981_0.5px,transparent_0.5px)] bg-[size:10px_10px] opacity-10 pointer-events-none z-0" />
-              
+            <div className="border-2 border-black bg-black text-emerald-400 font-mono p-6 min-h-105 flex flex-col justify-between relative shadow-[4px_4px_0_#0A0A0A] overflow-hidden">
+
               <div className="space-y-5 relative z-10">
                 <div className="flex justify-between items-center border-b border-emerald-950 pb-2 text-[8px] text-emerald-600 font-bold">
                   <span className="flex items-center gap-1">
@@ -241,16 +231,16 @@ export default function ContactForm() {
                     SYS_INGEST_LOG // CONSOLE_01
                   </span>
                   <span className="flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+                    <span className="w-1.5 h-1.5 bg-emerald-500 animate-ping" />
                     ONLINE
                   </span>
                 </div>
-                
+
                 {/* Dynamically logged form telemetry fields */}
                 <div className="space-y-2.5 text-[8.5px] leading-relaxed">
                   <p className="text-emerald-600">SYS_INTAKE_DAEMON // INITIALIZING HANDSHAKE...</p>
                   <p className="text-emerald-600">SECURE_TUNNEL // CREATING AUTHENTICATED PATHWAY [PORT_443]</p>
-                  
+
                   <p className="text-white">
                     &gt; CLIENT_IDENT: <span className={formData.name ? "text-emerald-400 font-bold" : "text-emerald-700/60"}>
                       {formData.name ? formData.name.toUpperCase() : "PENDING_INPUT..."}
@@ -309,4 +299,3 @@ export default function ContactForm() {
     </section>
   );
 }
-

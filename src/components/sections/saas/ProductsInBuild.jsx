@@ -9,15 +9,12 @@ const icons = [Layers, Zap, Bot];
 
 export default function ProductsInBuild() {
     return (
-        <section className="py-32 bg-gray-50 relative overflow-hidden select-none">
-            {/* Background Grid */}
-            <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10 bg-center" />
-
+        <section className="py-32 bg-[#FAFAF8] relative overflow-hidden select-none border-b-2 border-black">
             <Container className="relative z-10 max-w-4xl mx-auto">
                 <div className="text-left mb-20">
-                    <span className="text-xs font-mono text-red-600 uppercase tracking-widest block font-bold mb-4">[ 04 / ACTIVE_BUILDS ]</span>
-                    <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-black">
-                        Products in <span className="italic gradient-text" style={{ fontFamily: "Georgia, serif" }}>Development</span>.
+                    <span className="inline-block text-xs font-mono bg-black text-[#FFE500] border-2 border-black shadow-[3px_3px_0_#DC2626] px-3 py-1 uppercase tracking-widest font-black mb-4">[ 04 / ACTIVE_BUILDS ]</span>
+                    <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-black mt-4">
+                        Products in <span className="italic text-red-600 underline decoration-4 underline-offset-4" style={{ fontFamily: "Georgia, serif" }}>Development</span>.
                     </h2>
                 </div>
 
@@ -49,22 +46,22 @@ function ProductBlock({ product, Icon, index }) {
         >
             {/* Details Content (7 Cols) */}
             <div className={`lg:col-span-7 flex gap-8 items-start ${!isEven ? 'lg:order-2' : ''}`}>
-                <div className="w-12 h-12 bg-gray-100 border border-gray-200 flex flex-shrink-0 items-center justify-center text-gray-400 group-hover:text-black group-hover:border-gray-300 transition-all shadow-xl" style={{ borderRadius: 0 }}>
+                <div className="w-12 h-12 bg-white border-2 border-black shadow-[4px_4px_0_#0A0A0A] flex shrink-0 items-center justify-center transition-all duration-100">
                     <Icon className="w-5 h-5 text-red-600" />
                 </div>
 
-                <div className="flex-grow border-l border-gray-200 pl-8 md:pl-12 py-2 text-left">
+                <div className="grow border-l-2 border-black pl-8 md:pl-12 py-2 text-left">
                     <h3 className="text-xl font-bold uppercase tracking-tight text-black mb-2">{product.name}</h3>
                     <p className="text-xs text-red-600 font-mono uppercase tracking-widest mb-4">{product.purpose}</p>
-                    <p className="text-xs text-gray-500 mb-8 max-w-xl leading-relaxed font-light">
+                    <p className="text-xs text-gray-600 mb-8 max-w-xl leading-relaxed font-light">
                         {product.description}
                     </p>
 
                     <div>
-                        <span className="text-[10px] font-mono text-gray-400 uppercase tracking-widest block mb-4">Solves:</span>
+                        <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest block mb-4">Solves:</span>
                         <div className="flex flex-wrap gap-3">
                             {product.solves.map((item) => (
-                                <span key={item} className="px-3 py-1.5 bg-gray-100 border border-gray-200 text-[10px] font-mono uppercase text-gray-700" style={{ borderRadius: 0 }}>
+                                <span key={item} className="border-2 border-black bg-[#FAFAF8] text-black font-mono font-black uppercase text-[9px] px-2.5 py-1">
                                     {item}
                                 </span>
                              ))}
@@ -75,15 +72,15 @@ function ProductBlock({ product, Icon, index }) {
 
             {/* Dashboard Visual (5 Cols) */}
             <div className={`lg:col-span-5 ${!isEven ? 'lg:order-1' : ''}`}>
-                <div className="relative border border-gray-200 p-2 bg-gray-50 shadow-2xl" style={{ borderRadius: 0 }}>
-                    <div className="relative overflow-hidden aspect-[16/10]" style={{ borderRadius: 0 }}>
-                        <img 
-                            src={product.image} 
-                            alt={product.name} 
+                <div className="relative border-2 border-black p-2 bg-white shadow-[4px_4px_0_#0A0A0A] group-hover:shadow-[6px_6px_0_#0A0A0A] group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-100">
+                    <div className="relative overflow-hidden aspect-16/10">
+                        <img
+                            src={product.image}
+                            alt={product.name}
                             className="w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-all duration-1000 filter grayscale"
                         />
                         <div className="absolute inset-0 bg-black/80" />
-                        <div className="absolute bottom-4 left-4 font-mono text-[10px] uppercase text-gray-500 bg-gray-100/80 px-3 py-1 border border-gray-200" style={{ borderRadius: 0 }}>
+                        <div className="absolute bottom-4 left-4 font-mono text-[10px] uppercase text-white bg-black border-2 border-black px-3 py-1">
                             dev_status: compiling
                         </div>
                     </div>
