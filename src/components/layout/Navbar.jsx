@@ -10,7 +10,7 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#FAFAF8] border-b-2 border-black">
+    <header className={`fixed top-0 left-0 right-0 bg-[#FAFAF8] border-b-2 border-black ${isMobileMenuOpen ? 'z-[600]' : 'z-50'}`}>
       <div className="mx-auto max-w-7xl px-6 py-3 flex items-center justify-between">
 
         <Link href="/" className="flex items-center gap-2 group">
@@ -57,7 +57,7 @@ export default function Navbar() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "tween", duration: 0.2 }}
-            className="fixed inset-0 z-[100] bg-[#FAFAF8] border-l-2 border-black md:hidden flex flex-col p-8"
+            className="fixed inset-0 z-[500] bg-[#FAFAF8] border-l-2 border-black md:hidden flex flex-col p-8"
           >
             <div className="flex items-center justify-between mb-12">
               <span className="text-xl font-black uppercase tracking-tight">ARTIFX</span>

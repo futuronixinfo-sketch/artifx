@@ -8,10 +8,10 @@ export const heroContent = {
   titleHighlight: "That Scale",
   subtitle: "From AI-powered automation to enterprise web platforms — we engineer the technology backbone that transforms how your business operates.",
   stats: [
-    { label: "Projects Delivered", value: "50+" },
-    { label: "Avg. Efficiency Gain", value: "78%" },
-    { label: "Client Retention", value: "96%" },
-    { label: "Tech Integrations", value: "30+" }
+    { label: "Projects Delivered", value: "6+" },
+    { label: "Industries Served", value: "6+" },
+    { label: "Years Experience", value: "5+" },
+    { label: "Custom-Built", value: "100%" }
   ]
 };
 
@@ -61,7 +61,10 @@ export const projectsData = {
       description: "Automated student enrollment and lead management system replacing manual tracking.",
       image: "https://images.pexels.com/photos/768474/pexels-photo-768474.jpeg?auto=compress&cs=tinysrgb&w=600",
       tags: ["Next.js", "CRM", "Automation"],
-      impact: "50% faster enrollment"
+      impact: "50% faster enrollment",
+      challenge: "Enrollment ran on spreadsheets and WhatsApp — leads slipped through the cracks and staff spent hours on manual follow-up.",
+      solution: "A custom CRM with automated lead capture, status pipelines, and reminder workflows that route every enquiry to the right counsellor.",
+      result: { metric: "50%", label: "Faster enrollment cycle" }
     },
     {
       id: 2,
@@ -70,7 +73,10 @@ export const projectsData = {
       description: "Modern property listing platform with advanced search and investor dashboards.",
       image: "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=600",
       tags: ["Next.js", "Maps", "Portal"],
-      impact: "3x investor engagement"
+      impact: "3x investor engagement",
+      challenge: "Listings lived in PDFs and brokers' inboxes, giving investors no fast way to compare properties or track opportunities.",
+      solution: "A searchable listing platform with map-based discovery and a dedicated investor dashboard for shortlists and deal tracking.",
+      result: { metric: "3x", label: "Investor engagement" }
     },
     {
       id: 3,
@@ -79,7 +85,10 @@ export const projectsData = {
       description: "Full online store with catalog management and nationwide shipping integration.",
       image: "https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?auto=compress&cs=tinysrgb&w=600",
       tags: ["Shopify", "Next.js", "Payments"],
-      impact: "Nationwide reach"
+      impact: "Nationwide reach",
+      challenge: "A local apparel brand was limited to walk-in sales with no way to reach or fulfil orders beyond the city.",
+      solution: "A full online store with catalog management, payments, and shipping integration to deliver across the country.",
+      result: { metric: "100%", label: "Online sales channel added" }
     },
     {
       id: 4,
@@ -88,7 +97,10 @@ export const projectsData = {
       description: "Dual-platform brand presence with integrated e-commerce and content management.",
       image: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=600",
       tags: ["Next.js", "E-Commerce", "CMS"],
-      impact: "Unified brand experience"
+      impact: "Unified brand experience",
+      challenge: "Brand content and storefront were split across disconnected tools, creating an inconsistent customer experience.",
+      solution: "A unified platform pairing editorial content with commerce, managed from a single CMS the team controls.",
+      result: { metric: "1", label: "Unified brand + store" }
     },
     {
       id: 5,
@@ -97,7 +109,10 @@ export const projectsData = {
       description: "Agency website showcasing SaaS products and service offerings with lead generation.",
       image: "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=600",
       tags: ["Next.js", "SaaS", "Lead Gen"],
-      impact: "40% better lead quality"
+      impact: "40% better lead quality",
+      challenge: "An agency had strong products but a generic site that attracted unqualified, low-intent enquiries.",
+      solution: "A conversion-focused platform that showcases products and services with structured lead-capture funnels.",
+      result: { metric: "40%", label: "Better lead quality" }
     },
     {
       id: 6,
@@ -106,7 +121,10 @@ export const projectsData = {
       description: "Comprehensive multi-project agency portfolio with detailed case study format.",
       image: "https://images.pexels.com/photos/5762121/pexels-photo-5762121.jpeg?auto=compress&cs=tinysrgb&w=600",
       tags: ["Next.js", "Portfolio", "CMS"],
-      impact: "Centralized showcase"
+      impact: "Centralized showcase",
+      challenge: "Project work was scattered across links and decks, making it hard to present a credible track record to clients.",
+      solution: "A centralized portfolio with a repeatable case-study format that turns past work into a sales asset.",
+      result: { metric: "15+", label: "Case studies centralized" }
     }
   ]
 };
@@ -156,29 +174,29 @@ export const whyArtifx = {
       title: "System-First Architecture",
       description: "We design the complete business flow before writing code. Every component has a purpose in your operational ecosystem.",
       icon: Cpu,
-      stat: "300+",
-      statLabel: "Systems Architected"
+      stat: "100%",
+      statLabel: "Custom-Architected"
     },
     {
       title: "AI-Native From Day One",
       description: "Every system we build is designed to integrate with AI models from launch, not as an afterthought.",
       icon: Zap,
-      stat: "12+",
-      statLabel: "AI Integrations"
+      stat: "Day 1",
+      statLabel: "AI Integration"
     },
     {
       title: "Enterprise-Grade Security",
       description: "Security isn't optional. We implement enterprise best practices by default — encryption, auth, and audit trails.",
       icon: ShieldCheck,
-      stat: "99.9%",
-      statLabel: "Uptime Guarantee"
+      stat: "Secure",
+      statLabel: "By Default"
     },
     {
       title: "Scalable Foundation",
       description: "Built on Next.js enterprise architecture. Ready to scale from hundreds to millions of users without rewrites.",
       icon: TrendingUp,
-      stat: "50x",
-      statLabel: "Scale Capacity"
+      stat: "Cloud",
+      statLabel: "Native Scale"
     }
   ]
 };
@@ -271,4 +289,61 @@ export const finalCTA = {
   subtitle: "Stop fighting with disconnected tools and manual processes. Let's build a system that works while you focus on growth.",
   primaryCTA: "Book Free Consultation",
   secondaryCTA: "View Our Work"
+};
+
+/* Social-proof metrics — rendered directly below the hero (honest, defensible numbers) */
+export const socialProof = {
+  label: "What We Bring",
+  stats: [
+    { value: "6+",   label: "Projects Delivered" },
+    { value: "5+",   label: "Years Experience" },
+    { value: "6+",   label: "Industries Served" },
+    { value: "100%", label: "Custom-Built" },
+    { value: "24/7", label: "Support" },
+  ]
+};
+
+/* Trusted-by client / partner logos (text-based placeholders until real assets land) */
+export const clientLogos = {
+  title: "Trusted By Businesses Across Industries",
+  subtitle: "From early-stage startups to growing enterprises, teams ship with Artifx.",
+  logos: [
+    "Impact Talent Centre",
+    "Mqamy",
+    "Legacy Wear",
+    "BeaBeyond",
+    "Futuronix",
+    "Adporate",
+  ]
+};
+
+/* Founder spotlight — human element + credibility */
+export const founderSpotlight = {
+  badge: "Meet The Founder",
+  name: "Shan Khan",
+  role: "Founder & Systems Architect",
+  initials: "SK",
+  intro: "I started Artifx to build digital products that actually move the needle for businesses — not just websites that look good, but systems that automate operations, capture leads, and scale without breaking.",
+  experienceYears: "5+",
+  experienceLabel: "Years Building Products",
+  stack: ["React", "Next.js", "Spring Boot", "AI / LLMs", "Cloud", "Node.js"],
+  expertise: "Built digital products for startups and businesses using React, Next.js, Spring Boot, AI, and cloud technologies.",
+  email: "khanshan949@gmail.com",
+  website: "https://www.shankhan.co.in/",
+};
+
+/* Enterprise credibility — technology stack */
+export const techStack = {
+  title: "Built On A Modern, Battle-Tested Stack",
+  subtitle: "Enterprise-grade tooling chosen for performance, security, and scale — so your product is ready to grow from day one.",
+  technologies: [
+    { name: "React",        category: "Frontend" },
+    { name: "Next.js",      category: "Framework" },
+    { name: "Spring Boot",  category: "Backend" },
+    { name: "Node.js",      category: "Backend" },
+    { name: "PostgreSQL",   category: "Database" },
+    { name: "AWS",          category: "Cloud" },
+    { name: "Docker",       category: "DevOps" },
+    { name: "AI Integrations", category: "Intelligence" },
+  ]
 };

@@ -1,108 +1,105 @@
 'use client';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Container from '@/components/ui/Container';
 import Link from 'next/link';
-import { ArrowLeft, ArrowRight, Lightbulb, TrendingUp, Code2, Target, Workflow } from 'lucide-react';
+import { 
+  ArrowLeft, 
+  ArrowRight, 
+  Lightbulb, 
+  TrendingUp, 
+  Code2, 
+  Target, 
+  Workflow, 
+  Play, 
+  Pause, 
+  Terminal, 
+  Coins, 
+  Cpu, 
+  Activity, 
+  Info,
+  Layers,
+  Sparkles
+} from 'lucide-react';
+import { getModelFlow } from '@/data/modelFlows';
 
-function RenderCategoryDiagram({ categoryId }) {
-  const configs = {
-    'real-estate':     { nodes: ['CLIENT / BUYER', 'REAL ESTATE PLATFORM', 'VETTED BROKERS', 'BUILDER INVENTORY'], sub: 'Broker Routing Core' },
-    'healthcare':      { nodes: ['PATIENT', 'HIPAA GATEWAY', 'CLINICAL DB', 'TELEMED PHYSICIAN'], sub: 'HL7 Secure Tunnel' },
-    'ecommerce':       { nodes: ['BUYER APP', 'ORDER ROUTER', 'DARK STORE', 'LOGISTICS FLEET'], sub: null },
-    'home-services':   { nodes: ['CLIENT BOOKING', 'GEO DISPATCH', 'FIELD CONTRACTOR'], sub: 'Active Matching Engine' },
-    'food':            { nodes: ['CUSTOMER APP', 'MENU AGGREGATOR', 'CLOUD KITCHEN', 'COURIER RIDER'], sub: null },
-    'logistics':       { nodes: ['CARGO DISPATCH', 'ROUTE OPTIMIZER', 'FINAL DESTINATION'], sub: 'Smart Hub Distributor' },
-    'education':       { nodes: ['STUDENT APP', 'LMS CONTROLLER', 'ACADEMIC MENTOR'], sub: 'Live Streaming CDN' },
-    'fintech':         { nodes: ['INVESTOR / USER', 'LEDGER ESCROW', 'CLEARING CORE'], sub: 'ISO 20022 Audit Trail' },
-    'travel':          { nodes: ['TRAVELLER', 'GDS ENGINE', 'GLOBAL INVENTORY'], sub: 'Multi-Hospitality Router' },
-    'automobile':      { nodes: ['TELEMATICS', 'FLEET ROUTER HUB', 'EV CHARGING GRID'], sub: 'GPS Active Tracking' },
-    'ai-saas':         { nodes: ['USER API QUERY', 'COGNITIVE ORCHESTRATOR', 'VECTOR DB / ACTION'], sub: 'LLM Agent Reasoning' },
-    'creator-economy': { nodes: ['SUBSCRIBER', 'MEDIA PAYWALL', 'CREATOR WALLET'], sub: 'Direct Subscription CDN' },
-  };
-
-  const cfg = configs[categoryId] || { nodes: ['DEMAND INGEST', 'ORCHESTRATOR', 'SERVICE NODES'], sub: 'Real-Time Routing' };
-  const nodes = cfg.nodes;
-  const n = nodes.length;
-  const totalW = 520;
-  const nodeW = 110;
-  const nodeH = 44;
-  const gap = (totalW - n * nodeW) / (n + 1);
-  const cy = 100;
-
-  return (
-    <svg viewBox={`0 0 ${totalW} 200`} fill="none" className="w-full h-full">
-      <defs>
-        <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-          <path d="M 0 2 L 9 5 L 0 8 z" fill="#DC2626" />
-        </marker>
-      </defs>
-
-      {nodes.map((label, i) => {
-        const x = gap + i * (nodeW + gap);
-        const isCore = i === Math.floor(n / 2) && n > 2 || (n === 2 && i === 1) || (n <= 2 && i === 0);
-        const actuallyCore = n >= 3 ? i === 1 : i === 0;
-        return (
-          <g key={i}>
-            <rect
-              x={x} y={cy - nodeH / 2}
-              width={nodeW} height={nodeH}
-              className={actuallyCore ? 'fill-black stroke-black stroke-2' : 'fill-white stroke-black stroke-[1.5]'}
-            />
-            <text
-              x={x + nodeW / 2}
-              y={cy + (cfg.sub && actuallyCore ? -4 : 3)}
-              textAnchor="middle"
-              className={`font-mono font-black text-[8px] ${actuallyCore ? 'fill-white' : 'fill-black'}`}
-              fontSize="8"
-              fontWeight="900"
-              fontFamily="monospace"
-              fill={actuallyCore ? '#ffffff' : '#000000'}
-            >
-              {label}
-            </text>
-            {cfg.sub && actuallyCore && (
-              <text x={x + nodeW / 2} y={cy + 9} textAnchor="middle" fontSize="6.5" fontFamily="monospace" fill="#DC2626" fontWeight="700">
-                {cfg.sub}
-              </text>
-            )}
-          </g>
-        );
-      })}
-
-      {nodes.slice(0, -1).map((_, i) => {
-        const x1 = gap + i * (nodeW + gap) + nodeW;
-        const x2 = gap + (i + 1) * (nodeW + gap);
-        return (
-          <g key={i}>
-            <line x1={x1} y1={cy} x2={x2} y2={cy} stroke="#DC2626" strokeWidth="1.5" markerEnd="url(#arr2)" />
-            <circle r="3" fill="#DC2626">
-              <animateMotion dur={`${2 - i * 0.3}s`} repeatCount="indefinite" path={`M ${x1} ${cy} L ${x2} ${cy}`} />
-            </circle>
-          </g>
-        );
-      })}
-    </svg>
-  );
+// Simple helper to normalize name into slug
+function modelSlug(name) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
-const SPEC_CONFIG = [
-  { key: 'howItWorks',   label: 'How It Works',   Icon: Lightbulb,   accent: '#FFE500' },
-  { key: 'revenueModel', label: 'Revenue Model',   Icon: TrendingUp,  accent: '#DC2626' },
-  { key: 'techStack',    label: 'Tech Stack',      Icon: Code2,       accent: '#0A0A0A' },
-  { key: 'suitableFor',  label: 'Best Suited For', Icon: Target,      accent: '#0A0A0A' },
-];
-
 export default function ModelDetail({ model, category }) {
+  const modelSlugStr = modelSlug(model.name);
+  const flowData = getModelFlow(category.id, modelSlugStr, model);
+
+  // States
+  const [isMoneyFlow, setIsMoneyFlow] = useState(false);
+  const [currentLogIndex, setCurrentLogIndex] = useState(0);
+  const [isSimulating, setIsSimulating] = useState(true);
+  const [terminalLogs, setTerminalLogs] = useState([]);
+  const terminalEndRef = useRef(null);
+
+  // Toggle Flow Mode
+  const handleFlowToggle = (mode) => {
+    setIsMoneyFlow(mode);
+    setCurrentLogIndex(0);
+  };
+
+  // Steps matching the mode
+  const stepsToRender = isMoneyFlow ? flowData.moneyFlow : flowData.steps;
+
+  // Steps count
+  const totalSteps = stepsToRender.length;
+  // Active step highlights (synced with the logs index)
+  const activeStep = isMoneyFlow
+    ? (currentLogIndex >= totalSteps ? totalSteps - 1 : currentLogIndex)
+    : (currentLogIndex >= totalSteps ? totalSteps - 1 : currentLogIndex);
+
+  // Log Simulation Loop
+  useEffect(() => {
+    if (!isSimulating) return;
+
+    const interval = setInterval(() => {
+      setCurrentLogIndex((prev) => (prev + 1) % flowData.simulatedLogs.length);
+    }, 2800);
+
+    return () => clearInterval(interval);
+  }, [isSimulating, flowData.simulatedLogs]);
+
+  // Sync log array based on log index
+  useEffect(() => {
+    const activeLogs = [];
+    // Include all logs up to currentLogIndex
+    for (let i = 0; i <= currentLogIndex; i++) {
+      if (flowData.simulatedLogs[i]) {
+        activeLogs.push(flowData.simulatedLogs[i]);
+      }
+    }
+    setTerminalLogs(activeLogs);
+
+    // Auto-scroll terminal
+    if (terminalEndRef.current) {
+      terminalEndRef.current.scrollTop = terminalEndRef.current.scrollHeight;
+    }
+  }, [currentLogIndex, flowData.simulatedLogs]);
+
+  // Restart/Trigger transaction manually
+  const triggerManualTransaction = () => {
+    setCurrentLogIndex(0);
+    setIsSimulating(true);
+    // Add a quick system log
+    setTerminalLogs([`[SYS] Force-triggering live transaction pipeline...`]);
+  };
+
   return (
-    <section className="relative py-16 bg-[#FAFAF8]">
-      <Container className="max-w-4xl mx-auto">
+    <section className="relative py-12 bg-[#FAFAF8] select-none">
+      <Container className="max-w-5xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="space-y-10"
+          className="space-y-8"
         >
-
           {/* ── HEADER ── */}
           <div className="border-b-2 border-black pb-8 space-y-4">
             <div className="flex items-center gap-3 flex-wrap">
@@ -110,7 +107,7 @@ export default function ModelDetail({ model, category }) {
                 {category.name}
               </span>
               {model.example && (
-                <span className="px-3 py-1 bg-white text-gray-500 font-mono text-[10px] border-2 border-black uppercase tracking-widest">
+                <span className="px-3 py-1 bg-white text-gray-700 font-mono text-[10px] border-2 border-black uppercase tracking-widest">
                   e.g. {model.example}
                 </span>
               )}
@@ -120,64 +117,354 @@ export default function ModelDetail({ model, category }) {
               {model.name}
             </h1>
 
-            <p className="text-base text-gray-700 leading-relaxed max-w-2xl">
+            <p className="text-base text-gray-700 leading-relaxed max-w-3xl">
               {model.desc}
             </p>
           </div>
 
-          {/* ── FLOW DIAGRAM ── */}
-          <div className="border-2 border-black shadow-[4px_4px_0_#0A0A0A] bg-white overflow-hidden">
-            <div className="flex items-center gap-2 px-5 py-3 border-b-2 border-black bg-[#FAFAF8]">
-              <Workflow className="w-3.5 h-3.5 text-[#DC2626]" />
-              <span className="font-mono text-[10px] font-black uppercase tracking-widest text-black">System Flow</span>
-              <span className="ml-auto flex items-center gap-1.5 font-mono text-[9px] text-gray-500">
-                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse inline-block" />
-                Live
-              </span>
+          {/* ── VISUAL FLOW DASHBOARD (UX FIX) ── */}
+          <div className="border-2 border-black shadow-[6px_6px_0_#0A0A0A] bg-white overflow-hidden flex flex-col">
+            {/* Control Bar */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b-2 border-black bg-[#FAFAF8] p-4 gap-3">
+              <div className="flex items-center gap-2">
+                <Workflow className="w-5 h-5 text-[#DC2626]" />
+                <span className="font-mono text-xs font-black uppercase tracking-wider text-black">
+                  Interactive Business Flow
+                </span>
+                <span className="flex items-center gap-1.5 font-mono text-[9px] bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 uppercase font-bold ml-2">
+                  <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping inline-block" />
+                  Live Simulator
+                </span>
+              </div>
+
+              {/* Mode Toggles */}
+              <div className="flex border-2 border-black p-0.5 bg-white max-w-max">
+                <button
+                  onClick={() => handleFlowToggle(false)}
+                  className={`px-3 py-1.5 font-mono text-[10px] font-black uppercase tracking-wider transition-all duration-100 ${
+                    !isMoneyFlow 
+                      ? 'bg-black text-white' 
+                      : 'bg-white text-black hover:bg-gray-100'
+                  }`}
+                >
+                  ⚙️ Data & Ops Flow
+                </button>
+                <button
+                  onClick={() => handleFlowToggle(true)}
+                  className={`px-3 py-1.5 font-mono text-[10px] font-black uppercase tracking-wider transition-all duration-100 ${
+                    isMoneyFlow 
+                      ? 'bg-[#FFE500] text-black border-l-2 border-black' 
+                      : 'bg-white text-black hover:bg-gray-100 border-l-2 border-black'
+                  }`}
+                >
+                  💰 Money & Payouts
+                </button>
+              </div>
             </div>
-            <div className="relative h-52 bg-[#FAFAF8]">
-              <div className="absolute inset-0 bg-[radial-gradient(#d1d5db_1px,transparent_1px)] bg-size-[18px_18px] opacity-30 pointer-events-none" />
-              <div className="relative w-full h-full p-3 flex items-center">
-                <RenderCategoryDiagram categoryId={category.id} />
+
+            {/* Dashboard Workspace */}
+            <div className="grid grid-cols-1 lg:grid-cols-12">
+              
+              {/* Left Column: Visual Pipeline representation */}
+              <div className="lg:col-span-8 p-6 bg-[#FAFAF8] border-r-0 lg:border-r-2 lg:border-black flex flex-col justify-center min-h-[280px] relative overflow-hidden">
+                <div className="absolute inset-0 bg-[radial-gradient(#d1d5db_1px,transparent_1px)] bg-size-[18px_18px] opacity-40 pointer-events-none" />
+                
+                {/* Connector Line (Desktop) */}
+                <div className="hidden md:block absolute top-1/2 left-12 right-12 h-1 bg-black -translate-y-1/2 z-0" />
+
+                <div className="relative z-10 flex flex-col md:flex-row justify-between items-stretch gap-6 md:gap-4">
+                  {stepsToRender.map((step, idx) => {
+                    const isPassed = idx < activeStep;
+                    const isActive = idx === activeStep;
+                    
+                    return (
+                      <div
+                        key={idx}
+                        onClick={() => setCurrentLogIndex(idx)}
+                        className={`flex-1 relative cursor-pointer group flex flex-col justify-between p-4 border-2 border-black shadow-[3px_3px_0_#0A0A0A] hover:-translate-y-0.5 transition-all duration-150 ${
+                          isActive 
+                            ? 'bg-[#FFE500] shadow-[5px_5px_0_#0A0A0A]' 
+                            : isPassed 
+                              ? 'bg-[#e2f9e9]' 
+                              : 'bg-white'
+                        }`}
+                      >
+                        {/* Mobile Connectors */}
+                        {idx < totalSteps - 1 && (
+                          <div className="block md:hidden absolute left-1/2 -bottom-6 w-1 h-6 bg-black -translate-x-1/2 z-0" />
+                        )}
+
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <span className="font-mono text-[9px] font-black text-gray-500">
+                              STEP 0{idx + 1}
+                            </span>
+                            {isPassed && (
+                              <span className="font-mono text-[9px] font-bold text-emerald-700">✓ OK</span>
+                            )}
+                            {isActive && (
+                              <span className="w-2 h-2 bg-[#DC2626] rounded-full animate-ping" />
+                            )}
+                          </div>
+
+                          <h3 className="font-black text-xs uppercase text-black leading-tight tracking-tight">
+                            {step.title}
+                          </h3>
+
+                          <p className="text-[10px] text-gray-600 leading-snug line-clamp-3">
+                            {step.desc}
+                          </p>
+                        </div>
+
+                        {/* Tech Tag Badge */}
+                        <div className="mt-4 pt-2 border-t border-black/10">
+                          <span className="inline-block font-mono text-[8px] bg-black text-white px-1.5 py-0.5 border border-black uppercase font-bold">
+                            {step.tech}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Right Column: Console / Log Terminal */}
+              <div className="lg:col-span-4 bg-black p-4 flex flex-col h-[280px] lg:h-auto min-h-[250px]">
+                <div className="flex items-center justify-between border-b border-gray-800 pb-2 mb-3">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 bg-red-500 rounded-full inline-block" />
+                    <span className="w-2.5 h-2.5 bg-yellow-500 rounded-full inline-block" />
+                    <span className="w-2.5 h-2.5 bg-green-500 rounded-full inline-block" />
+                    <span className="ml-2 font-mono text-[10px] text-gray-400 font-bold uppercase tracking-wider">
+                      CONSOLE SHELL
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setIsSimulating(!isSimulating)}
+                      className="p-1 hover:bg-gray-800 text-gray-400 hover:text-white border border-gray-800 transition-colors"
+                      title={isSimulating ? "Pause Simulator" : "Play Simulator"}
+                    >
+                      {isSimulating ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
+                    </button>
+                    <button
+                      onClick={triggerManualTransaction}
+                      className="p-1 hover:bg-gray-800 text-gray-400 hover:text-[#FFE500] border border-gray-800 transition-colors"
+                      title="Trigger Transaction"
+                    >
+                      <Sparkles className="w-3 h-3" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Log Terminal Screen */}
+                <div 
+                  ref={terminalEndRef}
+                  className="flex-1 overflow-y-auto font-mono text-[10px] space-y-1.5 pr-2 custom-scrollbar text-emerald-400"
+                >
+                  <AnimatePresence initial={false}>
+                    {terminalLogs.map((log, index) => {
+                      let color = "text-emerald-400";
+                      if (log.includes("[SYS]")) color = "text-blue-400 font-bold";
+                      if (log.includes("[PAY]") || log.includes("[FUNDS]") || log.includes("[COMM]")) color = "text-[#FFE500]";
+                      if (log.includes("✅")) color = "text-emerald-300 font-bold";
+                      if (log.includes("[LEAD]") || log.includes("[TICKET]") || log.includes("[PATIENT]")) color = "text-purple-400";
+
+                      return (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.15 }}
+                          className={`${color} leading-relaxed`}
+                        >
+                          {log}
+                        </motion.div>
+                      );
+                    })}
+                  </AnimatePresence>
+                  {isSimulating && (
+                    <span className="inline-block w-1.5 h-3.5 bg-emerald-400 ml-1 animate-pulse" />
+                  )}
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* ── METRICS DASHBOARD (UX UPGRADE) ── */}
+          <div className="space-y-4">
+            <h2 className="text-xl font-black text-black uppercase tracking-wider flex items-center gap-2">
+              <Activity className="w-4 h-4 text-black" />
+              Key Business Metrics
+            </h2>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {/* Take Rate */}
+              <div className="bg-white border-2 border-black p-4 shadow-[3px_3px_0_#0A0A0A] flex flex-col justify-between">
+                <div>
+                  <span className="font-mono text-[9px] font-black uppercase text-gray-400 block mb-1">
+                    Take Rate / Margin
+                  </span>
+                  <div className="font-black text-lg md:text-xl text-[#DC2626]">
+                    {flowData.metrics.takeRate}
+                  </div>
+                </div>
+                <p className="text-[10px] text-gray-500 mt-2 border-t border-black/10 pt-2 leading-snug">
+                  Platform transaction split or markup percentage.
+                </p>
+              </div>
+
+              {/* Dev Complexity */}
+              <div className="bg-white border-2 border-black p-4 shadow-[3px_3px_0_#0A0A0A] flex flex-col justify-between">
+                <div>
+                  <span className="font-mono text-[9px] font-black uppercase text-gray-400 block mb-1">
+                    Development Complexity
+                  </span>
+                  <div className="font-black text-lg md:text-xl text-black">
+                    {flowData.metrics.complexity}
+                  </div>
+                </div>
+                <div className="mt-2 border-t border-black/10 pt-2 flex items-center justify-between">
+                  <span className="text-[10px] text-gray-500 leading-snug">Effort Level</span>
+                  <div className="flex gap-0.5">
+                    <span className={`w-1.5 h-1.5 border border-black ${flowData.metrics.complexity !== 'Low' ? 'bg-black' : 'bg-transparent'}`} />
+                    <span className={`w-1.5 h-1.5 border border-black ${flowData.metrics.complexity === 'High' || flowData.metrics.complexity === 'Very High' ? 'bg-black' : 'bg-transparent'}`} />
+                    <span className={`w-1.5 h-1.5 border border-black ${flowData.metrics.complexity === 'Very High' ? 'bg-black' : 'bg-transparent'}`} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Setup Cost */}
+              <div className="bg-white border-2 border-black p-4 shadow-[3px_3px_0_#0A0A0A] flex flex-col justify-between">
+                <div>
+                  <span className="font-mono text-[9px] font-black uppercase text-gray-400 block mb-1">
+                    Est. Setup Budget
+                  </span>
+                  <div className="font-black text-lg md:text-xl text-black">
+                    {flowData.metrics.setupCost}
+                  </div>
+                </div>
+                <p className="text-[10px] text-gray-500 mt-2 border-t border-black/10 pt-2 leading-snug">
+                  Estimated cloud infrastructure, API subscriptions, and initial launch budget.
+                </p>
+              </div>
+
+              {/* Profit Margin */}
+              <div className="bg-white border-2 border-black p-4 shadow-[3px_3px_0_#0A0A0A] flex flex-col justify-between">
+                <div>
+                  <span className="font-mono text-[9px] font-black uppercase text-gray-400 block mb-1">
+                    Gross Profit Margin
+                  </span>
+                  <div className="font-black text-lg md:text-xl text-[#059669]">
+                    {flowData.metrics.margin}
+                  </div>
+                </div>
+                <p className="text-[10px] text-gray-500 mt-2 border-t border-black/10 pt-2 leading-snug">
+                  Net margin after direct operational/infra overhead.
+                </p>
               </div>
             </div>
           </div>
 
-          {/* ── SPEC CARDS ── */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {SPEC_CONFIG.map(({ key, label, Icon, accent }) => (
-              <motion.div
-                key={key}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="bg-white border-2 border-black shadow-[4px_4px_0_#0A0A0A] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#0A0A0A] transition-all duration-100 flex flex-col"
-              >
-                {/* Card header */}
-                <div
-                  className="flex items-center gap-2.5 px-5 py-3 border-b-2 border-black"
-                  style={{ background: accent === '#FFE500' ? '#FFE500' : accent === '#DC2626' ? '#DC2626' : '#0A0A0A' }}
-                >
-                  <Icon
-                    className="w-4 h-4 shrink-0"
-                    style={{ color: accent === '#FFE500' ? '#0A0A0A' : '#ffffff' }}
-                  />
-                  <span
-                    className="font-black text-[11px] uppercase tracking-widest"
-                    style={{ color: accent === '#FFE500' ? '#0A0A0A' : '#ffffff' }}
-                  >
-                    {label}
-                  </span>
-                </div>
-
-                {/* Card body */}
-                <div className="px-5 py-5 flex-1">
-                  <p className="text-sm text-gray-800 leading-relaxed">
-                    {model[key]}
+          {/* ── SPEC CARDS (Tabulated & Badged) ── */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            {/* How It Works */}
+            <div className="bg-white border-2 border-black shadow-[4px_4px_0_#0A0A0A] flex flex-col">
+              <div className="flex items-center gap-2 px-5 py-3 border-b-2 border-black bg-[#FFE500] text-black">
+                <Lightbulb className="w-4 h-4 shrink-0" />
+                <span className="font-black text-[11px] uppercase tracking-widest">
+                  How It Works
+                </span>
+              </div>
+              <div className="px-5 py-5 flex-1 space-y-3">
+                <p className="text-sm text-gray-800 leading-relaxed font-medium">
+                  {model.howItWorks}
+                </p>
+                <div className="p-3 bg-[#FAFAF8] border border-black/10 rounded-none text-[11px] text-gray-600 flex gap-2">
+                  <Info className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
+                  <p className="leading-relaxed">
+                    This operational loop coordinates database registers, event hooks, and direct checkout actions to scale value delivery.
                   </p>
                 </div>
-              </motion.div>
-            ))}
+              </div>
+            </div>
+
+            {/* Revenue Model */}
+            <div className="bg-white border-2 border-black shadow-[4px_4px_0_#0A0A0A] flex flex-col">
+              <div className="flex items-center gap-2 px-5 py-3 border-b-2 border-black bg-[#DC2626] text-white">
+                <TrendingUp className="w-4 h-4 shrink-0" />
+                <span className="font-black text-[11px] uppercase tracking-widest">
+                  Revenue Engine
+                </span>
+              </div>
+              <div className="px-5 py-5 flex-1 space-y-4">
+                <p className="text-sm text-gray-800 leading-relaxed font-medium">
+                  {model.revenueModel}
+                </p>
+                <div className="flex items-center gap-2 flex-wrap pt-2">
+                  <span className="px-2 py-0.5 bg-red-50 text-red-700 font-mono text-[9px] border border-red-200 uppercase font-black tracking-wider">
+                    Take rate: {flowData.metrics.takeRate}
+                  </span>
+                  <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 font-mono text-[9px] border border-emerald-200 uppercase font-black tracking-wider">
+                    LTV: {flowData.metrics.ltv}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Tech Stack */}
+            <div className="bg-white border-2 border-black shadow-[4px_4px_0_#0A0A0A] flex flex-col">
+              <div className="flex items-center gap-2 px-5 py-3 border-b-2 border-black bg-black text-white">
+                <Code2 className="w-4 h-4 shrink-0" />
+                <span className="font-black text-[11px] uppercase tracking-widest">
+                  Tech Architecture Stack
+                </span>
+              </div>
+              <div className="px-5 py-5 flex-1">
+                <p className="text-xs text-gray-500 uppercase font-mono tracking-wider mb-3 block">
+                  Core Technologies Required:
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {model.techStack && model.techStack.split(',').map((tech, i) => (
+                    <span
+                      key={i}
+                      className="px-2.5 py-1 bg-[#FAFAF8] text-black font-mono text-[10px] font-black border border-black uppercase tracking-wider shadow-[1.5px_1.5px_0_#0A0A0A]"
+                    >
+                      🛠️ {tech.trim()}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Suitable For */}
+            <div className="bg-white border-2 border-black shadow-[4px_4px_0_#0A0A0A] flex flex-col">
+              <div className="flex items-center gap-2 px-5 py-3 border-b-2 border-black bg-black text-white">
+                <Target className="w-4 h-4 shrink-0" />
+                <span className="font-black text-[11px] uppercase tracking-widest">
+                  Best Suited For
+                </span>
+              </div>
+              <div className="px-5 py-5 flex-1">
+                <p className="text-xs text-gray-500 uppercase font-mono tracking-wider mb-3 block">
+                  Target Niches & Audiences:
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {model.suitableFor && model.suitableFor.split(',').map((niche, i) => (
+                    <span
+                      key={i}
+                      className="px-2.5 py-1 bg-white text-gray-700 font-mono text-[10px] border border-black uppercase tracking-wider"
+                    >
+                      🎯 {niche.trim()}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
           </div>
 
           {/* ── ACTIONS ── */}

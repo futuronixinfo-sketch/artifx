@@ -191,7 +191,7 @@ export const projects = [
         ],
         architecture: ["Next.js", "SEO Strategy", "Analytics", "Contact Automation"],
         impact: [
-            "Centralized portfolio showcasing 50+ projects",
+            "Centralized portfolio with structured case studies",
             "Enhanced client trust with testimonials and awards",
             "Streamlined client onboarding process"
         ],

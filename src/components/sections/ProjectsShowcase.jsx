@@ -89,9 +89,23 @@ export default function ProjectsShowcase() {
 
                 {/* Content */}
                 <div className="p-6 flex flex-col justify-between grow space-y-4">
-                  <p className="text-xs text-gray-600 leading-relaxed font-mono">
-                    {project.description}
-                  </p>
+                  {/* Challenge → Solution → Result */}
+                  <div className="space-y-3">
+                    <div>
+                      <span className="text-[8px] font-mono text-red-600 font-black uppercase tracking-widest">// Challenge</span>
+                      <p className="text-[11px] text-gray-600 leading-relaxed font-mono mt-0.5">{project.challenge}</p>
+                    </div>
+                    <div>
+                      <span className="text-[8px] font-mono text-black font-black uppercase tracking-widest">// Solution</span>
+                      <p className="text-[11px] text-gray-600 leading-relaxed font-mono mt-0.5">{project.solution}</p>
+                    </div>
+                    {project.result && (
+                      <div className="flex items-center gap-3 bg-[#FFE500] border-2 border-black shadow-[2px_2px_0_#0A0A0A] px-3 py-2">
+                        <span className="text-2xl font-black text-black leading-none">{project.result.metric}</span>
+                        <span className="text-[9px] font-mono font-black text-black uppercase tracking-wider leading-tight">{project.result.label}</span>
+                      </div>
+                    )}
+                  </div>
 
                   <div className="space-y-3 pt-3 border-t-2 border-black">
                     <div className="flex flex-wrap gap-1.5">

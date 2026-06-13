@@ -22,12 +22,14 @@ export default function Footer() {
             <p className="text-gray-600 text-xs leading-relaxed max-w-xs font-mono">
               Building intelligent digital systems that help businesses scale faster using AI and modern technology.
             </p>
-            <div className="mt-6 flex gap-2">
-              {['TW', 'LI', 'IG'].map((s) => (
-                <span key={s} className="w-8 h-8 border-2 border-black flex items-center justify-center text-[9px] font-mono font-black cursor-pointer hover:bg-black hover:text-[#FFE500] transition-all duration-100 shadow-[2px_2px_0_#0A0A0A] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5">
-                  {s}
-                </span>
-              ))}
+            <div className="mt-6">
+              <span className="block text-[9px] font-mono font-black uppercase tracking-widest text-gray-500 mb-1.5">Get in touch</span>
+              <a
+                href="mailto:khanshan949@gmail.com"
+                className="inline-block text-xs font-mono font-bold text-black border-2 border-black bg-white px-3 py-2 shadow-[2px_2px_0_#0A0A0A] hover:bg-[#FFE500] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all duration-100"
+              >
+                khanshan949@gmail.com
+              </a>
             </div>
           </div>
 
@@ -92,14 +94,12 @@ export default function Footer() {
         <div className="mt-0 border-l-2 border-r-2 border-b-2 border-black px-8 py-4 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 font-mono bg-black">
           <p className="text-gray-400">&copy; {new Date().getFullYear()} Artifx Agency. All rights reserved.</p>
           <div className="flex gap-0 mt-3 md:mt-0">
-            {['Twitter', 'LinkedIn', 'Instagram'].map((social, i) => (
-              <span
-                key={social}
-                className={`hover:text-[#FFE500] cursor-pointer transition-colors px-4 py-1 ${i < 2 ? 'border-r border-neutral-700' : ''}`}
-              >
-                {social}
-              </span>
-            ))}
+            <a href="mailto:khanshan949@gmail.com" className="hover:text-[#FFE500] transition-colors px-4 py-1 border-r border-neutral-700">
+              khanshan949@gmail.com
+            </a>
+            <Link href="/contact" className="hover:text-[#FFE500] transition-colors px-4 py-1">
+              Contact
+            </Link>
           </div>
         </div>
       </div>

@@ -8,9 +8,9 @@ export const whyArtifx = {
   title: "Why We Started",
   story: "Most businesses don't fail due to lack of effort. They fail because their internal systems cannot handle growth. We saw businesses running on WhatsApp, spreadsheets, and manual memory. Artifx was built to fix this gap — engineering operational backbones that scale without breaking.",
   stats: [
-    { label: "Businesses Transformed", value: "25+" },
-    { label: "Systems Architected", value: "50+" },
-    { label: "Avg. Efficiency Gain", value: "78%" }
+    { label: "Projects Delivered", value: "6+" },
+    { label: "Industries Served", value: "6+" },
+    { label: "Years Experience", value: "5+" }
   ]
 };
 
