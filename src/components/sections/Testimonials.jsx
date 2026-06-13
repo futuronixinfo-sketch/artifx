@@ -3,55 +3,14 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Container from '@/components/ui/Container';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
-
-const testimonials = [
-  {
-    quote: "Artifx delivered a full real estate platform in 6 weeks — property listings, lead CRM, and payment gateway — all pixel-perfect. The team communicates daily and every deadline was met. Wouldn't trust anyone else.",
-    name: "Rahul Sharma",
-    role: "Founder",
-    company: "Mqamy Real Estate",
-    category: "Real Estate Platform",
-    location: "Dubai, UAE",
-    result: "3× faster lead conversion",
-  },
-  {
-    quote: "We needed a complex restaurant ordering system with live kitchen tracking and rider dispatch. Artifx built it in 8 weeks, and our order fulfilment went from 28 minutes to 14. Genuinely impressive execution.",
-    name: "Aisha Al-Farsi",
-    role: "Operations Head",
-    company: "CloudKitchen DXB",
-    category: "Food Tech Platform",
-    location: "Abu Dhabi, UAE",
-    result: "50% faster order fulfilment",
-  },
-  {
-    quote: "The admin panel alone was worth every dirham. Full inventory management, analytics dashboard, and staff roles — all built cleanly and delivered with zero bugs. The after-support is outstanding.",
-    name: "Priya Nair",
-    role: "CEO",
-    company: "Legacy Wear",
-    category: "E-Commerce + Admin",
-    location: "Mumbai, India",
-    result: "Launched in 5 weeks",
-  },
-  {
-    quote: "Our AI-powered talent matching platform is live and converting. Artifx integrated the LLM layer and built the full dashboard in one sprint. No other agency understood the brief as fast as they did.",
-    name: "James Okonkwo",
-    role: "Co-Founder",
-    company: "Impact Talent Centre",
-    category: "AI SaaS Platform",
-    location: "Lagos, Nigeria",
-    result: "2× placement efficiency",
-  },
-];
-
-const stats = [
-  { value: '50+', label: 'Projects Delivered' },
-  { value: '96%', label: 'Client Retention' },
-  { value: '4.9★', label: 'Avg. Rating' },
-  { value: '0', label: 'Missed Deadlines' },
-];
+import { testimonials } from '@/data/testimonials';
 
 export default function Testimonials() {
   const [active, setActive] = useState(0);
+
+  // No real testimonials yet → hide the section entirely (no fabricated proof).
+  if (!testimonials.length) return null;
+
   const prev = () => setActive((i) => (i - 1 + testimonials.length) % testimonials.length);
   const next = () => setActive((i) => (i + 1) % testimonials.length);
   const t = testimonials[active];
@@ -70,16 +29,6 @@ export default function Testimonials() {
               Real Clients.<br />
               <span className="text-[#FFE500]">Real Results.</span>
             </h2>
-          </div>
-
-          {/* Stats row */}
-          <div className="flex gap-0 border-2 border-white/20 shrink-0">
-            {stats.map((s, i) => (
-              <div key={i} className={`text-center px-5 py-4 ${i < stats.length - 1 ? 'border-r-2 border-white/20' : ''}`}>
-                <div className="text-2xl font-black text-[#FFE500]">{s.value}</div>
-                <div className="text-[8px] font-mono text-gray-500 uppercase tracking-widest mt-0.5 whitespace-nowrap">{s.label}</div>
-              </div>
-            ))}
           </div>
         </div>
 

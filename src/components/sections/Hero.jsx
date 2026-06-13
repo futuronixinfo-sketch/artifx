@@ -206,10 +206,14 @@ export default function Hero() {
           <motion.h1 initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }}
             transition={{ duration:0.6, delay:0.1 }}
             className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-[0.95] uppercase max-w-3xl mx-auto">
-            We Build Digital{' '}
+            Websites, Apps &amp; AI{' '}
             <span className="text-red-600 underline decoration-4 underline-offset-4">Systems</span>{' '}
-            That Scale.
+            That Grow Your Business.
           </motion.h1>
+          <p className="text-sm sm:text-base text-gray-700 max-w-2xl mx-auto leading-relaxed">
+            We help startups and businesses launch scalable digital products, automate operations,
+            and increase revenue through technology.
+          </p>
           <p className="text-[9px] sm:text-[10px] font-mono text-gray-500 uppercase tracking-widest max-w-4xl mx-auto">
             Choose your business → pick a model → select a UI style → get your instant estimate
           </p>
@@ -372,10 +376,10 @@ export default function Hero() {
           transition={{ duration:0.6, delay:0.4 }}
           className="flex flex-wrap items-center justify-center gap-0 pt-8 font-mono border-t-2 border-black w-full">
           {[
-            { label: 'Systems Engineered', value: '50+' },
-            { label: 'Avg. Efficiency Gain', value: '78%' },
-            { label: 'Client Retention', value: '96%' },
-            { label: 'API Integrations', value: '30+' },
+            { label: 'Projects Delivered', value: '6+' },
+            { label: 'Industries Served', value: '6+' },
+            { label: 'Years Experience', value: '5+' },
+            { label: 'Custom-Coded', value: '100%' },
           ].map(stat => (
             <div key={stat.label} className="text-center flex-1 min-w-[120px] py-4 border-r-2 border-black last:border-r-0">
               <div className="text-2xl font-black text-black">{stat.value}</div>

@@ -91,10 +91,10 @@ export default function FinalCTA() {
             className="mt-20 pt-8 border-t-2 border-neutral-800 flex flex-wrap justify-center gap-0"
           >
             {[
-              { val: '50+', label: 'Systems Built' },
-              { val: '96%', label: 'Retention Rate' },
+              { val: '6+', label: 'Projects Shipped' },
+              { val: '5+', label: 'Yrs Experience' },
               { val: '< 8wks', label: 'Avg. Delivery' },
-              { val: '24/7', label: 'Support SLA' },
+              { val: '24/7', label: 'Support' },
             ].map((s, i) => (
               <div key={s.label} className={`text-center px-10 py-4 ${i < 3 ? 'border-r-2 border-neutral-800' : ''}`}>
                 <div className="text-2xl font-black text-[#FFE500]">{s.val}</div>

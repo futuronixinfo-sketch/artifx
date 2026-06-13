@@ -13,15 +13,13 @@ export const teamMembers = [
     avatarText: "SK",
     techStack: ["System Architecture", "LLM Pipelines", "DevOps & Cloud", "Next.js", "Node.js", "Python / Go"],
     stats: [
-      { label: "Systems Built", value: "50+" },
+      { label: "Projects Built", value: "6+" },
       { label: "Core Philosophy", value: "systems_before_features" },
       { label: "Dev Experience", value: "5+ Years" },
       { label: "Status Engine", value: "ONLINE_EXECUTION" }
     ],
     links: {
-      website: "https://www.shankhan.co.in/",
-      github: "https://github.com/",
-      linkedin: "https://linkedin.com/"
+      website: "https://www.shankhan.co.in/"
     }
   },
   {
@@ -31,14 +29,12 @@ export const teamMembers = [
     avatarText: "VG",
     techStack: ["Agile Management", "Client Relations", "Process Optimization", "Sprint Execution", "Operations Telemetry"],
     stats: [
-      { label: "Delivery Rate", value: "100%" },
+      { label: "Core Focus", value: "on_time_delivery" },
       { label: "Core Methodology", value: "agile_scrum_v2" },
-      { label: "Client Retention", value: "96%" },
+      { label: "Specialization", value: "client_success" },
       { label: "Status Engine", value: "PROCESS_MONITORING" }
     ],
-    links: {
-      linkedin: "https://linkedin.com/"
-    }
+    links: {}
   }
 ];
 

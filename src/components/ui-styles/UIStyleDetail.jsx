@@ -123,6 +123,18 @@ function BgDecor({ slug, category, t }) {
   return null;
 }
 
+/* Build a representative gradient straight from the style's own palette.
+   Skips translucent values; falls back to the accent so every style shows
+   its real colours instead of a random stock photo. */
+function paletteGradient(palette = [], fallback = '#888888') {
+  const solid = palette
+    .map((c) => c.hex)
+    .filter((h) => h && !h.includes('rgba') && !h.toLowerCase().includes('transparent'));
+  const cols = (solid.length ? solid : [fallback]).slice(0, 5);
+  if (cols.length === 1) return cols[0];
+  return `linear-gradient(135deg, ${cols.join(', ')})`;
+}
+
 export default function UIStyleDetail({ style }) {
   const t = style.theme;
   const idx = uiStyles.findIndex((s) => s.slug === style.slug);
@@ -136,8 +148,8 @@ export default function UIStyleDetail({ style }) {
     .slice(0, 4);
 
   const fontCfg = FONT_MAP[style.slug] || CAT_FONT_MAP[style.category] || null;
-  const hf = fontCfg?.family || hf;
-  const bf = fontCfg?.family || bf;
+  const hf = fontCfg?.family || t.headingFont || 'system-ui, -apple-system, sans-serif';
+  const bf = fontCfg?.family || t.bodyFont || 'system-ui, -apple-system, sans-serif';
 
   const [radiusPercent, setRadiusPercent] = useState(100);
 
@@ -154,14 +166,28 @@ export default function UIStyleDetail({ style }) {
   const br = (radius, extra = {}) => ({ '--br': radius, ...extra });
 
   return (
-    <div style={{ fontFamily: bf, color: t.bodyColor, background: t.pageBg, minHeight: '100vh' }}>
+    <div className="ui-style-detail uisd" style={{ fontFamily: bf, color: t.bodyColor, background: t.pageBg, minHeight: '100vh' }}>
       {fontCfg && <style>{`@import url('${fontCfg.url}');`}</style>}
       <style>{`.ui-style-detail .ui-br { border-radius: calc(var(--br, 0px) * ${(radiusPercent / 100).toFixed(4)}) !important; }`}</style>
+      <style>{`
+        .uisd .uisd-2col { display:grid; grid-template-columns:1fr 1fr; gap:60px; }
+        .uisd .uisd-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+        .uisd .uisd-split { display:grid; grid-template-columns:240px 1fr; gap:64px; align-items:start; }
+        @media (max-width: 820px) {
+          .uisd .uisd-2col, .uisd .uisd-cards, .uisd .uisd-split { grid-template-columns:1fr !important; gap:28px !important; }
+          .uisd .uisd-sec { padding-left:20px !important; padding-right:20px !important; }
+          .uisd .uisd-divider { margin-left:20px !important; margin-right:20px !important; }
+          .uisd .uisd-nav { padding-left:16px !important; padding-right:16px !important; flex-wrap:wrap; gap:10px; }
+          .uisd .uisd-radius { display:none !important; }
+          .uisd .uisd-phone { justify-self:center; }
+          .uisd .uisd-hero-h1 { font-size:clamp(34px,9vw,52px) !important; }
+        }
+      `}</style>
       <BgDecor slug={style.slug} category={style.category} t={t} />
       <div style={{ position: 'relative', zIndex: 1 }}>
 
       {/* ── CUSTOM NAVBAR ── */}
-      <nav style={{
+      <nav className="uisd-nav" style={{
         background: t.navBg,
         borderBottom: t.navBorderBottom,
         backdropFilter: t.cardBackdrop,
@@ -181,7 +207,7 @@ export default function UIStyleDetail({ style }) {
           ← UI Lab
         </Link>
         {/* ── Border Radius Control ── */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div className="uisd-radius" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <span style={{ fontSize: '9px', color: t.navFg, fontFamily: 'monospace', fontWeight: 700, opacity: 0.55, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
             Radius
           </span>
@@ -233,7 +259,7 @@ export default function UIStyleDetail({ style }) {
       </nav>
 
       {/* ── HERO ── */}
-      <section style={{ padding: '72px 40px 56px', maxWidth: '1200px', margin: '0 auto' }}>
+      <section className="uisd-sec" style={{ padding: '72px 40px 56px', maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ display: 'flex', gap: '8px', marginBottom: '20px', flexWrap: 'wrap', alignItems: 'center' }}>
           {style.tags.map((tag) => (
             <span key={tag} className="ui-br" style={br(t.badgeRadius, {
@@ -254,7 +280,7 @@ export default function UIStyleDetail({ style }) {
           </span>
         </div>
 
-        <h1 style={{
+        <h1 className="uisd-hero-h1" style={{
           fontFamily: hf,
           color: t.headingColor,
           fontWeight: t.headingWeight || '900',
@@ -278,46 +304,78 @@ export default function UIStyleDetail({ style }) {
           </p>
         )}
 
-        {/* Hero sample image */}
+        {/* Hero LIVE preview — a real mini-page rendered in this exact theme (no stock photos) */}
         <div className="ui-br" style={br(t.cardRadius, {
           marginTop: '40px',
           overflow: 'hidden',
           border: t.cardBorder,
           boxShadow: t.cardShadow,
           position: 'relative',
+          background: t.pageBg,
+          minHeight: '340px',
         })}>
-          <img
-            src={`https://picsum.photos/seed/${style.slug}-hero/1200/420`}
-            alt={`${style.name} style preview`}
-            loading="lazy"
-            style={{ width: '100%', height: '360px', objectFit: 'cover', display: 'block' }}
-          />
-          <div style={{
-            position: 'absolute', bottom: 0, left: 0, right: 0,
-            padding: '16px 24px',
-            background: `linear-gradient(to top, ${t.pageBg || 'rgba(0,0,0,0.6)'}, transparent)`,
-            display: 'flex', alignItems: 'center', gap: '10px',
-          }}>
+          {/* the style's own palette, used as an ambient wash so its real colours always show */}
+          <div style={{ position: 'absolute', inset: 0, background: paletteGradient(style.palette, t.accent), opacity: 0.20, pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', width: '260px', height: '260px', borderRadius: '50%', background: t.accent, filter: 'blur(90px)', opacity: 0.4, top: '-60px', right: '-40px', pointerEvents: 'none' }} />
+
+          <div style={{ position: 'relative', padding: '40px 32px', display: 'flex', flexDirection: 'column', gap: '16px', justifyContent: 'center', minHeight: '340px', boxSizing: 'border-box' }}>
             <span className="ui-br" style={br(t.badgeRadius, {
+              alignSelf: 'flex-start',
               background: t.badgeBg, color: t.badgeFg,
               border: t.badgeBorder || 'none',
-              padding: '3px 10px', fontSize: '9px', fontWeight: 700,
+              padding: '4px 11px', fontSize: '9px', fontWeight: 700,
               textTransform: 'uppercase', letterSpacing: '0.1em',
             })}>
-              Sample Preview
+              Live Preview
             </span>
-            <span style={{ color: t.captionColor, fontSize: '10px', fontFamily: 'monospace', opacity: 0.7 }}>
-              {style.name} aesthetic
-            </span>
+
+            <div style={{
+              fontFamily: hf, color: t.headingColor,
+              fontWeight: t.headingWeight || 900,
+              fontSize: 'clamp(26px,4.2vw,44px)', lineHeight: 1.04,
+              letterSpacing: '-0.02em', maxWidth: '560px', textShadow: heroGlow,
+            }}>
+              Real components, rendered in the {style.name} style.
+            </div>
+            <p style={{ color: t.bodyColor, fontSize: '13px', lineHeight: 1.6, maxWidth: '440px', opacity: 0.85 }}>
+              Everything you see below — buttons, cards, type and colour — is this theme applied live, so you know exactly how your product would feel.
+            </p>
+
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: '4px' }}>
+              <button className="ui-br" style={br(t.btnRadius, {
+                background: t.btnBg, color: t.btnFg, border: t.btnBorder || 'none',
+                padding: '11px 22px', fontSize: '11px', fontWeight: 700, cursor: 'pointer',
+                boxShadow: t.btnShadow, letterSpacing: '0.06em', textTransform: 'uppercase', fontFamily: hf,
+              })}>
+                Get Started →
+              </button>
+              <button className="ui-br" style={br(t.btnRadius, {
+                background: 'transparent', color: t.accent, border: `2px solid ${t.accent}`,
+                padding: '11px 22px', fontSize: '11px', fontWeight: 700, cursor: 'pointer',
+                letterSpacing: '0.06em', textTransform: 'uppercase', fontFamily: hf,
+              })}>
+                Learn More
+              </button>
+            </div>
+
+            {/* floating themed card — surfaces depth / glass / iridescence per style */}
+            <div className="ui-br" style={br(t.cardRadius, {
+              background: t.cardBg, border: t.cardBorder, boxShadow: t.cardShadow,
+              backdropFilter: t.cardBackdrop, WebkitBackdropFilter: t.cardBackdrop,
+              padding: '14px 16px', maxWidth: '280px', marginTop: '6px',
+            })}>
+              <div style={{ fontFamily: hf, color: t.headingColor, fontWeight: 700, fontSize: '12px', marginBottom: '4px' }}>Component Card</div>
+              <div style={{ color: t.bodyColor, fontSize: '11px', opacity: 0.8, lineHeight: 1.5 }}>Uses the real {style.name} tokens — not a stock image.</div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ── DIVIDER ── */}
-      <div style={{ height: '1px', background: t.dividerColor, margin: '0 40px' }} />
+      <div className="uisd-divider" style={{ height: '1px', background: t.dividerColor, margin: '0 40px' }} />
 
       {/* ── PALETTE + TYPOGRAPHY ── */}
-      <section style={{ padding: '56px 40px', maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px' }}>
+      <section className="uisd-sec uisd-2col" style={{ padding: '56px 40px', maxWidth: '1200px', margin: '0 auto' }}>
 
         {/* Palette */}
         <div>
@@ -373,10 +431,10 @@ export default function UIStyleDetail({ style }) {
       </section>
 
       {/* ── DIVIDER ── */}
-      <div style={{ height: '1px', background: t.dividerColor, margin: '0 40px' }} />
+      <div className="uisd-divider" style={{ height: '1px', background: t.dividerColor, margin: '0 40px' }} />
 
       {/* ── COMPONENT GALLERY ── */}
-      <section style={{ padding: '56px 40px', maxWidth: '1200px', margin: '0 auto' }}>
+      <section className="uisd-sec" style={{ padding: '56px 40px', maxWidth: '1200px', margin: '0 auto' }}>
         <h2 style={{ fontFamily: hf, color: t.headingColor, fontWeight: 700, fontSize: '11px', marginBottom: '48px', textTransform: 'uppercase', letterSpacing: '0.12em', opacity: 0.6 }}>
           Component Gallery
         </h2>
@@ -419,7 +477,7 @@ export default function UIStyleDetail({ style }) {
           <div style={{ fontSize: '10px', color: t.captionColor, fontFamily: 'monospace', marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
             // Cards
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '20px' }}>
+          <div className="uisd-cards">
             {[
               { title: 'Design System', desc: 'Consistent visual language and component patterns for scalable product teams.', tag: 'UI/UX' },
               { title: 'Component Lib', desc: 'Reusable building blocks that maintain visual consistency across all surfaces.', tag: 'Dev' },
@@ -433,22 +491,24 @@ export default function UIStyleDetail({ style }) {
                 WebkitBackdropFilter: t.cardBackdrop,
                 overflow: 'hidden',
               })}>
-                {/* image area */}
+                {/* image area — rendered from the style's own palette (no stock photos) */}
                 <div style={{
                   height: '148px',
                   borderBottom: t.cardBorder,
                   overflow: 'hidden',
                   position: 'relative',
+                  background: t.pageBg,
                 }}>
-                  <img
-                    src={`https://picsum.photos/seed/${style.slug}-card-${i}/400/160`}
-                    alt={card.title}
-                    loading="lazy"
-                    style={{
-                      width: '100%', height: '100%',
-                      objectFit: 'cover', display: 'block',
-                    }}
-                  />
+                  <div style={{ position: 'absolute', inset: 0, background: paletteGradient(style.palette, t.accent), opacity: 0.95 }} />
+                  <div style={{ position: 'absolute', width: '90px', height: '90px', borderRadius: '50%', background: style.palette[i % style.palette.length]?.hex || t.accent, filter: 'blur(26px)', opacity: 0.55, top: '-16px', right: '-10px' }} />
+                  <span className="ui-br" style={br(t.badgeRadius, {
+                    position: 'absolute', left: '12px', bottom: '12px',
+                    background: t.badgeBg, color: t.badgeFg, border: t.badgeBorder || 'none',
+                    padding: '3px 9px', fontSize: '8px', fontWeight: 700,
+                    textTransform: 'uppercase', letterSpacing: '0.08em',
+                  })}>
+                    {card.tag}
+                  </span>
                 </div>
                 <div style={{ padding: '18px' }}>
                   <span className="ui-br" style={br(t.badgeRadius, {
@@ -571,13 +631,13 @@ export default function UIStyleDetail({ style }) {
       </section>
 
       {/* ── DIVIDER ── */}
-      <div style={{ height: '1px', background: t.dividerColor, margin: '0 40px' }} />
+      <div className="uisd-divider" style={{ height: '1px', background: t.dividerColor, margin: '0 40px' }} />
 
       {/* ── MOBILE PREVIEW + CHARACTERISTICS ── */}
-      <section style={{ padding: '56px 40px', maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '240px 1fr', gap: '64px', alignItems: 'start' }}>
+      <section className="uisd-sec uisd-split" style={{ padding: '56px 40px', maxWidth: '1200px', margin: '0 auto' }}>
 
         {/* Phone Frame */}
-        <div>
+        <div className="uisd-phone">
           <h2 style={{ fontFamily: hf, color: t.headingColor, fontWeight: 700, fontSize: '11px', marginBottom: '24px', textTransform: 'uppercase', letterSpacing: '0.12em', opacity: 0.6 }}>
             Mobile Preview
           </h2>
@@ -649,9 +709,12 @@ export default function UIStyleDetail({ style }) {
 
         {/* Characteristics */}
         <div>
-          <h2 style={{ fontFamily: hf, color: t.headingColor, fontWeight: 700, fontSize: '11px', marginBottom: '24px', textTransform: 'uppercase', letterSpacing: '0.12em', opacity: 0.6 }}>
-            Key Characteristics
+          <h2 style={{ fontFamily: hf, color: t.headingColor, fontWeight: 700, fontSize: '11px', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.12em', opacity: 0.6 }}>
+            What Defines This Style
           </h2>
+          <p style={{ color: t.captionColor, fontSize: '12px', marginBottom: '22px', fontFamily: bf, opacity: 0.75, lineHeight: 1.5 }}>
+            The signature details that make {style.name} instantly recognisable.
+          </p>
           <div>
             {style.characteristics.map((char, i) => (
               <div key={i} style={{ padding: '16px 0', borderBottom: `1px solid ${t.dividerColor}`, display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
@@ -676,8 +739,8 @@ export default function UIStyleDetail({ style }) {
       {/* ── INDUSTRIES SECTION ── */}
       {suggestedCategories.length > 0 && (
         <>
-          <div style={{ height: '1px', background: t.dividerColor, margin: '0 40px' }} />
-          <section style={{ padding: '56px 40px', maxWidth: '1200px', margin: '0 auto' }}>
+          <div className="uisd-divider" style={{ height: '1px', background: t.dividerColor, margin: '0 40px' }} />
+          <section className="uisd-sec" style={{ padding: '56px 40px', maxWidth: '1200px', margin: '0 auto' }}>
             <h2 style={{ fontFamily: hf, color: t.headingColor, fontWeight: 700, fontSize: '11px', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.12em', opacity: 0.6 }}>
               Industries &amp; Business Models
             </h2>
@@ -722,10 +785,10 @@ export default function UIStyleDetail({ style }) {
       )}
 
       {/* ── DIVIDER ── */}
-      <div style={{ height: '1px', background: t.dividerColor, margin: '0 40px' }} />
+      <div className="uisd-divider" style={{ height: '1px', background: t.dividerColor, margin: '0 40px' }} />
 
       {/* ── FOOTER NAV ── */}
-      <section style={{ padding: '40px', maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
+      <section className="uisd-sec" style={{ padding: '40px', maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
         {prev ? (
           <Link href={`/ui-styles/${prev.slug}`} style={{ textDecoration: 'none' }}>
             <button className="ui-br" style={br(t.btnRadius, {

@@ -93,7 +93,7 @@ function ScalableSVG({ isHovered }) {
 }
 
 const bentoExtraData = [
-  { status: 'SYNCHRONIZED', efficiency: '+45% SPEED', metrics: [{ label: 'CORES', val: '300+ SYSTEMS' }, { label: 'LATENCY', val: '< 2.4ms' }] },
+  { status: 'SYNCHRONIZED', efficiency: '+45% SPEED', metrics: [{ label: 'CORES', val: 'CUSTOM SYS' }, { label: 'LATENCY', val: '< 2.4ms' }] },
   { status: 'INTELLIGENT', efficiency: '92% AUTO-RATE', metrics: [{ label: 'ENGINES', val: '12+ CORES' }, { label: 'CONTEXT', val: '1M+ TOKENS' }] },
   { status: 'ARMORED', efficiency: '0.00% BREACH', metrics: [{ label: 'COMPLIANCE', val: 'SOC2 Ready' }, { label: 'ENCRYPTION', val: 'AES-256' }] },
   { status: 'ELASTIC', efficiency: '50x CAPACITY', metrics: [{ label: 'ENGINE', val: 'EDGE CORES' }, { label: 'DEPLOY', val: '< 4.5 sec' }] }
